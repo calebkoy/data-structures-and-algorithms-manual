@@ -64,11 +64,12 @@ body > p {
 }
 
 .content {
-  grid-area: content;
+  grid-area: mainContent;
 }
 
 .main-nav {
-  grid-area: nav;
+  grid-area: nav;  
+  background-color: #4d4dff;
 }
 
 .footer-rule {
@@ -83,18 +84,37 @@ body > p {
 
 .wrapper {
   display: grid;
-  grid-template-areas: 
+  grid-template-areas:     
     "nav"
-    "content"
+    "mainContent"
     "footerRule"
     "footer";
+}
+
+.main-nav ul {
+  list-style: none;    
+}
+
+.home-page-link {
+  text-decoration: none;
+  font-family: 'Chilanka', cursive;
+  font-size: 2.2em;     
+}
+
+.main-nav ul li {
+  margin-left: 20px;
+  margin-bottom: 10px;
+}
+
+.main-nav ul li:first-child {
+  padding-top: 20px;
 }
 
 @media (min-width: 500px) {
   .wrapper {
     grid-template-columns: 1fr 3fr;
-    grid-template-areas: 
-      "nav content"
+    grid-template-areas:       
+      "nav mainContent"
       "nav footerRule"
       "nav footer";
   }
