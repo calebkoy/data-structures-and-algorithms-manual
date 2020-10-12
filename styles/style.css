@@ -18,7 +18,21 @@ header h2 {
   color: #404040;
 }
 
-header button {  
+header > a {
+  outline: none;
+  text-decoration: none;
+  width: 200px;  
+  margin: 0 auto;
+  text-align: center;
+  display: block;
+  color: white;
+  border-radius: 5px;
+  font-size: 20px;  
+  background-color: #7070db;  
+  padding: 10px;  
+}
+
+/* header button {  
   margin: 0 auto 30px auto;
   display: block;
   border-radius: 5px;
@@ -28,7 +42,7 @@ header button {
   border: none;
   color: white;  
   padding: 10px;
-}
+} */
 
 hr {
   width: 700px;
