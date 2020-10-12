@@ -27,8 +27,8 @@ header > a {
   display: block;
   color: white;
   border-radius: 5px;
-  font-size: 20px;  
-  background-color: #7070db;  
+  font-size: 20px;    
+  background-color: #4d4dff;  
   padding: 10px;  
 }
 
@@ -63,9 +63,41 @@ body > p {
   line-height: 1.6;
 }
 
+.content {
+  grid-area: content;
+}
+
+.main-nav {
+  grid-area: nav;
+}
+
 .footer-rule {
   margin-top: 60px;
   width: 400px;
+  grid-area: footerRule
+}
+
+.main-footer {
+  grid-area: footer;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-areas: 
+    "nav"
+    "content"
+    "footerRule"
+    "footer";
+}
+
+@media (min-width: 500px) {
+  .wrapper {
+    grid-template-columns: 1fr 3fr;
+    grid-template-areas: 
+      "nav content"
+      "nav footerRule"
+      "nav footer";
+  }
 }
 
 footer {    
