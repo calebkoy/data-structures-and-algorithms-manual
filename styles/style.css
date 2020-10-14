@@ -1,4 +1,15 @@
+/* html {
+  font-family: 'Roboto', sans-serif;
+}
+
 body {
+  width: 600px;
+  margin: 0 auto;
+} */
+
+/*-----------------------------------*/
+
+/*body {
   font-family: 'Roboto', sans-serif;
 }
 
@@ -31,18 +42,6 @@ header > a {
   background-color: #4d4dff;  
   padding: 10px;  
 }
-
-/* header button {  
-  margin: 0 auto 30px auto;
-  display: block;
-  border-radius: 5px;
-  font-size: 20px;  
-  width: 200px;
-  background-color: #7070db;  
-  border: none;
-  color: white;  
-  padding: 10px;
-} */
 
 hr {
   width: 700px;
@@ -122,4 +121,4 @@ body > p {
 
 footer {    
   text-align: center;
-}
+} */

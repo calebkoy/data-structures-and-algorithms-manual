@@ -4,10 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Asymptotic Complexity | Data Structures and Algorithms Manual</title>
+    <title>Computational complexity | Data Structures and Algorithms Manual</title>
+
+    <!-- A light MathML polyfill recommended by MDN -->
+    <!-- See https://developer.mozilla.org/en-US/docs/Web/MathML/Authoring -->
+    <script src="https://fred-wang.github.io/mathml.css/mspace.js"></script>
   </head>
   <body>
-    <nav>
+    <nav>      
       <ul>
         <li><a href="index.html">Data Structures and Algorithms Manual</a></li>
         <li><a href="introduction.html">Introduction</a></li>
@@ -15,22 +19,15 @@
         <li>Data structures</li>
         <li><a href="data-structures/data-structures-overview.html">Data structures overview</a></li>
         <li><a href="data-structures/array.html">Array</a></li>
-        <li><a href="data-structures/dynamic-array.html">Dynamic array</a></li>
-        <li><a href="data-structures/linked-list.html">Linked list</a></li>
-        <li><a href="data-structures/stack.html">Stack</a></li>        
-        <li><a href="data-structures/queue.html">Queue</a></li>
-        <li><a href="data-structures/graph.html">Graph</a></li>
-        <li><a href="data-structures/binary-tree.html">Binary tree</a></li>
-        <li><a href="data-structures/binary-heap.html">Binary heap</a></li>
+        <li><a href="data-structures/dynamic-array.html">Dynamic array</a></li>        
         <li>Algorithms</li>
-        <li><a href="algorithms/binary-search.html">Binary search</a></li>
-        <li><a href="algorithms/dfs.html">DFS</a></li>
-        <li><a href="algorithms/bfs.html">BFS</a></li>
+        <li><a href="algorithms/algorithms-overview.html">Algorithms overview</a></li>        
+        <li><a href="algorithms/binary-search.html">Binary search</a></li> 
       </ul>
     </nav>
 
     <main>
-      <h1>Computational Complexity</h1>
+      <h1>Computational complexity</h1>
       <p>
         If you've never heard of computational complexity before, the name probably doesn't make it obvious what it refers to.
         However, it's a relatively straightforward concept that's used to analyse the efficiency of algorithms and of performing various 
@@ -56,82 +53,285 @@
       </p>
       <p>
         <!-- How could I do mathematical font styling of variables here? -->
-        Now suppose you have an algorithm that takes in a list of n numbers and prints out each of the numbers. 
+        Now suppose you have an algorithm that takes in a list of 
+        <math>
+          <mrow>
+            <mi>n</mi>
+          </mrow>
+        </math> 
+        numbers and prints out each of the numbers. 
         If we assume that printing out a single number takes a constant amount of time, then the running time of this algorithm
         will grow linearly in proportion to the size of the input list. If the input list has size 5, the algorithm will take 5 steps to run.
         If the input list has size 500, the algorithm will take 500 steps to run. 
         Such an algorithm is often referred to as a linear-time algorithm.
       </p>
       <p>
-        Finally, suppose you have an algorithm that takes in a list of n numbers. For each of those n numbers, 
-        the algorithm multiplies every number in the list by the number.
+        Finally, suppose you have an algorithm that takes in a list of 
+        <math>          
+          <mi>n</mi>          
+        </math>
+        numbers. For each of those 
+        <math>          
+          <mi>n</mi>
+        </math>
+        numbers, the algorithm multiplies every number in the list by the number.
         Then it sums up the resulting numbers and prints the result. What would the running time of such an algorithm be?
-        For example, suppose the input list is [1, 2, 3, 4].
+        For example, suppose the input list is <code>[1, 2, 3, 4]</code>.
         The first number is 1. So the algorithm multiplies every number in the list by 1, which leaves the list unchanged. 
-        Then it prints the sum of the numbers in the list: 1 + 2 + 3 + 4 = 10.        
+        Then it prints the sum of the numbers in the list:
+        <math>
+          <mrow>
+            <mn>1</mn>
+            <mo>+</mo>
+            <mn>2</mn>
+            <mo>+</mo>
+            <mn>3</mn>
+            <mo>+</mo>
+            <mn>4</mn>
+            <mo>=</mo>
+            <mn>10</mn>
+          </mrow>
+        </math>.        
       </p>
       <p>
-        The second number is 2. So the algorithm multiplies every number in the list by 2, giving [2, 4, 6, 8]. 
+        The second number is 2. So the algorithm multiplies every number in the list by 2, giving <code>[2, 4, 6, 8]</code>. 
         Then it sums up the numbers and prints the result, which is 20. There's a pattern here.
         The third number is 3 and the corresponding result is 30. The fourth number is 4 and the corresponding result is 40.
       </p>
       <p>
-        For each of the n numbers in the list, the algorithm does n multiplications and then n - 1 additions. 
-        This gives a total of 2n - 1 operations for each of the n numbers. So the total number of steps the algorithm 
-        takes for an input list of size n is n * (2n - 1) = 2n^2 - n. 
+        For each of the 
+        <math>
+          <mi>n</mi>
+        </math> 
+        numbers in the list, the algorithm does 
+        <math>
+          <mi>n</mi>
+        </math> 
+        multiplications and 
+        then 
+        <math>
+          <mrow>
+            <mi>n</mi>
+            <mo>-</mo>
+            <mn>1</mn>
+          </mrow>
+        </math>        
+        additions. 
+        This gives a total of 
+        <math>
+          <mrow>
+            <mn>2</mn>
+            <mi>n</mi>
+            <mo>-</mo>
+            <mn>1</mn>
+          </mrow>
+        </math>        
+        operations for each of the 
+        <math>
+          <mi>n</mi>
+        </math> 
+        numbers. So the total number of steps the algorithm 
+        takes for an input list of size 
+        <math>
+          <mi>n</mi>
+        </math> 
+        is 
+        <math>
+          <mrow>
+            <mi>n</mi>
+            <mo>*</mo>
+            <mrow>
+              <mo>(</mo>
+              <mn>2</mn>
+              <mi>n</mi>
+              <mo>-</mo>
+              <mn>1</mn>
+              <mo>)</mo>
+            </mrow>
+            <mo>=</mo>
+            <mn>2</mn>
+            <msup>
+              <mi>n</mi>
+              <mn>2</mn>            
+            </msup>     
+            <mo>-</mo>       
+            <mi>n</mi>
+          </mrow>
+        </math>. 
         Such an algorithm is often referred to as a quadratic-time algorithm, because the running time of the algorithm is 
         quadratic with respect to the input size of the algorithm. 
       </p>
       <p>
         You might wonder if there are other types of running times. There sure are. 
         There are algorithms whose running times are cubic with respect to the input size. 
-        There are algorithms which take an input of size n and run in n factorial steps (usually denoted as n!). 
-        There are exponential-time algorithms, which run in a^n steps, where a is some constant. 
+        There are algorithms which take an input of size <math><mi>n</mi></math> and run in 
+        <math>
+          <mrow>
+            <mi>n</mi>
+            <mo>!</mo>
+          </mrow>
+        </math>
+        (n factorial)
+        steps. 
+        There are exponential-time algorithms, which run in 
+        <math>
+          <mrow>
+            <msup>
+              <mi>a</mi>
+              <mi>n</mi>
+            </msup>            
+          </mrow>
+        </math>        
+        steps, where <math><mi>a</mi></math> is some constant. 
         And there are many more. Some take longer than others. 
       </p>
       
       <h2>Big O notation</h2>
       <p>
         In order to communicate about computational complexity more effectively, people who work in this area often use 
-        a particular notation called 'big O notation'. For example, the time complexity of the constant-time algorithm we discussed earlier 
-        is written as O(1) in big O notation. This is pronounced as "big O of 1", or "big O 1", or "O 1" or "order 1" 
-        and it means that, given an input size of n, the algorithm in question takes a constant number of steps in the worst case.        
+        a particular notation called "big O notation". For example, the time complexity of the constant-time algorithm we discussed earlier 
+        is written as 
+        <math>
+          <mrow>
+            <mi>O</mi>
+            <mo>(</mo>
+            <mn>1</mn>
+            <mo>)</mo>
+          </mrow>
+        </math>        
+        in big O notation. This is pronounced as "big O of 1", or "big O 1", or "O 1" or "order 1" 
+        and it means that, given an input size of <math><mi>n</mi></math>, the algorithm in question takes a constant number of steps in the worst case.        
       </p>
       <p>
         "In the worst case?" Yes, an algorithm might take a different number of steps depending on the type of input it receives, 
-        even if the input size is fixed. For example, suppose you have an algorithm that takes in an input list of n numbers 
+        even if the input size is fixed. For example, suppose you have an algorithm that takes in an input list of 
+        <math><mi>n</mi></math> numbers 
         and then sorts the numbers in ascending order and outputs the result. If the input list is already sorted in ascending order, 
         then the algorithm doesn't need to do anything. However, if the input list is sorted in descending order, the algorithm will 
-        have to do a lot more work to sort the list. This is an example of a worst-case input for a given input size, n.
+        have to do a lot more work to sort the list. This is an example of a worst-case input for a given input size.
       </p>
       <p>
         Big O notation is also used to reason about other running times. For example, if an algorithm takes in an input 
-        of size n and then takes n steps to run, like the linear-time algorithm we saw earlier, this is denoted as O(n) 
+        of size <math><mi>n</mi></math> and then takes <math><mi>n</mi></math> steps to run, like the linear-time algorithm we saw earlier, this is denoted as 
+        <math>
+          <mrow>
+            <mi>O</mi>
+            <mo>(</mo>
+            <mi>n</mi>
+            <mo>)</mo>
+          </mrow>
+        </math>        
         and pronounced as "big O of n", or "big O n", or "O n" or "order n". 
-        An interesting point to note is that, if the algorithm takes 2n steps instead of n, the worst-case running time of the algorithm 
-        is denoted as O(n), not O(2n). Why's that, you might ask? 
+        An interesting point to note is that, if the algorithm takes 
+        <math>
+          <mrow>
+            <mn>2</mn>
+            <mi>n</mi>
+          </mrow>
+        </math>        
+        steps instead of <math><mi>n</mi></math>, the worst-case running time of the algorithm 
+        is denoted as 
+        <math>
+          <mrow>
+            <mi>O</mi>
+            <mo>(</mo>
+            <mi>n</mi>
+            <mo>)</mo>
+          </mrow>
+        </math>,        
+        not 
+        <math>
+          <mrow>
+            <mi>O</mi>
+            <mo>(</mo>
+            <mn>2</mn>
+            <mi>n</mi>
+            <mo>)</mo>
+          </mrow>
+        </math>.        
+        Why's that, you might ask? 
         The reason that we're able to drop the constant is that, when we analyse computational complexity,
-        we're most interested in the rate of growth of the function in question as the input size n gets very large.
-        As n gets very large, the constant 2 in 2n affects the rate of growth much less than the variable n.
+        we're most interested in the rate of growth of the function in question as the input size <math><mi>n</mi></math> gets very large.
+        As <math><mi>n</mi></math> gets very large, the constant <math><mn>2</mn></math> in 
+        <math>
+          <mrow>
+            <mn>2</mn>
+            <mi>n</mi>
+          </mrow>
+        </math>        
+        affects the rate of growth much less than the variable <math><mi>n</mi></math>.
       </p>
       <p>
-        Similarly, if we have an algorithm that takes 2n^2 + n steps, the rate of growth for very large input sizes is 
-        most affected by the highest order term, n^2. Therefore, in big O notation, we drop the lower order term and the 
-        constant and say that the running time is O(n^2).
+        Similarly, if we have an algorithm that takes 
+        <math>
+          <mrow>
+            <mn>2</mn>
+            <msup>
+              <mi>n</mi>
+              <mn>2</mn>            
+            </msup>     
+            <mo>+</mo>       
+            <mi>n</mi>
+          </mrow>
+        </math>        
+        steps, the rate of growth for very large input sizes is 
+        most affected by the highest order term, 
+        <math>
+          <mrow>
+            <msup>
+              <mi>n</mi>
+              <mn>2</mn>
+            </msup>
+          </mrow>
+        </math>.         
+        Therefore, in big O notation, we drop the lower order term and the 
+        constant and say that the running time is 
+        <math>
+          <mrow>
+            <mi>O</mi>
+            <mo>(</mo>
+            <msup>
+              <mi>n</mi>
+              <mn>2</mn>
+            </msup>            
+            <mo>)</mo>
+          </mrow>
+        </math>.        
       </p>
       
       <!-- This could be a note, set off in its own special box -->
       <p>
         It's helpful to note that the usage of big O notation in the technology industry often differs from its usage
         in academia. In academia, big O notation is used to describe an upper bound on the computational complexity of 
-        some computation. Therefore, the linear-time algorithm we saw earlier could be described as O(n^2), even though 
+        some computation. Therefore, the linear-time algorithm we saw earlier could be described as 
+        <math>
+          <mrow>
+            <mi>O</mi>
+            <mo>(</mo>
+            <msup>
+              <mi>n</mi>
+              <mn>2</mn>
+            </msup>            
+            <mo>)</mo>
+          </mrow>
+        </math>,        
+        even though 
         that's not a tight bound. However, in industry, big O notation is usually used to describe a tight bound on the 
-        computational complexity. Therefore, that algorithm would be described as O(n). In the worst case, it runs in 
+        computational complexity. Therefore, that algorithm would be described as 
+        <math>
+          <mrow>
+            <mi>O</mi>
+            <mo>(</mo>
+            <mi>n</mi>                                        
+            <mo>)</mo>
+          </mrow>
+        </math>.
+        In the worst case, it runs in 
         linear time and in the best case it runs in linear time. 
       </p>
       <p>
-        If you're like me and love to dig deeper into the details, see <a href="https://mitpress.mit.edu/books/introduction-algorithms-third-edition">Introduction to Algorithms, Third Edition</a> 
-        (often referred to as "CLRS") for a more formal treatment of big O notation.
+        If you're like me and love to dig deeper into the details, see <a href="https://mitpress.mit.edu/books/introduction-algorithms-third-edition">Introduction to Algorithms, Third Edition</a>, 
+        often referred to as "CLRS", for a more formal treatment of big O notation.
       </p>
 
       <h2>Space complexity</h2>
@@ -153,7 +353,7 @@
         As a brief example of space complexity, the linear-time algorithm we saw earlier 
         which simply prints out each of the numbers in the input list has a space complexity which is also linear, 
         if we assume that the input is an <a href="data-structures/array.html">array</a>. Why? 
-        This is because memory must be allocated for each of the n elements in the input list. 
+        This is because memory must be allocated for each of the <math><mi>n</mi></math> elements in the input list. 
       </p>
       <p>
         As with time complexity, there can be different types of space complexity, which we'll see as we work through the manual.

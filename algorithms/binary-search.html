@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Binary search | Data Structures and Algorithms Manual</title>
+
+    <!-- A light MathML polyfill recommended by MDN -->
+    <!-- See https://developer.mozilla.org/en-US/docs/Web/MathML/Authoring -->
+    <script src="https://fred-wang.github.io/mathml.css/mspace.js"></script>
+  </head>
+  <body>
+    <!-- How can I build the nav when I'm in different directories? -->
+    <!-- One option would be to not use different directories -->
+    <nav>
+      <ul>
+        <li><a href="../index.html">Data Structures and Algorithms Manual</a></li>
+        <li><a href="../introduction.html">Introduction</a></li>
+        <li><a href="../computational-complexity.html">Computational complexity</a></li>
+        <li>Data structures</li>
+        <li><a href="../data-structures/data-structures-overview.html">Data structures overview</a></li>
+        <li><a href="../data-structures/array.html">Array</a></li>
+        <li><a href="../data-structures/dynamic-array.html">Dynamic array</a></li>        
+        <li>Algorithms</li>
+        <li><a href="algorithms-overview.html">Algorithms overview</a></li>        
+        <li><a href="binary-search.html">Binary search</a></li> 
+      </ul>
+    </nav>
+
+    <main>
+      <h1>Binary search</h1>      
+      <p>    
+        Binary search is an algorithm that is used to efficiently search for an element in a sorted list. 
+        As covered in the <a href="../data-structures/array.html">section on arrays</a>, searching through an array 
+        is a linear-time operation. However, if the array is sorted and we need to find out if it contains a 
+        particular element, we improve on this running time. Here's how. 
+      </p>
+      <h2>Idea behind binary search</h2>
+      <p>
+        Suppose we have the following array of integers, sorted in ascending order: <code>[0, 1, 2, 3, 4, 5]</code>.
+        We want to find out if the array contains the element 1. We can calculate the midpoint of the array 
+        by calculating the midpoint of the lowest and highest indices. This gives us 
+        <math>
+          <mrow>
+            <mo>(</mo>
+            <mn>0</mn>
+            <mo>+</mo>
+            <mn>5</mn>
+            <mo>)</mo>
+            <mo>/</mo>
+            <mn>2</mn>
+            <mo>=</mo>
+            <mn>2</mn>
+          </mrow>
+        </math>.                
+        Now we compare the element at index 2 to the desired value. Since it's greater than the desired value, we can 
+        search for the value in the lower half of the array. That is, we can search all the elements to the left of 
+        midpoint. We calculate a new midpoint in this new sub-array: 
+        <math>
+          <mrow>
+            <mo>(</mo>
+            <mn>0</mn>
+            <mo>+</mo>
+            <mn>1</mn>
+            <mo>)</mo>
+            <mo>/</mo>
+            <mn>2</mn>
+            <mo>=</mo>
+            <mn>0</mn>
+          </mrow>
+        </math>
+        (we floor the result). 
+        Since the value at this new midpoint is lower than the desired value, we increase the value of the current low 
+        index, so that we search only the elements on the right of the midpoint. The new midpoint is 
+        <math>
+          <mrow>
+            <mo>(</mo>
+            <mn>1</mn>
+            <mo>+</mo>
+            <mn>1</mn>
+            <mo>)</mo>
+            <mo>/</mo>
+            <mn>2</mn>
+            <mo>=</mo>
+            <mn>1</mn>
+          </mrow>
+        </math>       
+        and the value at that midpoint is the desired value, so we return it. Let's have a look at the code.
+      </p>
+      <h2>Implementation</h2>
+
+      <h2>Time complexity</h2>
+      <p>
+        What's the time complexity of this algorithm? The first few lines all take constant time to execute. The real 
+        work happens in the while loop. So the question is: How many times does the while loop execute? Let's 
+        look at the worst case. Suppose the input array has size <math><mi>n</mi></math>. Then the while loop will terminate when the 
+        variable <code>low</code> is greater than the variable <code>high</code>. This occurs when the sorted subarray 
+        that we're inspecting has no more elements in it. On each iteration of the while loop, we halve the size of the 
+        sorted subarray. In the example above, the original array has length six. Then this is halved to become three. 
+        Then this is halved once more to become one. The worst case occurs when the element is not in the original array 
+        and the original array is not empty. Then the first iteration of the while loop looks through an array 
+        of size 
+        <math>
+          <mrow>
+            <mi>n</mi>
+            <mo>/</mo>
+            <mn>2</mn>
+          </mrow>
+        </math>.
+        The next looks through an array of size 
+        <math>
+          <mrow>
+            <mi>n</mi>
+            <mo>/</mo>
+            <mn>4</mn>
+          </mrow>
+        </math>.
+        The next looks through an array of size 
+        <math>
+          <mrow>
+            <mi>n</mi>
+            <mo>/</mo>
+            <mn>8</mn>
+          </mrow>
+        </math>.
+        This continues until the array has size 1. So the number of iterations is the number of times 
+        <math><mi>n</mi></math> can be halved until we reach 1. Another way of expressing this is 
+        <math>
+          <mrow>
+            <msub>
+              <mi>log</mi>
+              <mn>2</mn>
+            </msub>
+            <mi>n</mi>
+          </mrow>
+        </math>.
+        Therefore, the worst-case running 
+        time of the algorithm is logarithmic with respect to the input array size. That is, the algorithm has a 
+        <math>
+          <mrow>
+            <mi>O</mi>
+            <mo>(</mo>
+            <mi>log</mi>
+            <mo>(</mo>
+            <mi>n</mi>
+            <mo>)</mo>
+            <mo>)</mo>
+          </mrow>
+        </math>        
+        running time. 
+      </p>
+    </main>
+
+    <footer>
+      <a href="algorithms-overview.html">Previous</a>
+      <a>Next</a>
+      <hr>
+      Crafted by Caleb Owusu-Yianoma - &copy; 2020
+    </footer>
+  </body>
+</html>

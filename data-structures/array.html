@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Array | Data Structures and Algorithms Manual</title>
+
+    <!-- A light MathML polyfill recommended by MDN -->
+    <!-- See https://developer.mozilla.org/en-US/docs/Web/MathML/Authoring -->
+    <script src="https://fred-wang.github.io/mathml.css/mspace.js"></script>
+  </head>
+  <body>
+    <!-- How can I build the nav when I'm in different directories? -->
+    <!-- One option would be to not use different directories -->
+    <nav>
+      <ul>
+        <li><a href="../index.html">Data Structures and Algorithms Manual</a></li>
+        <li><a href="../introduction.html">Introduction</a></li>
+        <li><a href="../computational-complexity.html">Computational complexity</a></li>
+        <li>Data structures</li>
+        <li><a href="data-structures-overview.html">Data structures overview</a></li>
+        <li><a href="array.html">Array</a></li>
+        <li><a href="dynamic-array.html">Dynamic array</a></li>        
+        <li>Algorithms</li>
+        <li><a href="../algorithms/algorithms-overview.html">Algorithms overview</a></li>        
+        <li><a href="../algorithms/binary-search.html">Binary search</a></li> 
+      </ul>
+    </nav>
+
+    <main>
+      <h1>Array</h1>
+      <!-- TODO: add more structure with headings -->
+      <p>
+        An array is usually considered the most simple common data structure, because many other data structures are 
+        based on or built on top of an array.
+      </p>
+
+      <p>
+        An array can be visualised as a container with multiple slots which are right next to each other.         
+        Here, we'll discuss a type of array known as a static array, which has a fixed size, and in the next section, we'll 
+        discuss dynamic arrays, which can grow in size. 
+        A static array is an array with a fixed size. The array can only hold objects of the same size.
+        It's helpful to visualise the array as a block of contiguous slots in computer random 
+        access memory, usually abbreviated as RAM.               
+      </p>
+
+      <p>
+        Because most computers have direct references to their RAM slots, a given element of a static array can be accessed 
+        in constant time. Accessing an element of a static array is also known as "indexing".
+      </p>
+
+      <p>
+        Consider the array below with five slots. Arrays are usually zero-indexed, which means that the first slot of the 
+        array has index 0. Therefore, our array has indices 0, 1, 2, 3 and 4, each of which can be accessed in constant time.         
+      </p>
+
+      <!-- TODO: insert an image of an array. -->
+
+      <p>
+        Suppose we want to update the value at index 2. What's the time complexity of this operation? Since arrays have 
+        constant-time access, this is a constant-time operation, or 
+        <math>
+          <mrow>
+            <mi>O</mi>
+            <mo>(</mo>
+            <mn>1</mn>
+            <mo>)</mo>
+          </mrow>
+        </math>.
+      </p>
+
+      <p>
+        What if we want to search for a particular value in an array? If all we know is the value we want and 
+        we have the array, then we'll have to walk through each element of the array in turn, checking to see if it's 
+        equal to the value we're looking for. This will take <math><mi>n</mi></math> steps, where 
+        <math><mi>n</mi></math> is the size of the array. Therefore, 
+        searching an array is a linear-time operation, or 
+        <math>
+          <mrow>
+            <mi>O</mi>
+            <mo>(</mo>
+            <mi>n</mi>
+            <mo>)</mo>
+          </mrow>
+        </math>. 
+      </p>
+
+      <!-- This could be a note -->
+      <p>
+        If the array is sorted, we can take advantage of this information and construct an algorithm for searching 
+        through the array that takes 
+        <math>
+          <mrow>
+            <mi>log</mi>
+            <mo>(</mo>
+            <mi>n</mi>
+            <mo>)</mo>
+          </mrow>
+        </math>        
+        steps, which is an improvement. One such algorithm is 
+        <a href="../algorithms/binary-search.html">binary search</a>.
+      </p>
+
+      <p>
+        How about deleting an item from a static array? How long would this take? Well this depends. Suppose that the array is an unsorted list of numbers and 
+        we need to delete a particular number from the array. Then theoretically, we need to search the entire array until we 
+        find the number. This will take <math><mi>n</mi></math> steps in the worst case, where <math><mi>n</mi></math> is the size of the array. Then we'll need to delete the number. 
+        Assume that this takes constant time. Then we'll need to shift all elements to the right of the deleted number one space to the left. 
+        In the worst case, this shifting will take 
+        <math><mi>n</mi></math> steps. Therefore, deleting an element from a static array is a 
+        linear-time operation, or 
+        <math>
+          <mrow>
+            <mi>O</mi>
+            <mo>(</mo>
+            <mi>n</mi>
+            <mo>)</mo>
+          </mrow>
+        </math>.             
+      </p>
+
+      <p>
+        Perhaps a more common way of looking at deletion is that since a static array is of a fixed size, it's not possible to remove an element from it. 
+        This is exactly the case in Java. 
+      </p>
+
+      <p>
+        One downside of a static array is that we're not able to append new items to it, since the size of the array needs 
+        to be known in advance so that a contiguous block of memory can be allocated for it by the computer. One way to 
+        overcome this limitation is to use a <a href="dynamic-array.html">dynamic array</a>, which we'll cover next.
+      </p>
+
+      <!-- It would be helpful to have a key takeaways box showing the key features of the data structure and the 
+        complexity analyses.
+      -->
+    </main>
+
+    <footer>
+      <a href="data-structures-overview.html">Previous</a>
+      <a href="dynamic-array.html">Next</a>
+      <hr>
+      Crafted by Caleb Owusu-Yianoma - &copy; 2020
+    </footer>
+  </body>
+</html>

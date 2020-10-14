@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Dynamic array | Data Structures and Algorithms Manual</title>
+
+    <!-- A light MathML polyfill recommended by MDN -->
+    <!-- See https://developer.mozilla.org/en-US/docs/Web/MathML/Authoring -->
+    <script src="https://fred-wang.github.io/mathml.css/mspace.js"></script>
+  </head>
+  <body>
+    <!-- How can I build the nav when I'm in different directories? -->
+    <!-- One option would be to not use different directories -->
+    <nav>
+      <ul>
+        <li><a href="../index.html">Data Structures and Algorithms Manual</a></li>
+        <li><a href="../introduction.html">Introduction</a></li>
+        <li><a href="../computational-complexity.html">Computational complexity</a></li>
+        <li>Data structures</li>
+        <li><a href="data-structures-overview.html">Data structures overview</a></li>
+        <li><a href="array.html">Array</a></li>
+        <li><a href="dynamic-array.html">Dynamic array</a></li>        
+        <li>Algorithms</li>
+        <li><a href="../algorithms/algorithms-overview.html">Algorithms overview</a></li>        
+        <li><a href="../algorithms/binary-search.html">Binary search</a></li> 
+      </ul>
+    </nav>
+
+    <main>
+      <h1>Dynamic array</h1>
+      <p>
+        As we saw in the <a href="array.html">section on arrays</a>, static arrays aren't able to grow or shrink in 
+        size. Dynamic arrays are used to overcome this limitation.
+      </p>
+
+      <h2>What is a dynamic array?</h2>
+      <p>
+        A dynamic array is an array that is able to shrink and grow in size. As with a static array, it allows updating 
+        of values, but it also allows the user to delete values, append new values and insert new values. A common way to 
+        implement a dynamic array is to use a static array. Let's look at how appending, inserting and searching for a value 
+        work with a dynamic array built on top of a static array. 
+      </p>
+      
+      <h2>Appending an element</h2>
+      <p>
+        To implement a dynamic array using a static array, we typically start with a static array of a particular capacity, 
+        say four. When we want to append the first value, we append it to the next empty slot in the array. What happens 
+        when the array is full, though?
+      </p>
+      <p>
+        When the array is full, we create a new, larger array, copy over the elements from the previous array and then append the 
+        new value. We can choose how large the new array is going to be. One common strategy is to double the capacity of the 
+        previous array. So now our array has a capacity of eight and contains five elements. The number of elements actually stored 
+        in the array is usually referred to as the "size" of the array. 
+      </p>
+      <p>
+        So what's the time complexity of appending an element to a dynamic array? It depends. In most cases, the capacity of the 
+        array will be greater than the size, so the time complexity will be constant. Simply append the new element to the next 
+        available slot. When the size equals the capacity, though, a new array of double the capacity is created and each 
+        element from the previous array is copied over to the new array. Then, finally, the new element is appended to the 
+        new array. 
+      </p>
+      
+      <!-- It would be good to show how the geometric series evaluates to 2n - 1. -->
+      <p>
+        To reason about the time complexity of this, suppose first that the initial array has a capacity of 1, 
+        that we double the array capacity when it needs to be increased and that we make a total of 
+        <math><mi>n</mi></math> appends. 
+        Most of the appends will take constant time, but some will take longer. Which ones take longer? It will be 
+        the ones where the array size is a power of two: 1, 2, 4, 8 and so on. Each time the capacity is doubled from 
+        <math><mi>x</mi></math> to 
+        <math>
+          <mrow>
+            <mn>2</mn>
+            <mi>x</mi>
+          </mrow>
+        </math>,        
+        <math><mi>x</mi></math> elements are copied from the previous array to the new array. So, to append a total of 
+        <math>
+          <mrow>
+            <mi>n</mi>
+            <mo>+</mo>
+            <mn>1</mn>
+          </mrow>
+        </math>        
+        elements to the array, we make roughly 
+        <math>
+          <mrow>
+            <mi>n</mi>
+            <mspace width=".2em" />
+            <mo>+</mo>            
+            <mspace width=".2em" />
+            <mi>n</mi>
+            <mo>/</mo>
+            <mn>2</mn>
+            <mspace width=".2em" />
+            <mo>+</mo>
+            <mspace width=".2em" />
+            <mi>n</mi>
+            <mo>/</mo>
+            <mn>4</mn>
+            <mspace width=".2em" />
+            <mo>+</mo>
+            <mspace width=".2em" />
+            &#x2026;
+            <mspace width=".2em" />
+            <mo>+</mo>
+            <mspace width=".2em" />
+            <mn>1</mn>
+          </mrow>
+        </math>        
+        copies. It's "roughly" because <math><mi>n</mi></math> might not be 
+        a strict power of two. This is a geometric series which evaluates to 
+        <math>
+          <mrow>
+            <mn>2</mn>
+            <mi>n</mi>
+            <mo>-</mo>
+            <mn>1</mn>
+          </mrow>
+        </math>.
+        That's 
+        <math>
+          <mrow>
+            <mi>O</mi>
+            <mo>(</mo>
+            <mi>n</mi>
+            <mo>)</mo>
+          </mrow>
+        </math>
+        steps for the copies. 
+        Add this to the 
+        <math>
+          <mrow>
+            <mi>O</mi>
+            <mo>(</mo>
+            <mi>n</mi>
+            <mo>)</mo>
+          </mrow>
+        </math>        
+        steps needed to do the actual 
+        <math>
+          <mrow>                        
+            <mi>n</mi>
+            <mo>+</mo>
+            <mn>1</mn>
+          </mrow>
+        </math>
+        appends and we have a total time complexity of 
+        <math>
+          <mrow>
+            <mi>O</mi>
+            <mo>(</mo>
+            <mi>n</mi>
+            <mo>)</mo>
+          </mrow>
+        </math>        
+        for appending 
+        <math>
+          <mrow>                        
+            <mi>n</mi>
+            <mo>+</mo>
+            <mn>1</mn>
+          </mrow>
+        </math>
+        elements to the dynamic array. If we evenly spread out this cost over the 
+        <math>
+          <mrow>                        
+            <mi>n</mi>
+            <mo>+</mo>
+            <mn>1</mn>
+          </mrow>
+        </math>
+        items, we 
+        get an average cost of about 
+        <math>
+          <mrow>
+            <mi>O</mi>
+            <mo>(</mo>
+            <mi>1</mi>
+            <mo>)</mo>
+          </mrow>
+        </math>
+        for appending a single item, which is often referred to as the amortised 
+        time complexity of appending an element to a dynamic array. See <a href="https://mitpress.mit.edu/books/introduction-algorithms-third-edition">Introduction to Algorithms, Third Edition</a>
+        for a more formal 
+        treatment of amortised analysis.
+      </p>
+      
+      <h2>Inserting an element</h2>
+      <p>
+        Inserting an element into a dynamic array is a bit different to appending an element. In addition to the amortised 
+        constant-time append of the element, we'll need to shift over some other elements in order to make room 
+        for the new element. If there are previously <math><mi>n</mi></math> elements in the array, 
+        in the worst case, we'll need to shift the majority of them into their new correct positions before inserting the new element. 
+        The entire time complexity of inserting an element is linear, or 
+        <math>
+          <mrow>
+            <mi>O</mi>
+            <mo>(</mo>
+            <mi>n</mi>
+            <mo>)</mo>
+          </mrow>
+        </math>.        
+      </p>
+
+      <h2>Deleting an element</h2>
+      <p>
+        To delete an element from an array of size <math><mi>n</mi></math>, we'll create a new array of size one less than the previous array and 
+        copy over all the previous elements except the one to be deleted into the new array. This will take 
+        <math>
+          <mrow>
+            <mi>O</mi>
+            <mo>(</mo>
+            <mi>n</mi>
+            <mo>)</mo>
+          </mrow>
+        </math>
+        time.
+      </p>
+
+      <h2>Space complexity</h2>
+      <p>
+        How about the space complexity of appending <math><mi>n</mi></math> elements to a dynamic array?
+        Suppose, again that the initial capacity of the array is one and that we double the 
+        capacity each time it's reached. Then appending <math><mi>n</mi></math> elements requires roughly 
+        <math>
+          <mrow>
+            <mn>1</mn>
+            <mo>+</mo>
+            <mn>2</mn>
+            <mo>+</mo>
+            <mn>4</mn>
+            <mo>+</mo>
+            <mn>8</mn>
+            <mo>+</mo>
+            &#x2026;
+            <mo>+</mo>
+            <mi>n</mi>
+          </mrow>
+        </math>
+        units of space. 
+        This is the same geometric series encountered when appending items to the array and it equals 
+        <math>
+          <mrow>
+            <mn>2</mn>
+            <mi>n</mi>
+            <mo>-</mo>
+            <mn>1</mn>
+          </mrow>
+        </math>.
+        Therefore, 
+        appending <math><mi>n</mi></math> items has a space complexity of 
+        <math>
+          <mrow>
+            <mi>O</mi>
+            <mo>(</mo>
+            <mi>n</mi>
+            <mo>)</mo>
+          </mrow>
+        </math>. 
+      </p>
+
+      <h2>Implementation</h2>
+      <p>
+        Below is an implementation of a dynamic array in the Java programming language, with comments.
+      </p>
+    </main>
+
+    <footer>
+      <a href="array.html">Previous</a>
+      <a>Next</a>
+      <hr>
+      Crafted by Caleb Owusu-Yianoma - &copy; 2020
+    </footer>
+  </body>
+</html>
