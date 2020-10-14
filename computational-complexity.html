@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Asymptotic Complexity | Data Structures and Algorithms Manual</title>
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="index.html">Data Structures and Algorithms Manual</a></li>
+        <li><a href="introduction.html">Introduction</a></li>
+        <li><a href="computational-complexity.html">Computational complexity</a></li>
+        <li>Data structures</li>
+        <li><a href="data-structures/data-structures-overview.html">Data structures overview</a></li>
+        <li><a href="data-structures/array.html">Array</a></li>
+        <li><a href="data-structures/dynamic-array.html">Dynamic array</a></li>
+        <li><a href="data-structures/linked-list.html">Linked list</a></li>
+        <li><a href="data-structures/stack.html">Stack</a></li>        
+        <li><a href="data-structures/queue.html">Queue</a></li>
+        <li><a href="data-structures/graph.html">Graph</a></li>
+        <li><a href="data-structures/binary-tree.html">Binary tree</a></li>
+        <li><a href="data-structures/binary-heap.html">Binary heap</a></li>
+        <li>Algorithms</li>
+        <li><a href="algorithms/binary-search.html">Binary search</a></li>
+        <li><a href="algorithms/dfs.html">DFS</a></li>
+        <li><a href="algorithms/bfs.html">BFS</a></li>
+      </ul>
+    </nav>
+
+    <main>
+      <h1>Computational Complexity</h1>
+      <p>
+        If you've never heard of computational complexity before, the name probably doesn't make it obvious what it refers to.
+        However, it's a relatively straightforward concept that's used to analyse the efficiency of algorithms and of performing various 
+        operations on data structures. 
+        If you're not yet familiar with algorithms and data structures, don't worry. For now, think of a data structure as 
+        a container for holding data of some kind, and think of an algorithm as a funnel that takes in some input, does something to it
+        and possibly returns some output.  
+      </p>
+      <p>
+        Computational complexity is usually used to measure how quickly an algorithm or operation on a data structure takes to returns
+        as the size of the input to the algorithm or operation increases. This is often referred to as time complexity. 
+        Computational complexity is also used to measure how much space, in terms of computer memory, an algorithm or operation on a data 
+        structure takes up as the size of the input to the algorithm or operation increases. This is often referred to as space complexity.
+        Let's look at each one in turn.
+      </p>
+      
+      <h2>Time complexity</h2>
+      <p>
+        Suppose you have an algorithm that takes in some input and, regardless of the input, always executes 10 steps and then 
+        outputs a result. No matter how large the input to the algorithm gets, the time the algorithm takes to run will always be the same.
+        We could say that the running time of the algorithm is constant with respect to the size of the input. 
+        In computational complexity, this is often referred to as a constant-time algorithm. 
+      </p>
+      <p>
+        <!-- How could I do mathematical font styling of variables here? -->
+        Now suppose you have an algorithm that takes in a list of n numbers and prints out each of the numbers. 
+        If we assume that printing out a single number takes a constant amount of time, then the running time of this algorithm
+        will grow linearly in proportion to the size of the input list. If the input list has size 5, the algorithm will take 5 steps to run.
+        If the input list has size 500, the algorithm will take 500 steps to run. 
+        Such an algorithm is often referred to as a linear-time algorithm.
+      </p>
+      <p>
+        Finally, suppose you have an algorithm that takes in a list of n numbers. For each of those n numbers, 
+        the algorithm multiplies every number in the list by the number.
+        Then it sums up the resulting numbers and prints the result. What would the running time of such an algorithm be?
+        For example, suppose the input list is [1, 2, 3, 4].
+        The first number is 1. So the algorithm multiplies every number in the list by 1, which leaves the list unchanged. 
+        Then it prints the sum of the numbers in the list: 1 + 2 + 3 + 4 = 10.        
+      </p>
+      <p>
+        The second number is 2. So the algorithm multiplies every number in the list by 2, giving [2, 4, 6, 8]. 
+        Then it sums up the numbers and prints the result, which is 20. There's a pattern here.
+        The third number is 3 and the corresponding result is 30. The fourth number is 4 and the corresponding result is 40.
+      </p>
+      <p>
+        For each of the n numbers in the list, the algorithm does n multiplications and then n - 1 additions. 
+        This gives a total of 2n - 1 operations for each of the n numbers. So the total number of steps the algorithm 
+        takes for an input list of size n is n * (2n - 1) = 2n^2 - n. 
+        Such an algorithm is often referred to as a quadratic-time algorithm, because the running time of the algorithm is 
+        quadratic with respect to the input size of the algorithm. 
+      </p>
+      <p>
+        You might wonder if there are other types of running times. There sure are. 
+        There are algorithms whose running times are cubic with respect to the input size. 
+        There are algorithms which take an input of size n and run in n factorial steps (usually denoted as n!). 
+        There are exponential-time algorithms, which run in a^n steps, where a is some constant. 
+        And there are many more. Some take longer than others. 
+      </p>
+      
+      <h2>Big O notation</h2>
+      <p>
+        In order to communicate about computational complexity more effectively, people who work in this area often use 
+        a particular notation called 'big O notation'. For example, the time complexity of the constant-time algorithm we discussed earlier 
+        is written as O(1) in big O notation. This is pronounced as "big O of 1", or "big O 1", or "O 1" or "order 1" 
+        and it means that, given an input size of n, the algorithm in question takes a constant number of steps in the worst case.        
+      </p>
+      <p>
+        "In the worst case?" Yes, an algorithm might take a different number of steps depending on the type of input it receives, 
+        even if the input size is fixed. For example, suppose you have an algorithm that takes in an input list of n numbers 
+        and then sorts the numbers in ascending order and outputs the result. If the input list is already sorted in ascending order, 
+        then the algorithm doesn't need to do anything. However, if the input list is sorted in descending order, the algorithm will 
+        have to do a lot more work to sort the list. This is an example of a worst-case input for a given input size, n.
+      </p>
+      <p>
+        Big O notation is also used to reason about other running times. For example, if an algorithm takes in an input 
+        of size n and then takes n steps to run, like the linear-time algorithm we saw earlier, this is denoted as O(n) 
+        and pronounced as "big O of n", or "big O n", or "O n" or "order n". 
+        An interesting point to note is that, if the algorithm takes 2n steps instead of n, the worst-case running time of the algorithm 
+        is denoted as O(n), not O(2n). Why's that, you might ask? 
+        The reason that we're able to drop the constant is that, when we analyse computational complexity,
+        we're most interested in the rate of growth of the function in question as the input size n gets very large.
+        As n gets very large, the constant 2 in 2n affects the rate of growth much less than the variable n.
+      </p>
+      <p>
+        Similarly, if we have an algorithm that takes 2n^2 + n steps, the rate of growth for very large input sizes is 
+        most affected by the highest order term, n^2. Therefore, in big O notation, we drop the lower order term and the 
+        constant and say that the running time is O(n^2).
+      </p>
+      
+      <!-- This could be a note, set off in its own special box -->
+      <p>
+        It's helpful to note that the usage of big O notation in the technology industry often differs from its usage
+        in academia. In academia, big O notation is used to describe an upper bound on the computational complexity of 
+        some computation. Therefore, the linear-time algorithm we saw earlier could be described as O(n^2), even though 
+        that's not a tight bound. However, in industry, big O notation is usually used to describe a tight bound on the 
+        computational complexity. Therefore, that algorithm would be described as O(n). In the worst case, it runs in 
+        linear time and in the best case it runs in linear time. 
+      </p>
+      <p>
+        If you're like me and love to dig deeper into the details, see <a href="https://mitpress.mit.edu/books/introduction-algorithms-third-edition">Introduction to Algorithms, Third Edition</a> 
+        (often referred to as "CLRS") for a more formal treatment of big O notation.
+      </p>
+
+      <h2>Space complexity</h2>
+      <p>
+        Computational complexity and big O notation are used not only to analyse how quickly an algorithm runs in the 
+        worst case but how much space it uses to do its computation. A formal treatment of space complexity would require
+        us to specify the computational model and device in great detail. Most of the time, however, to analyse 
+        the space complexity of some computation, it's generally assumed that the algorithms are implemented as computer programs 
+        and that each step of the algorithm is executed one after the other. 
+      </p>
+
+      <p>
+        This doesn't account for more complex models, like algorithms that have steps that can be run in parallel, 
+        but for the purposes of this manual, it's sufficient. Again, for more formality, check out 
+        <a href="https://mitpress.mit.edu/books/introduction-algorithms-third-edition">Introduction to Algorithms, Third Edition</a>. 
+      </p>
+
+      <p>
+        As a brief example of space complexity, the linear-time algorithm we saw earlier 
+        which simply prints out each of the numbers in the input list has a space complexity which is also linear, 
+        if we assume that the input is an <a href="data-structures/array.html">array</a>. Why? 
+        This is because memory must be allocated for each of the n elements in the input list. 
+      </p>
+      <p>
+        As with time complexity, there can be different types of space complexity, which we'll see as we work through the manual.
+      </p>
+      <p>
+        Next up are <a href="data-structures/data-structures-overview.html">data structures</a>.
+      </p>
+    </main>
+
+    <footer>
+      <a href="introduction.html">Previous</a>
+      <a href="data-structures/data-structures-overview.html">Next</a>
+      <hr>
+      Crafted by Caleb Owusu-Yianoma - &copy; 2020
+    </footer>
+  </body>
+</html>
