@@ -264,9 +264,149 @@
       </p>
 
       <h2>Implementation</h2>
-      <p>
-        Below is an implementation of a dynamic array in the Java programming language, with comments.
+      <p id="dynamic-array-constructors-description">
+        We'll start our Java implementation of a dynamic array with the class constructors.
       </p>
+
+      <figure>
+        <figcaption id="dynamic-array-constructors-caption">
+          Dynamic array constructors
+        </figcaption>
+        <pre 
+          aria-labelledby="dynamic-array-constructors-caption" 
+          aria-describedby="dynamic-array-constructors-description"><code>@SuppressWarnings("unchecked")
+public class DynamicArray&lt;E&gt; {
+  private E[] array;
+  private int size = 0;
+  private int capacity = 0;
+
+  DynamicArray() {
+    this(10);
+  }
+
+  DynamicArray(int initialCapacity) {
+    if (initialCapacity &lt;= 0) {
+      throw new IllegalArgumentException("Initial capacity must be > 0; got: " +
+        initialCapacity);
+    }
+    array = (E[]) new Object[initialCapacity];
+    capacity = initialCapacity;
+  }
+}</code></pre>        
+      </figure>
+
+      <p id="is-empty-and-size-description">
+        Next, we'll add two small methods to check if the array is empty 
+        and to return its size.
+      </p>
+
+      <figure>
+        <figcaption id="is-empty-and-size-caption">
+          Dynamic array isEmpty() and size() methods
+        </figcaption>
+        <pre
+          aria-labelledby="is-empty-and-size-caption"
+          aria-describedby="is-empty-and-size-description"><code>public boolean isEmpty() {            
+  return size == 0;
+}
+
+public int size() {
+  return size;
+}</code></pre>
+      </figure>
+      
+      <p id="dynamic-array-add-description">
+        And now a method to add a new element to the end of the array.
+      </p>
+
+      <figure>
+        <figcaption id="dynamic-array-add-caption">
+          Dynamic array add() method
+        </figcaption>
+        <pre
+          aria-labelledby="dynamic-array-add-caption"
+          aria-describedby="dynamic-array-add-description"><code>public boolean add(E element) {
+  if (size &lt; capacity) {
+    array[size++] = element;
+    return true;
+  }
+  
+  capacity *= 2;
+  E[] newArray = (E[]) new Object[capacity];
+  for (int i = 0; i &lt; array.length; i++) {
+    newArray[i] = array[i];
+  }
+  newArray[size++] = element;
+  array = newArray;
+  return true;
+}</code></pre>
+      </figure>
+
+      <p id="get-method-description">
+        Next up is a method to get an element at a particular index.
+      </p>
+      <figure>
+        <figcaption id="get-method-caption">
+          Dynamic array get() method
+        </figcaption>
+        <pre
+          aria-labelledby="get-method-caption"
+          aria-describedby="get-method-description"><code>public E get(int index) {
+  if (index &lt; 0 || index &gt;= size) {
+    throw new IndexOutOfBoundsException("Index is out of bounds; got: " + 
+      index);
+  }
+  
+  return array[index];
+}</code></pre>
+      </figure>
+
+      <p id="set-method-description">
+        And a method to set a particular index to a particular value:
+      </p>
+      <figure>
+        <figcaption id="set-method-caption">
+          Dynamic array set() method
+        </figcaption>
+        <pre
+          aria-labelledby="set-method-caption"
+          aria-describedby="set-method-description"><code>public E set(int index, E element) {            
+  if (index &lt; 0 || index &gt;= size) {
+    throw new IndexOutOfBoundsException("Index is out of bounds; got: " + 
+      index);
+  }
+  E previousElement = array[index];
+  array[index] = element;
+  return previousElement;
+}</code></pre>
+      </figure>
+
+      <p id="remove-method-description">
+        And finally, a method to remove the element at a given 
+        index from the array.
+      </p>
+      <figure>
+        <figcaption id="remove-method-caption">
+          Dynamic array remove() method
+        </figcaption>
+        <pre 
+          aria-labelledby="remove-method-caption"
+          aria-describedby="remove-method-description"><code>public E remove(int index) {            
+  if (index &lt; 0 || index &gt;= size) {
+    throw new IndexOutOfBoundsException("Index is out of bounds; got: " + 
+      index);
+  }
+  E element = array[index];
+  E[] newArray = (E[]) new Object[size - 1];
+  for (int i = 0, j = 0; i &lt; size; i++, j++) {
+    if (i == index) j--;
+    else newArray[j] = array[i];
+  }
+  array = newArray;
+  capacity = --size;
+  return element;
+}</code></pre>
+      </figure>
     </main>
 
     <footer>
@@ -277,3 +417,4 @@
     </footer>
   </body>
 </html>
+

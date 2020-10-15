@@ -88,7 +88,39 @@
         </math>       
         and the value at that midpoint is the desired value, so we return it. Let's have a look at the code.
       </p>
+      
       <h2>Implementation</h2>
+      <p id="binary-search-description">
+        Below is the implementation of the binary search method. 
+        In this case, the input to the method is a sorted array of <code>int</code>s 
+        along with the value to find in the array.
+      </p>
+      <figure>
+        <figcaption id="binary-search-caption">
+          Binary search method
+        </figcaption>
+        <pre
+          aria-labelledby="binary-search-caption"
+          aria-describedby="binary-search-description"><code>public int search(int[] array, int element) {
+  if (array.length == 0) return -1;
+  int low = 0;
+  int high = array.length - 1;
+  int mid;
+  while (low &lt;= high) {
+    mid = (low + high) / 2;
+    if (array[mid] &lt; element) {
+      low = mid + 1;
+      continue;
+    } else if (array[mid] &gt; element) {
+      high = mid - 1;
+      continue;
+    } else {
+      return mid;
+    }
+  }
+  return -1; // Didn't find the element
+}</code></pre>
+      </figure>
 
       <h2>Time complexity</h2>
       <p>

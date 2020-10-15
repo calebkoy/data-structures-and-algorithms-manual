@@ -1,6 +1,6 @@
 public class BinarySearch {
   public int search(int[] array, int element) {
-    if (array.length == 0) return -1; // Return early
+    if (array.length == 0) return -1;
     int low = 0; 
     int high = array.length - 1;
     int mid;
@@ -10,7 +10,7 @@ public class BinarySearch {
         low = mid + 1;
         continue;
       } else if (array[mid] > element) {
-        high = mid - 1;        
+        high = mid - 1;
         continue;
       } else {
         return mid;
