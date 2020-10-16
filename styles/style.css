@@ -1,7 +1,6 @@
-/* TODO: set the margin to a suitable amount on narrow screens */
-
+/*================*/
 /* General styles */
-/*----------------*/
+/*================*/
 
 html {
   box-sizing: border-box; /* Alternative box model */
@@ -36,7 +35,7 @@ p {
 
 footer {
   font-size: 1.5em;
-  padding-top: 1.5em;    
+  padding-top: 2.5em;    
   color: #9494b8;  
   text-align: center;  
 }
@@ -49,11 +48,11 @@ hr {
   max-width: 20em;
 }
 
+/*==========================*/
 /* Homepage-specific styles */
-/*--------------------------*/
+/*==========================*/
 
 .home-page {
-  margin: 0 auto;
   max-width: 720px;
   text-align: center;  
 }
@@ -80,11 +79,13 @@ hr {
   margin-bottom: 1em;
 }
 
-.home-page header a:link, .home-page header a:visited {
+.home-page header a:link,
+.home-page header a:visited {
   background-color: #1a1aff;
 }
 
-.home-page header a:focus, .home-page header a:hover {
+.home-page header a:focus,
+.home-page header a:hover {
   background-color: #0000cc;
 }
 
@@ -92,37 +93,50 @@ hr {
   background-color: #000080;
 }
 
-/* Navigation bar */
-/*----------------*/
+/*===================*/
+/* Navigation styles */
+/*===================*/
+
+nav.wide {
+  display: none;
+}
 
 nav.narrow {
   font-size: 1.5em;          
 }
 
-nav.narrow .left-nav-link,
-nav.narrow .right-nav-link {
-  font-size: 1em;
-}
-
 a.home-page-link {
-  display: inline-block;
+  display: inline-block; /* So that padding can be added */
   font-weight: bold;  
   padding: 1.5em 0;  
   margin-bottom: 2em;
   text-decoration: none;
 }
 
-a.home-page-link:focus, a.home-page-link:hover {
+nav.narrow a.home-page-link:link,
+nav.narrow a.home-page-link:visited {
+  color: #000099;    
+}
+
+nav.narrow a.home-page-link:focus,
+nav.narrow a.home-page-link:hover {
   background-color: #ccddff;  
   color: #000099;    
 }
 
-a.home-page-link:active {
+nav.narrow a.home-page-link:active {
   background-color: #0000cc;  
   color: white;    
 } 
 
-/* TODO: reduce this duplication. Consider using Sass */
+nav.narrow .left-nav-link,
+nav.narrow .right-nav-link {
+  font-size: 1em;
+}
+
+a.left-nav-link {    
+  margin-right: 2em;
+}
 
 a.left-nav-link,
 a.right-nav-link
@@ -131,74 +145,56 @@ a.right-nav-link
   color: #000;  
   padding: 0.5em 0.5em;
   font-size: 1.5em;
-  font-weight: bold;      
+  font-weight: bold;
+  text-decoration: none;      
 }
 
-.top .left-nav-link,
-.top .right-nav-link {
-  padding-top: 10em;
-}
-
-a.left-nav-link:link, a.left-nav-link:visited {  
+a.left-nav-link:link,
+a.left-nav-link:visited,
+a.right-nav-link:link,
+a.right-nav-link:visited {  
   background-color: #cce6ff;  
 }
 
-a.left-nav-link:focus, a.left-nav-link:hover {  
+a.left-nav-link:focus,
+a.left-nav-link:hover,
+a.right-nav-link:focus, 
+a.right-nav-link:hover {  
   background-color: #99ccff;
 }
 
-a.left-nav-link:active {
-  background-color: #4da6ff;
-}
-
-a.right-nav-link:link, a.right-nav-link:visited {
-  background-color: #cce6ff;
-}
-
-a.right-nav-link:focus, a.right-nav-link:hover {
-  background-color: #99ccff;
-}
-
+a.left-nav-link:active,
 a.right-nav-link:active {
   background-color: #4da6ff;
-}
+}   
 
-/* MISC */
-/*------*/
-
-main .left-nav-link,
-main .right-nav-link {
-  text-decoration: none;   
-}
-
-main .left-nav-link {    
-  margin-right: 2em;
-}  
-
-/* Narrower screens */
-nav.wide {
-  display: none;
-}
+/*===================================================*/
+/* Margin-related styles for the main content block */
+/*===================================================*/
 
 main {    
   margin: 0 auto;
   max-width: 80em;
 }
 
+@media screen and (max-width: 850px) {
+  main {
+    margin: 0 24px;
+  }
+}
+
+/*=================*/
 /* Larger screens */
+/*=================*/
+
 @media screen and (min-width: 1160px) {
   nav.narrow {
     display: none;
-  }  
-
-  body {
-    margin-top: 0;
-  }
+  }    
 
   nav.wide {
     display: block;    
-    grid-area: main-nav;
-    font-size: 2em;
+    grid-area: main-nav;    
     position: fixed;  
     font-size: 1.8em;        
     background-color: #00004d;    
@@ -209,6 +205,11 @@ main {
   main {
     grid-area: main-content;    
     margin-left: 3em;    
+  }
+
+  main h1 {
+    font-size: 5em;
+    margin-top: 0.2em;
   }
   
   footer {
@@ -223,6 +224,15 @@ main {
       "main-nav main-footer";
   }    
   
+  .nav-menu-header-item {
+    color: white;
+    font-weight: bold;
+  }
+
+  .nav-menu-section-item {
+    font-weight: normal;
+  }
+  
   nav.wide ol {    
     list-style-type: none;
     padding-left: 1em;        
@@ -232,34 +242,25 @@ main {
     outline: none;
     text-decoration: none;  
     color: #e0e0eb;
-  }    
-  
-  main h1 {
-    font-size: 5em;
-    margin-top: 0.2em;
-  }    
+  }            
   
   nav.wide li {
     padding-top: 0.2em;
     padding-bottom: 0.2em;
     padding-right: 1em;
   }
-  
+    
   nav.wide a.home-page-link {    
     font-family: 'Commissioner', sans-serif;
     padding-top: 0.6em;
     padding-bottom: 0.6em; 
     font-size: 0.8em;    
     line-height: 1.8;
-  }
-
-  /* TODO: remove duplication. This is duplicated for narrow nav bar */    
-
+  }  
+  
   nav.wide a.home-page-link:focus,
   nav.wide a.home-page-link:hover {
-    background-color: #e6eeff;    
-    /* TODO: remove this if it's no longer needed after sorting out the border on the mobile view */
-    border: none; 
+    background-color: #e6eeff;        
     color: #0000cc;    
   }
 
@@ -279,25 +280,5 @@ main {
   {
     background-color: #666699;    
     color: white;
-  }
-
-  .nav-menu-button {
-    border: none;      
-  }
-
-  .nav-menu-header-item {
-    color: white;
-    font-weight: bold;
-  }  
-
-  main nav {
-    padding-top: 1em;
-    padding-bottom: 3em;    
-  }    
-}
-
-@media screen and (max-width: 850px) {
-  main {
-    margin: 0 24px;
-  }
+  }        
 }
