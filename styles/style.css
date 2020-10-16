@@ -110,7 +110,7 @@ a.home-page-link {
   font-weight: bold;  
   padding: 1.5em 0;  
   margin-bottom: 2em;
-  text-decoration: none;
+  text-decoration: none;  
 }
 
 nav.narrow a.home-page-link:link,
@@ -121,7 +121,8 @@ nav.narrow a.home-page-link:visited {
 nav.narrow a.home-page-link:focus,
 nav.narrow a.home-page-link:hover {
   background-color: #ccddff;  
-  color: #000099;    
+  color: #000099;   
+  border: none; 
 }
 
 nav.narrow a.home-page-link:active {
@@ -154,6 +155,7 @@ a.left-nav-link:visited,
 a.right-nav-link:link,
 a.right-nav-link:visited {  
   background-color: #cce6ff;  
+  color: #000;
 }
 
 a.left-nav-link:focus,
@@ -161,6 +163,7 @@ a.left-nav-link:hover,
 a.right-nav-link:focus, 
 a.right-nav-link:hover {  
   background-color: #99ccff;
+  border: none;
 }
 
 a.left-nav-link:active,
@@ -181,6 +184,34 @@ main {
   main {
     margin: 0 24px;
   }
+}
+
+/*================================================*/
+/* Link-related styles for the main content block */
+/*================================================*/
+
+main a {
+  outline: none;
+  text-decoration: none;
+  padding: 0.4em 0.1em 0;
+}
+
+main a:link {
+  color: #6699ff;
+}
+
+main a:visited {
+  color: #004de6;
+}
+
+main a:focus {
+  border-bottom: 0.15em solid;
+  background: #b3ecff;
+}
+
+main a:hover {
+  border-bottom: 0.15em solid;
+  background: #ccf2ff;
 }
 
 /*=================*/
@@ -281,4 +312,29 @@ main {
     background-color: #666699;    
     color: white;
   }        
+}
+
+/*==============*/
+/* Other styles */
+/*==============*/
+
+@media screen and (max-width: 500px) {
+  h1 {
+    font-size: 4em;
+  }
+
+  h2 {
+    font-size: 2.5em;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .home-page h1 {
+    font-size: 4.5em;
+  }
+
+  .home-page h2,
+  .home-page header a {
+    font-size: 2em;
+  }
 }
