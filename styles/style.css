@@ -93,6 +93,13 @@ hr {
   background-color: #000080;
 }
 
+@media screen and (max-width: 750px) {
+  .header-rule {
+    width: 90%;
+    margin: 0 auto;
+  }
+}
+
 /*===================*/
 /* Navigation styles */
 /*===================*/
@@ -212,6 +219,15 @@ main a:focus {
 main a:hover {
   border-bottom: 0.15em solid;
   background: #ccf2ff;
+}
+
+/*================================================*/
+/* In-text list styles for the main content block */
+/*================================================*/
+
+main li  {
+  font-size: 1.8em;
+  padding: 0.4em 0.1em;
 }
 
 /*=================*/

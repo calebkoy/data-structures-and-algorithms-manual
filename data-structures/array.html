@@ -4,31 +4,47 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link href="https://fonts.googleapis.com/css2?family=Commissioner&family=Roboto:wght@300&display=swap" rel="stylesheet">    
+    <link href="../styles/style.css" rel="stylesheet">
+    
     <title>Array | Data Structures and Algorithms Manual</title>
 
     <!-- A light MathML polyfill recommended by MDN -->
     <!-- See https://developer.mozilla.org/en-US/docs/Web/MathML/Authoring -->
     <script src="https://fred-wang.github.io/mathml.css/mspace.js"></script>
   </head>
-  <body>
-    <!-- How can I build the nav when I'm in different directories? -->
-    <!-- One option would be to not use different directories -->
-    <nav>
-      <ul>
-        <li><a href="../index.html">Data Structures and Algorithms Manual</a></li>
-        <li><a href="../introduction.html">Introduction</a></li>
-        <li><a href="../computational-complexity.html">Computational complexity</a></li>
-        <li>Data structures</li>
-        <li><a href="data-structures-overview.html">Data structures overview</a></li>
-        <li><a href="array.html">Array</a></li>
-        <li><a href="dynamic-array.html">Dynamic array</a></li>        
-        <li>Algorithms</li>
-        <li><a href="../algorithms/algorithms-overview.html">Algorithms overview</a></li>        
-        <li><a href="../algorithms/binary-search.html">Binary search</a></li> 
-      </ul>
+  <body class="container">    
+    <nav class="wide">
+      <ol>
+        <li><a href="../index.html" class="home-page-link">DATA STRUCTURES AND ALGORITHMS</a></li>
+        <li><a href="../introduction.html" class="nav-menu-section-item">Introduction</a></li>
+        <li><a href="../computational-complexity.html" class="nav-menu-section-item">Computational complexity</a></li>
+        <li class="nav-menu-header-item">
+          Data structures
+          <ol>
+            <li><a href="data-structures-overview.html" class="nav-menu-section-item">Data structures overview</a></li>
+            <li><a href="array.html" class="nav-menu-section-item">Array</a></li>
+            <li><a href="dynamic-array.html" class="nav-menu-section-item">Dynamic array</a></li>        
+          </ol>
+        </li>                
+        <li class="nav-menu-header-item">
+          Algorithms
+          <ol>
+            <li><a href="../algorithms/algorithms-overview.html" class="nav-menu-section-item">Algorithms overview</a></li>        
+            <li><a href="../algorithms/binary-search.html" class="nav-menu-section-item">Binary search</a></li>
+          </ol>
+        </li>        
+      </ol>
     </nav>
 
     <main>
+      <nav class="narrow">
+        <a href="../index.html" class="home-page-link">DATA STRUCTURES AND ALGORITHMS</a>
+      </nav>
+      <nav class="narrow">
+        <a href="data-structures-overview.html" class="left-nav-link">PREVIOUS</a>
+        <a href="dynamic-array.html" class="right-nav-link">NEXT</a>
+      </nav>
       <h1>Array</h1>
       <!-- TODO: add more structure with headings -->
       <p>
@@ -134,12 +150,15 @@
       <!-- It would be helpful to have a key takeaways box showing the key features of the data structure and the 
         complexity analyses.
       -->
+
+      <nav>
+        <a href="data-structures-overview.html" class="left-nav-link">PREVIOUS</a>
+        <a href="dynamic-array.html" class="right-nav-link">NEXT</a>
+      </nav>
     </main>
 
-    <footer>
-      <a href="data-structures-overview.html">Previous section</a>
-      <a href="dynamic-array.html">Next section</a>
-      <hr>
+    <footer>      
+      <hr class="footer-top-rule">
       Crafted by Caleb Owusu-Yianoma - &copy; 2020
     </footer>
   </body>
