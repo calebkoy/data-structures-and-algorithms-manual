@@ -4,25 +4,45 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link href="https://fonts.googleapis.com/css2?family=Commissioner&family=Roboto:wght@300&display=swap" rel="stylesheet">    
+    <link href="styles/style.css" rel="stylesheet">
+    
     <title>Introduction | Data Structures and Algorithms Manual</title>
   </head>
-  <body>
-    <nav>
-      <ul>
-        <li><a href="index.html">Data Structures and Algorithms Manual</a></li>
-        <li><a href="introduction.html">Introduction</a></li>
-        <li><a href="computational-complexity.html">Computational complexity</a></li>
-        <li>Data structures</li>
-        <li><a href="data-structures/data-structures-overview.html">Data structures overview</a></li>
-        <li><a href="data-structures/array.html">Array</a></li>
-        <li><a href="data-structures/dynamic-array.html">Dynamic array</a></li>        
-        <li>Algorithms</li>
-        <li><a href="algorithms/algorithms-overview.html">Algorithms overview</a></li>        
-        <li><a href="algorithms/binary-search.html">Binary search</a></li> 
-      </ul>
-    </nav>
+  <body class="container">                
+    <nav class="wide">
+      <ol>
+        <li><a href="index.html" class="home-page-link">DATA STRUCTURES AND ALGORITHMS</a></li>
+        <li><a href="introduction.html" class="nav-menu-section-item">Introduction</a></li>
+        <li><a href="computational-complexity.html" class="nav-menu-section-item">Computational complexity</a></li>
+        <!-- <li><button type="button" class="nav-menu-button">Data structures</button></li> -->
+        <li class="nav-menu-header-item">
+          Data structures
+          <ol>
+            <li><a href="data-structures/data-structures-overview.html" class="nav-menu-section-item">Data structures overview</a></li>
+            <li><a href="data-structures/array.html" class="nav-menu-section-item">Array</a></li>
+            <li><a href="data-structures/dynamic-array.html" class="nav-menu-section-item">Dynamic array</a></li>        
+          </ol>
+        </li>        
+        <!-- <li><button type="button" class="nav-menu-button">Algorithms</button></li> -->
+        <li class="nav-menu-header-item">
+          Algorithms
+          <ol>
+            <li><a href="algorithms/algorithms-overview.html" class="nav-menu-section-item">Algorithms overview</a></li>        
+            <li><a href="algorithms/binary-search.html" class="nav-menu-section-item">Binary search</a></li> 
+          </ol>
+        </li>        
+      </ol>
+    </nav>    
 
     <main>
+      <nav class="narrow">
+        <a href="index.html" class="home-page-link">DATA STRUCTURES AND ALGORITHMS</a>
+      </nav>
+      <nav class="narrow">
+        <a href="index.html" class="left-nav-link">PREVIOUS</a>
+        <a href="computational-complexity.html" class="right-nav-link">NEXT</a>
+      </nav>      
       <h1>Introduction</h1>
       <p>
         Welcome! The purpose of this manual is to take common data structures and algorithms and explain them clearly, 
@@ -44,12 +64,15 @@
         is used to analyse the efficiency of various data structures and algorithms. 
         Feel free to use the navigation menu to explore the manual in any order you like. Enjoy!
       </p>
+
+      <nav>
+        <a href="index.html" class="left-nav-link">PREVIOUS</a>
+        <a href="computational-complexity.html" class="right-nav-link">NEXT</a>
+      </nav>      
     </main>
 
-    <footer>
-      <a href="index.html">Previous</a>
-      <a href="computational-complexity.html">Next</a>
-      <hr>
+    <footer>      
+      <hr class="footer-top-rule">      
       Crafted by Caleb Owusu-Yianoma - &copy; 2020
     </footer>
   </body>
