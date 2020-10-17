@@ -330,6 +330,43 @@ main li  {
   }        
 }
 
+/*===========================*/
+/* Code block-related styles */
+/*===========================*/
+
+code {
+  outline: none;
+}
+
+.copy-code-button {
+  border: 0.1em solid;
+  border-radius: 0.3em 0.3em 0 0;    
+  border-color: rgba(0, 0, 179, 0.1);  
+  padding-bottom: 0.2em;
+  padding-top: 0.1em;  
+  background-color: rgba(153, 204, 255, 0.5);  
+}
+
+.copy-code-button:focus {
+  outline: none;
+  background-color: rgba(153, 204, 255, 0.7);
+  border-color: #0000ff;  
+}
+
+.copy-code-button:hover {
+  background-color: rgba(153, 204, 255, 0.7);  
+}
+
+.copy-code-button:active {
+  background-color: rgba(153, 204, 255, 1);  
+  border-color: #0000ff;
+}
+
+pre[class*="language-"] {
+  margin-top: 0;
+  background-color: rgba(153, 204, 255, 0.1);
+}
+
 /*==============*/
 /* Other styles */
 /*==============*/

@@ -5,15 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link href="https://fonts.googleapis.com/css2?family=Commissioner&family=Roboto:wght@300&display=swap" rel="stylesheet">    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/themes/prism.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet">
     <link href="../styles/style.css" rel="stylesheet">
     
-    <title>Dynamic array | Data Structures and Algorithms Manual</title>
-
-    <!-- A light MathML polyfill recommended by MDN -->
-    <!-- See https://developer.mozilla.org/en-US/docs/Web/MathML/Authoring -->
-    <script src="https://fred-wang.github.io/mathml.css/mspace.js"></script>
+    <title>Dynamic array | Data Structures and Algorithms Manual</title>    
   </head>
-  <body class="container">    
+  <body class="container language-java line-numbers">    
     <nav class="wide">
       <ol>
         <li><a href="../index.html" class="home-page-link">DATA STRUCTURES AND ALGORITHMS</a></li>
@@ -284,13 +282,17 @@
         We'll start our Java implementation of a dynamic array with the class constructors.
       </p>
 
-      <figure>
+      <figure>        
         <figcaption id="dynamic-array-constructors-caption">
           Dynamic array constructors
         </figcaption>
+        <button type="button" 
+                data-clipboard-target="#dynamic-array-constructors"
+                class="copy-code-button"
+                id="dynamic-array-constructors-code-button">Copy code</button>
         <pre 
           aria-labelledby="dynamic-array-constructors-caption" 
-          aria-describedby="dynamic-array-constructors-description"><code>@SuppressWarnings("unchecked")
+          aria-describedby="dynamic-array-constructors-description"><code contenteditable spellcheck="false" id="dynamic-array-constructors">@SuppressWarnings("unchecked")
 public class DynamicArray&lt;E&gt; {
   private E[] array;
   private int size = 0;
@@ -322,7 +324,7 @@ public class DynamicArray&lt;E&gt; {
         </figcaption>
         <pre
           aria-labelledby="is-empty-and-size-caption"
-          aria-describedby="is-empty-and-size-description"><code>public boolean isEmpty() {            
+          aria-describedby="is-empty-and-size-description"><code contenteditable spellcheck="false">public boolean isEmpty() {            
   return size == 0;
 }
 
@@ -341,7 +343,7 @@ public int size() {
         </figcaption>
         <pre
           aria-labelledby="dynamic-array-add-caption"
-          aria-describedby="dynamic-array-add-description"><code>public boolean add(E element) {
+          aria-describedby="dynamic-array-add-description"><code contenteditable spellcheck="false">public boolean add(E element) {
   if (size &lt; capacity) {
     array[size++] = element;
     return true;
@@ -367,7 +369,7 @@ public int size() {
         </figcaption>
         <pre
           aria-labelledby="get-method-caption"
-          aria-describedby="get-method-description"><code>public E get(int index) {
+          aria-describedby="get-method-description"><code contenteditable spellcheck="false">public E get(int index) {
   if (index &lt; 0 || index &gt;= size) {
     throw new IndexOutOfBoundsException("Index is out of bounds; got: " + 
       index);
@@ -386,7 +388,7 @@ public int size() {
         </figcaption>
         <pre
           aria-labelledby="set-method-caption"
-          aria-describedby="set-method-description"><code>public E set(int index, E element) {            
+          aria-describedby="set-method-description"><code contenteditable spellcheck="false">public E set(int index, E element) {            
   if (index &lt; 0 || index &gt;= size) {
     throw new IndexOutOfBoundsException("Index is out of bounds; got: " + 
       index);
@@ -407,7 +409,7 @@ public int size() {
         </figcaption>
         <pre 
           aria-labelledby="remove-method-caption"
-          aria-describedby="remove-method-description"><code>public E remove(int index) {            
+          aria-describedby="remove-method-description"><code contenteditable spellcheck="false">public E remove(int index) {            
   if (index &lt; 0 || index &gt;= size) {
     throw new IndexOutOfBoundsException("Index is out of bounds; got: " + 
       index);
@@ -434,6 +436,20 @@ public int size() {
       <hr class="footer-top-rule">
       Crafted by Caleb Owusu-Yianoma - &copy; 2020
     </footer>
+
+    <!-- A light MathML polyfill recommended by MDN -->
+    <!-- See https://developer.mozilla.org/en-US/docs/Web/MathML/Authoring -->
+    <script src="https://fred-wang.github.io/mathml.css/mspace.js"></script>
+    
+    <!-- Code syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../script.js"></script>
   </body>
 </html>
 
