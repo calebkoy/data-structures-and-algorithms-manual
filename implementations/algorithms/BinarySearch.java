@@ -1,3 +1,5 @@
+package algorithms;
+
 public class BinarySearch {
   public int search(int[] array, int element) {
     if (array.length == 0) return -1;
