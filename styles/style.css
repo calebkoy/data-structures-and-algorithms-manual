@@ -29,7 +29,7 @@ h2 {
 }
 
 p {
-  font-size: 1.8em;  
+  font-size: 1.7em;  
   line-height: 1.6;
 }
 
@@ -360,7 +360,7 @@ code[class*="language-java"] {
 
 @media screen and (min-width: 500px) {
   code[class*="language-java"] {    
-    font-size: 1.4em;  
+    font-size: 1.3em;  
   } 
 }
 
