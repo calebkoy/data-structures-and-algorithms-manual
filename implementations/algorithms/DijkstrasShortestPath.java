@@ -37,8 +37,10 @@ public class DijkstrasShortestPath {
   };
   
   // Returns optimal distance from start node to each other node 
-  // in a directed graph with non-negative integer weights
-  public double[] lazyDijkstra(List<List<Edge>> graph, int start) {
+  // in a directed graph with non-negative integer weights.
+  // This could be optimised by using an indexed priority queue, 
+  // to avoid polling stale nodes from the priority queue.
+  public double[] dijkstra(List<List<Edge>> graph, int start) {
     int v = graph.size();
     boolean[] visited = new boolean[v];
     previous = new Integer[v];
@@ -53,6 +55,7 @@ public class DijkstrasShortestPath {
     Node node;
     while (!queue.isEmpty()) {
       node = queue.poll();
+      if (node.value > distance[node.id]) continue;
       for (Edge edge : graph.get(node.id)) {
         if (!visited[edge.to]) {
           int newDistance = node.value + edge.cost;
