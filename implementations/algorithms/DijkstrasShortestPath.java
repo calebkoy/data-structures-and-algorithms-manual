@@ -75,7 +75,7 @@ public class DijkstrasShortestPath {
     if (start < 0 || start >= graph.size()) {
       throw new IllegalArgumentException("Start node index is invalid; got: " + start);
     }
-    double[] distance = lazyDijkstra(graph, start);    
+    double[] distance = dijkstra(graph, start);    
     List<List<Integer>> paths = new ArrayList<>(graph.size());
     for (int i = 0; i < graph.size(); i++) {
       if (i == start || distance[i] == Double.POSITIVE_INFINITY) {
