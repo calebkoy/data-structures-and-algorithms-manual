@@ -5,11 +5,7 @@
 html {
   box-sizing: border-box; /* Alternative box model */
   font-family: 'Roboto', sans-serif;
-  font-size: 10px; /* Makes calculations of other font sizes easier */ 
-  
-  /* Helps to push footer down */
-  /* See: https://css-tricks.com/couple-takes-sticky-footer/ */
-  height: 100%; 
+  font-size: 10px; /* Makes calculations of other font sizes easier */     
 }
 
 *,
@@ -239,16 +235,6 @@ main li  {
   padding: 0.4em 0.1em;
 }
 
-/* Might help push the footer down on narrow screens */
-/* .container {
-  min-height: 100%;
-  display: grid;
-  grid-template-rows: 1fr auto;
-  grid-template-areas: 
-    "main-content"      
-    "main-footer";
-} */
-
 /*=================*/
 /* Larger screens */
 /*=================*/
@@ -282,14 +268,9 @@ main li  {
     grid-area: main-footer;    
   }
 
-  .container {
-    /* Helps to push footer down */
-    /* See: https://css-tricks.com/couple-takes-sticky-footer/ */
-    min-height: 100%;
-    
+  .container {        
     display: grid;        
-    grid-template-columns: 1fr 3fr;  
-    grid-template-rows: 1fr auto;
+    grid-template-columns: 1fr 3fr;      
     grid-template-areas: 
       "main-nav main-content"      
       "main-nav main-footer";
@@ -362,10 +343,6 @@ figure {
   margin: 3em 0;
 }
 
-/* figcaption {
-  font-size: 1.4em;  
-} */
-
 .code-block-caption
 {
   font-size: 1.4em;
@@ -376,13 +353,13 @@ figure {
   border-width: 0.1em 0;
 }
 
-code[class*="language-"] {
+code[class*="language-java"] {
   outline: none;
   font-size: 1.3em;  
 }
 
 @media screen and (min-width: 500px) {
-  code[class*="language-"] {    
+  code[class*="language-java"] {    
     font-size: 1.4em;  
   } 
 }
@@ -412,7 +389,7 @@ code[class*="language-"] {
   border-color: #0000ff;
 }
 
-pre[class*="language-"] {
+pre[class*="language-java"] {
   margin-top: 0;
   background-color: rgba(153, 204, 255, 0.1);
   border-left: 0.2em solid;  

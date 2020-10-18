@@ -4,31 +4,47 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Binary search | Data Structures and Algorithms Manual</title>
-
-    <!-- A light MathML polyfill recommended by MDN -->
-    <!-- See https://developer.mozilla.org/en-US/docs/Web/MathML/Authoring -->
-    <script src="https://fred-wang.github.io/mathml.css/mspace.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Commissioner&family=Roboto:wght@300&display=swap" rel="stylesheet">    
+    
+    <!-- Code display -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/themes/prism.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet">    
+    
+    <link href="../styles/style.css" rel="stylesheet">
+    
+    <title>Binary search | Data Structures and Algorithms Manual</title>    
   </head>
-  <body>
-    <!-- How can I build the nav when I'm in different directories? -->
-    <!-- One option would be to not use different directories -->
-    <nav>
-      <ul>
-        <li><a href="../index.html">Data Structures and Algorithms Manual</a></li>
-        <li><a href="../introduction.html">Introduction</a></li>
-        <li><a href="../computational-complexity.html">Computational complexity</a></li>
-        <li>Data structures</li>
-        <li><a href="../data-structures/data-structures-overview.html">Data structures overview</a></li>
-        <li><a href="../data-structures/array.html">Array</a></li>
-        <li><a href="../data-structures/dynamic-array.html">Dynamic array</a></li>        
-        <li>Algorithms</li>
-        <li><a href="algorithms-overview.html">Algorithms overview</a></li>        
-        <li><a href="binary-search.html">Binary search</a></li> 
-      </ul>
+  <body class="container language-java line-numbers">    
+    <nav class="wide">
+      <ol>
+        <li><a href="../index.html" class="home-page-link">DATA STRUCTURES AND ALGORITHMS</a></li>
+        <li><a href="../introduction.html" class="nav-menu-section-item">Introduction</a></li>
+        <li><a href="../computational-complexity.html" class="nav-menu-section-item">Computational complexity</a></li>
+        <li class="nav-menu-header-item">
+          Data structures
+          <ol>
+            <li><a href="../data-structures/data-structures-overview.html" class="nav-menu-section-item">Data structures overview</a></li>
+            <li><a href="../data-structures/array.html" class="nav-menu-section-item">Array</a></li>
+            <li><a href="../data-structures/dynamic-array.html" class="nav-menu-section-item">Dynamic array</a></li>        
+          </ol>          
+        </li>        
+        <li class="nav-menu-header-item">
+          Algorithms
+          <ol>
+            <li><a href="algorithms-overview.html" class="nav-menu-section-item">Algorithms overview</a></li>        
+            <li><a href="binary-search.html" class="nav-menu-section-item">Binary search</a></li> 
+          </ol>          
+        </li>        
+      </ol>
     </nav>
 
     <main>
+      <nav class="narrow">
+        <a href="../index.html" class="home-page-link">DATA STRUCTURES AND ALGORITHMS</a>
+      </nav>
+      <nav class="narrow">
+        <a href="algorithms-overview.html" class="left-nav-link">PREVIOUS</a>        
+      </nav>
       <h1>Binary search</h1>      
       <p>    
         Binary search is an algorithm that is used to efficiently search for an element in a sorted list. 
@@ -38,7 +54,7 @@
       </p>
       <h2>Idea behind binary search</h2>
       <p>
-        Suppose we have the following array of integers, sorted in ascending order: <code>[0, 1, 2, 3, 4, 5]</code>.
+        Suppose we have the following array of integers, sorted in ascending order: <code class="language-none">[0, 1, 2, 3, 4, 5]</code>.
         We want to find out if the array contains the element 1. We can calculate the midpoint of the array 
         by calculating the midpoint of the lowest and highest indices. This gives us 
         <math>
@@ -92,16 +108,20 @@
       <h2>Implementation</h2>
       <p id="binary-search-description">
         Below is the implementation of the binary search method. 
-        In this case, the input to the method is a sorted array of <code>int</code>s 
+        In this case, the input to the method is a sorted array of <code class="language-none">int</code>s 
         along with the value to find in the array.
       </p>
       <figure>
         <figcaption id="binary-search-caption">
-          Binary search method
+          <span class="code-block-caption">Binary search method</span>
         </figcaption>
+        <button type="button" 
+                data-clipboard-target="#binary-search-code"
+                class="copy-code-button"
+                id="binary-search-code-button">Copy code</button>
         <pre
           aria-labelledby="binary-search-caption"
-          aria-describedby="binary-search-description"><code>public int search(int[] array, int element) {
+          aria-describedby="binary-search-description"><code contenteditable spellcheck="false" id="binary-search-code">public int binarySearch(int[] array, int element) {
   if (array.length == 0) return -1;
   int low = 0;
   int high = array.length - 1;
@@ -127,7 +147,7 @@
         What's the time complexity of this algorithm? The first few lines all take constant time to execute. The real 
         work happens in the while loop. So the question is: How many times does the while loop execute? Let's 
         look at the worst case. Suppose the input array has size <math><mi>n</mi></math>. Then the while loop will terminate when the 
-        variable <code>low</code> is greater than the variable <code>high</code>. This occurs when the sorted subarray 
+        variable <code class="language-none">low</code> is greater than the variable <code class="language-none">high</code>. This occurs when the sorted subarray 
         that we're inspecting has no more elements in it. On each iteration of the while loop, we halve the size of the 
         sorted subarray. In the example above, the original array has length six. Then this is halved to become three. 
         Then this is halved once more to become one. The worst case occurs when the element is not in the original array 
@@ -182,13 +202,29 @@
         </math>        
         running time. 
       </p>
+
+      <nav>
+        <a href="algorithms-overview.html" class="left-nav-link">PREVIOUS</a>        
+      </nav>
     </main>
 
-    <footer>
-      <a href="algorithms-overview.html">Previous section</a>
-      <a>Next section</a>
-      <hr>
+    <footer>      
+      <hr class="footer-top-rule">
       Crafted by Caleb Owusu-Yianoma - &copy; 2020
     </footer>
+
+    <!-- A light MathML polyfill recommended by MDN -->
+    <!-- See https://developer.mozilla.org/en-US/docs/Web/MathML/Authoring -->
+    <script src="https://fred-wang.github.io/mathml.css/mspace.js"></script>
+
+    <!-- Code syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../script.js"></script>
   </body>
 </html>
