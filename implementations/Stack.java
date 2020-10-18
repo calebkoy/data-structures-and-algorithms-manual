@@ -2,7 +2,7 @@ import java.util.EmptyStackException;
 import java.util.LinkedList;
 
 public class Stack<E> {
-  private LinkedList<E> list;  
+  private LinkedList<E> list = new LinkedList<>();  
   
   public int size() {
     return list.size();    
