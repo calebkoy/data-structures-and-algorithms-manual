@@ -14,10 +14,10 @@ public class BFS {
     }
   }
   
-  public void search(List<List<Edge>> graph, int start, int v) {
+  public void search(List<List<Edge>> graph, int start) {
     Queue<Integer> queue = new LinkedList<>();
     queue.offer(start);
-    boolean[] visited = new boolean[v];
+    boolean[] visited = new boolean[graph.size()];
     visited[start] = true;
     while (!queue.isEmpty()) {
       int node = queue.poll();

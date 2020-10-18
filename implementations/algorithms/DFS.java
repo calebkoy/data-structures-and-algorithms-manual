@@ -13,10 +13,10 @@ public class DFS {
     }
   }
 
-  public void search(List<List<Edge>> graph, int start, int v) {
+  public void search(List<List<Edge>> graph, int start) {
     Stack<Integer> stack = new Stack<>();
     stack.push(start);
-    boolean[] visited = new boolean[v];
+    boolean[] visited = new boolean[graph.size()];
     visited[start] = true;
     int node;
     while (!stack.isEmpty()) {
