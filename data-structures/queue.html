@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css2?family=Commissioner&family=Roboto:wght@300&display=swap" rel="stylesheet">    
+    
+    <!-- Code display -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/themes/prism.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet">    
+    
+    <link href="../styles/style.css" rel="stylesheet">
+    
+    <title>Queue | Data Structures and Algorithms Manual</title>    
+  </head>
+  <body class="container language-java line-numbers">
+    <nav class="wide">
+      <ol>
+        <li><a href="../index.html" class="home-page-link">DATA STRUCTURES AND ALGORITHMS</a></li>
+        <li><a href="../introduction.html" class="nav-menu-section-item">Introduction</a></li>
+        <li><a href="../computational-complexity.html" class="nav-menu-section-item">Computational complexity</a></li>
+        <li class="nav-menu-header-item">
+          Data structures
+          <ol>
+            <li><a href="data-structures-overview.html" class="nav-menu-section-item">Data structures overview</a></li>
+            <li><a href="array.html" class="nav-menu-section-item">Array</a></li>
+            <li><a href="dynamic-array.html" class="nav-menu-section-item">Dynamic array</a></li>        
+            <li><a href="linked-list.html" class="nav-menu-section-item">Linked list</a></li>        
+            <li><a href="stack.html" class="nav-menu-section-item">Stack</a></li>        
+            <li><a href="queue.html" class="nav-menu-section-item">Queue</a></li>        
+          </ol>
+        </li>        
+        <li class="nav-menu-header-item">
+          Algorithms
+          <ol>
+            <li><a href="../algorithms/algorithms-overview.html" class="nav-menu-section-item">Algorithms overview</a></li>        
+            <li><a href="../algorithms/binary-search.html" class="nav-menu-section-item">Binary search</a></li> 
+            <li><a href="../algorithms/dfs.html" class="nav-menu-section-item">Depth-first search</a></li>
+          </ol>
+        </li>        
+      </ol>
+    </nav>
+
+    <main>
+      <nav class="narrow">
+        <a href="../index.html" class="home-page-link">DATA STRUCTURES AND ALGORITHMS</a>
+      </nav>
+      <nav class="narrow">
+        <a href="stack.html" class="left-nav-link">PREVIOUS</a>
+        <a href="../algorithms/algorithms-overview.html" class="right-nav-link">NEXT</a>
+      </nav>
+
+      <h1>Queue</h1>                  
+
+      <h2>What's a queue?</h2>  
+      <p>
+        Like the name suggests, a queue is a data structure that's used to model the concept of a real-world 
+        queue. Elements enter the queue at one end, the back, and leave at the other end, the front. 
+        In contrast to a stack, the first element to enter the queue is the first element to leave, unless 
+        <a href="https://youtu.be/fhbUFKt7tzA?t=44">someone jumps the queue</a>. This is known as "first in first out", 
+        or "FIFO".
+      </p>             
+
+      <p>
+        Queues are useful data structures. Among other things, they're used:
+        <ul>
+          <li>
+            To create simulations of real-world queues - for example, when studying queueing theory in the field 
+            of operational research.
+          </li>
+          <li>As input/output buffers.</li>
+          <li>
+            In the implementation of the popular graph search algorithm 
+            <a href="../algorithms/bfs.html">breadth-first search</a>.
+          </li>
+        </ul>
+      </p>
+
+      <h2>Enqueue and dequeue</h2>      
+      <p>
+        The two key operations of a queue are "enqueueing", pronounced "en-kyoo-ing", and "dequeueing", pronounced 
+        "dee-kyoo-ing". These refer to adding an element at the back of the queue and removing an element from the front 
+        of the queue, respectively. The enqueue operation is sometimes called the "offer" operation and the dequeue 
+        operation is sometimes called the "poll" operation.
+      </p>
+
+      <p>
+        Depending on the implementation and as long as we keep track of the front and back of the queue, 
+        enqueueing and dequeueing are constant-time operations. As with the stack, searching for or accessing 
+        an element at any other location in the queue is a linear-time operation. 
+      </p>
+
+      <p>
+        It's interesting to note that queues can also be double-ended - that is, elements can be added at both the front 
+        and the back. Such queues are sometimes called circular queues and the 
+        <code class="language-none">java.util</code> package implementation 
+        of this is the <a href="https://docs.oracle.com/javase/9/docs/api/java/util/Deque.html">Deque</a> interface,        
+        usually pronounced "dek".
+      </p>
+      
+      <h2>The code</h2>
+      <p id="queue-code-description">
+        Like we did for the stack, we'll use the Java <a href="https://docs.oracle.com/javase/7/docs/api/java/util/LinkedList.html">LinkedList</a>  
+        implementation to implement a queue. The queue supports offer, peek and poll operations.
+      </p>
+      <figure>
+        <figcaption id="stack-code-caption">
+          <span class="code-block-caption">Linked list-based queue implementation</span>
+        </figcaption>
+        <button type="button" 
+                data-clipboard-target="#queue-code"
+                class="copy-code-button"
+                id="queue-code-button">Copy code</button>
+        <pre
+          aria-labelledby="queue-code-caption"
+          aria-describedby="queue-code-description"><code contenteditable spellcheck="false" id="queue-code">import java.util.LinkedList;
+public class Queue&lt;E&gt; {      
+  private LinkedList&lt;E&gt; list = new LinkedList&lt;&gt;();
+  
+  public boolean isEmpty() {
+    return list.size() == 0;
+  }
+  
+  public boolean offer(E element) {
+    list.addLast(element);
+    return true;
+  }
+
+  public E peek() {
+    if (isEmpty()) return null;
+    return list.peekFirst();
+  }
+
+  public E poll() {
+    if (isEmpty()) return null;
+    return list.removeFirst();
+  }
+}</code></pre>            
+      </figure>
+
+      <h2>Key takeaways</h2>      
+      <p>
+        In summary, a queue is a useful linear data structure that:         
+        <ul>
+          <li>Has constant-time enqueue and dequeue operations, depending on the implementation.</li>
+          <li>Is simple to implement.</li>
+          <li>Has many practical applications.</li>
+          <li>Adheres to the first in first out principle.</li>
+        </ul>
+      </p>
+      
+      <nav>
+        <a href="stack.html" class="left-nav-link">PREVIOUS</a>
+        <a href="../algorithms/algorithms-overview.html" class="right-nav-link">NEXT</a>
+      </nav>
+
+      
+    </main>
+
+    <footer>      
+      <hr class="footer-top-rule">
+      Crafted by Caleb Owusu-Yianoma - &copy; 2020
+    </footer>
+    
+    <!-- A light MathML polyfill recommended by MDN -->
+    <!-- See https://developer.mozilla.org/en-US/docs/Web/MathML/Authoring -->
+    <script src="https://fred-wang.github.io/mathml.css/mspace.js"></script>
+    
+    <!-- Code syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../script.js"></script>
+  </body>    
+</html>
