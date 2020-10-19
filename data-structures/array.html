@@ -45,37 +45,67 @@
         <a href="data-structures-overview.html" class="left-nav-link">PREVIOUS</a>
         <a href="dynamic-array.html" class="right-nav-link">NEXT</a>
       </nav>
-      <h1>Array</h1>
-      <!-- TODO: add more structure with headings -->
+      <h1>Array</h1>      
+      
+      <h2>Motivation</h2>
       <p>
-        An array is usually considered the most simple common data structure, because many other data structures are 
-        based on or built on top of an array.
+        If you're familiar with arrays, then the answer to the motivation question won't come as a surprise. 
+        Arrays are used practically everywhere in computing. Okay, although that's a very slight overstatement, 
+        arrays are used in so many places that they're generally considered one of the most fundamental 
+        data structures. 
       </p>
+
+      <p>
+        Arrays are usually used as containers for objects of the same type in many computer programs. 
+        Because of this, they're usually baked into the standard library of most modern programming languages. 
+        Strings, which are sequences of characters, are fundamentally stored as arrays. Two-dimensional arrays 
+        are used in computer vision for matrix operations. 
+        Arrays can be used to implement dynamic arrays and linked lists, as we'll see in upcoming sections. 
+        And the list goes on. 
+      </p>
+      
+      <p>
+        So it's well worth learning about arrays.
+      </p>
+
+      <h2>The main idea</h2>
 
       <p>
         An array can be visualised as a container with multiple slots which are right next to each other.         
-        Here, we'll discuss a type of array known as a static array, which has a fixed size, and in the next section, we'll 
-        discuss dynamic arrays, which can grow in size. 
-        A static array is an array with a fixed size. The array can only hold objects of the same size.
-        It's helpful to visualise the array as a block of contiguous slots in computer random 
-        access memory, usually abbreviated as RAM.               
+        Here, we'll discuss a type of array known as a static array and in the next section, we'll 
+        discuss dynamic arrays.
+      </p>
+      
+      <p>
+        A static array is an array with a fixed size. It can only hold objects of the same size, because it's 
+        essentially a container of contiguous slots of computer random access memory, or RAM.                       
       </p>
 
+      <!-- TODO: probably insert an image here which illustrates the main array concepts of:
+        - continugous memory slots
+        - indexing, including zero-based indexing
+       -->
+
+      <h2>Complexity analysis</h2>
       <p>
-        Because most computers have direct references to their RAM slots, a given element of a static array can be accessed 
-        in constant time. Accessing an element of a static array is also known as "indexing".
+        The space complexity of an array is conceptually simple. In most cases, it's 
+        sufficient to say that a static array of size <math><mi>n</mi></math> has a space complexity of 
+        <math>
+          <mrow>
+            <mi>O</mi>
+            <mo>(</mo>
+            <mi>n</mi>
+            <mo>)</mo>
+          </mrow>
+        </math>.
+        We're allocating <math><mi>n</mi></math> memory slots, and this, by the way, is 
+        why we specify the array size when declaring a static array. The computer needs to find a block of unused,
+        uninterrupted memory for the array.         
       </p>
-
+      
       <p>
-        Consider the array below with five slots. Arrays are usually zero-indexed, which means that the first slot of the 
-        array has index 0. Therefore, our array has indices 0, 1, 2, 3 and 4, each of which can be accessed in constant time.         
-      </p>
-
-      <!-- TODO: insert an image of an array. -->
-
-      <p>
-        Suppose we want to update the value at index 2. What's the time complexity of this operation? Since arrays have 
-        constant-time access, this is a constant-time operation, or 
+        Most computers have direct references to their RAM slots, which means that 
+        a given element of a static array can be accessed (and updated) in constant time, or 
         <math>
           <mrow>
             <mi>O</mi>
@@ -84,7 +114,10 @@
             <mo>)</mo>
           </mrow>
         </math>.
-      </p>
+        Accessing an element of a static array is also known as "indexing". 
+        Arrays are usually zero-indexed, which means that the first slot of the 
+        array has index 0.          
+      </p>                  
 
       <p>
         What if we want to search for a particular value in an array? If all we know is the value we want and 
@@ -105,7 +138,7 @@
       <!-- This could be a note -->
       <p>
         If the array is sorted, we can take advantage of this information and construct an algorithm for searching 
-        through the array that takes 
+        through the array that takes roughly 
         <math>
           <mrow>
             <mi>log</mi>
@@ -119,12 +152,20 @@
       </p>
 
       <p>
-        How about deleting an item from a static array? How long would this take? Well this depends. Suppose that the array is an unsorted list of numbers and 
-        we need to delete a particular number from the array. Then theoretically, we need to search the entire array until we 
-        find the number. This will take <math><mi>n</mi></math> steps in the worst case, where <math><mi>n</mi></math> is the size of the array. Then we'll need to delete the number. 
-        Assume that this takes constant time. Then we'll need to shift all elements to the right of the deleted number one space to the left. 
+        How about appending and deleting items? How long would these take? 
+        Well this depends. Suppose that the array is an unsorted list of numbers and 
+        we need to delete a particular number from the array. 
+        Then theoretically, we need to search the entire array until we 
+        find the number. 
+        This will take <math><mi>n</mi></math> steps in the worst case, 
+        where <math><mi>n</mi></math> is the size of the array. 
+      </p>
+      <p>
+        Once we've found the nubmer (if it even exists), we'll need to delete it. 
+        Assume that deletion takes constant time. 
+        Then we'll need to shift all elements to the right of the deleted number one space to the left. 
         In the worst case, this shifting will take 
-        <math><mi>n</mi></math> steps. Therefore, deleting an element from a static array is a 
+        <math><mi>n</mi></math> steps. Therefore, deleting an element from a static array is, theoretically, a 
         linear-time operation, or 
         <math>
           <mrow>
@@ -137,19 +178,29 @@
       </p>
 
       <p>
-        Perhaps a more common way of looking at deletion is that since a static array is of a fixed size, it's not possible to remove an element from it. 
-        This is exactly the case in Java. 
+        However, a more common way of looking at appending and deletion is that 
+        since a static array is of a fixed size, it's not possible to add or remove elements.
+        This is exactly the case in Java and we'll assume that this is the case for the rest of the manual, 
+        unless otherwise stated. 
       </p>
 
+      <h2>Key takeaways</h2>
       <p>
-        One downside of a static array is that we're not able to append new items to it, since the size of the array needs 
-        to be known in advance so that a contiguous block of memory can be allocated for it by the computer. One way to 
-        overcome this limitation is to use a <a href="dynamic-array.html">dynamic array</a>, which we'll cover next.
+        So, we've seen that: 
+        <ul>
+          <li>An array is a contiguous block of memory.</li>
+          <li>An array holds objects of the same size.</li>
+          <li>Accessing elements in an array is super fast (constant-time).</li>
+          <li>A trade-off is that we can't append or delete items, since we need to know the size of the array 
+            in advance.
+          </li>
+        </ul>
       </p>
-
-      <!-- It would be helpful to have a key takeaways box showing the key features of the data structure and the 
-        complexity analyses.
-      -->
+      
+      <p>
+        One way to overcome the fixed-size limitation is to use a <a href="dynamic-array.html">dynamic array</a>, 
+        which we'll cover next.
+      </p>      
 
       <nav>
         <a href="data-structures-overview.html" class="left-nav-link">PREVIOUS</a>

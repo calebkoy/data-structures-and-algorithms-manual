@@ -26,6 +26,7 @@
             <li><a href="data-structures-overview.html" class="nav-menu-section-item">Data structures overview</a></li>
             <li><a href="array.html" class="nav-menu-section-item">Array</a></li>
             <li><a href="dynamic-array.html" class="nav-menu-section-item">Dynamic array</a></li>        
+            <li><a href="linked-list.html" class="nav-menu-section-item">Linked list</a></li>        
           </ol>
         </li>        
         <li class="nav-menu-header-item">
@@ -44,20 +45,34 @@
       </nav>
       <nav class="narrow">
         <a href="array.html" class="left-nav-link">PREVIOUS</a>
-        <a href="../algorithms/algorithms-overview.html" class="right-nav-link">NEXT</a>
+        <a href="linked-list.html" class="right-nav-link">NEXT</a>
       </nav>
       <h1>Dynamic array</h1>
       <p>
         As we saw in the <a href="array.html">section on arrays</a>, static arrays aren't able to grow or shrink in 
-        size. Dynamic arrays are used to overcome this limitation.
+        size. Dynamic arrays overcome this limitation.
       </p>
 
       <h2>What is a dynamic array?</h2>
       <p>
-        A dynamic array is an array that is able to shrink and grow in size. As with a static array, it allows updating 
-        of values, but it also allows the user to delete values, append new values and insert new values. A common way to 
-        implement a dynamic array is to use a static array. Let's look at how appending, inserting and searching for a value 
-        work with a dynamic array built on top of a static array. 
+        At the risk of repeating myself: 
+        a dynamic array is an array that is able to shrink and grow in size. 
+        It's commonly implemented using a static array and, 
+        as with a static array, it allows updating 
+        of values, but it also allows the user to delete, append and insert values.  
+      </p>
+      <p>
+        Let's look at how the various dynamic array operations work, before diving into some code.
+        We won't cover searching in much detail. As with a static array, it's 
+        <math>
+          <mrow>
+            <mi>O</mi>
+            <mo>(</mo>
+            <mi>n</mi>
+            <mo>)</mo>
+          </mrow>
+        </math>.
+        Also, access is constant-time like a static array.
       </p>
       
       <h2>Appending an element</h2>
@@ -67,10 +82,9 @@
         when the array is full, though?
       </p>
       <p>
-        When the array is full, we create a new, larger array, copy over the elements from the previous array and then append the 
+        Well, we create a new, larger array, copy over the elements from the previous array and then append the 
         new value. We can choose how large the new array is going to be. One common strategy is to double the capacity of the 
-        previous array. So now our array has a capacity of eight and contains five elements. The number of elements actually stored 
-        in the array is usually referred to as the "size" of the array. 
+        previous array. So now our array has a capacity of eight and a "size" of five.  
       </p>
       <p>
         So what's the time complexity of appending an element to a dynamic array? It depends. In most cases, the capacity of the 
@@ -79,14 +93,16 @@
         element from the previous array is copied over to the new array. Then, finally, the new element is appended to the 
         new array. 
       </p>
-      
-      <!-- It would be good to show how the geometric series evaluates to 2n - 1. -->
+            
       <p>
         To reason about the time complexity of this, suppose first that the initial array has a capacity of 1, 
         that we double the array capacity when it needs to be increased and that we make a total of 
         <math><mi>n</mi></math> appends. 
+      </p>
+      
+      <p>
         Most of the appends will take constant time, but some will take longer. Which ones take longer? It will be 
-        the ones where the array size is a power of two: 1, 2, 4, 8 and so on. Each time the capacity is doubled from 
+        the ones where the current array size is a power of two: 1, 2, 4, 8 and so on. Each time the capacity is doubled from 
         <math><mi>x</mi></math> to 
         <math>
           <mrow>
@@ -125,11 +141,20 @@
             <mspace width=".2em" />
             <mo>+</mo>
             <mspace width=".2em" />
+            <mn>2</mn>
+            <mspace width=".2em" />
+            <mo>+</mo>
+            <mspace width=".2em" />
             <mn>1</mn>
           </mrow>
         </math>        
         copies. It's "roughly" because <math><mi>n</mi></math> might not be 
-        a strict power of two. This is a geometric series which evaluates to 
+        a strict power of two. 
+      </p>
+      
+      <p>
+        This is a <a href="https://www.mathsisfun.com/algebra/sequences-sums-geometric.html">geometric series</a> 
+        which evaluates to 
         <math>
           <mrow>
             <mn>2</mn>
@@ -138,7 +163,7 @@
             <mn>1</mn>
           </mrow>
         </math>.
-        That's 
+        So that's 
         <math>
           <mrow>
             <mi>O</mi>
@@ -200,8 +225,9 @@
             <mo>)</mo>
           </mrow>
         </math>
-        for appending a single item, which is often referred to as the amortised 
-        time complexity of appending an element to a dynamic array. See <a href="https://mitpress.mit.edu/books/introduction-algorithms-third-edition">Introduction to Algorithms, Third Edition</a>
+        for appending a single item. This is often referred to as the "amortised 
+        time complexity" of appending an element to a dynamic array. Again, 
+        see <a href="https://mitpress.mit.edu/books/introduction-algorithms-third-edition">Introduction to Algorithms, Third Edition</a>
         for a more formal 
         treatment of amortised analysis.
       </p>
@@ -211,8 +237,9 @@
         Inserting an element into a dynamic array is a bit different to appending an element. In addition to the amortised 
         constant-time append of the element, we'll need to shift over some other elements in order to make room 
         for the new element. If there are previously <math><mi>n</mi></math> elements in the array, 
-        in the worst case, we'll need to shift the majority of them into their new correct positions before inserting the new element. 
-        The entire time complexity of inserting an element is linear, or 
+        then in the worst case, we'll need to shift the majority of them into their new correct positions before inserting 
+        the new element. 
+        So the entire time complexity of inserting an element is linear, or 
         <math>
           <mrow>
             <mi>O</mi>
@@ -225,7 +252,8 @@
 
       <h2>Deleting an element</h2>
       <p>
-        To delete an element from an array of size <math><mi>n</mi></math>, we'll create a new array of size one less than the previous array and 
+        To delete an element from an array of size <math><mi>n</mi></math>, 
+        a common strategy is to create a new array of size one less than the previous array and 
         copy over all the previous elements except the one to be deleted into the new array. This will take 
         <math>
           <mrow>
@@ -241,7 +269,7 @@
       <h2>Space complexity</h2>
       <p>
         How about the space complexity of appending <math><mi>n</mi></math> elements to a dynamic array?
-        Suppose, again that the initial capacity of the array is one and that we double the 
+        Suppose again that the initial capacity of the array is one and that we double the 
         capacity each time it's reached. Then appending <math><mi>n</mi></math> elements requires roughly 
         <math>
           <mrow>
@@ -281,8 +309,10 @@
       </p>
 
       <h2>Implementation</h2>
-      <p id="dynamic-array-constructors-description">
-        We'll start our Java implementation of a dynamic array with the class constructors.
+      <p>Alriiight. Time for some code. 
+        We'll be implementing the dynamic array in the Java programming language. </p>
+      <p id="dynamic-array-constructors-description">        
+        Let's start with the class constructors.
       </p>
 
       <figure>        
@@ -297,10 +327,11 @@
           aria-labelledby="dynamic-array-constructors-caption" 
           aria-describedby="dynamic-array-constructors-description"><code contenteditable spellcheck="false" id="dynamic-array-constructors">@SuppressWarnings("unchecked")
 public class DynamicArray&lt;E&gt; {
-  private E[] array;
+  private E[] array; // Internal static array
   private int size = 0;
   private int capacity = 0;
 
+  // Default capacity is 10
   DynamicArray() {
     this(10);
   }
@@ -316,8 +347,14 @@ public class DynamicArray&lt;E&gt; {
 }</code></pre>        
       </figure>
 
+      <p>
+        That "SuppressWarnings" annotation at the beginning prevents the compiler from complaining about 
+        the cast from an <code class="language-none">Object</code> array to an 
+        <code class="language-none">E</code> array.
+      </p>
+
       <p id="is-empty-and-size-description">
-        Next, we'll add two small methods to check if the array is empty 
+        Next, we'll add two small methods underneath the constructors, to check if the array is empty 
         and to return its size.
       </p>
 
@@ -360,6 +397,7 @@ public int size() {
     return true;
   }
   
+  // Increase array capacity
   capacity *= 2;
   E[] newArray = (E[]) new Object[capacity];
   for (int i = 0; i &lt; array.length; i++) {
@@ -388,8 +426,7 @@ public int size() {
   if (index &lt; 0 || index &gt;= size) {
     throw new IndexOutOfBoundsException("Index is out of bounds; got: " + 
       index);
-  }
-  
+  }  
   return array[index];
 }</code></pre>
       </figure>
@@ -449,9 +486,32 @@ public int size() {
 }</code></pre>
       </figure>
 
+      <p>
+        The Java implementation of a dynamic array is the 
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html">ArrayList</a>. 
+        The documentation lists other methods which aren't implemented here but, by all means, feel free to add 
+        them to your implementation. 
+      </p>
+
+      <h2>Key takeaways</h2>
+      <p>
+        We've seen that a dynamic array:
+        <ul>
+          <li>Overcomes the fixed-size limitation of a static array.</li>
+          <li>Has amortised constant-time appends.</li>
+          <li>Is relatively straightforward to code up.</li>
+        </ul>        
+      </p>
+
+      <p>
+        There's one limitation of both static and dynamic arrays which we haven't dwelt on, though: 
+        they can only hold objects which have the same size. So, typically, they're used to hold objects 
+        of the same type. The next data structure we'll look at provides a solution.
+      </p>
+
       <nav>
         <a href="array.html" class="left-nav-link">PREVIOUS</a>
-        <a href="../algorithms/algorithms-overview.html" class="right-nav-link">NEXT</a>
+        <a href="linked-list.html" class="right-nav-link">NEXT</a>
       </nav>
     </main>
 
