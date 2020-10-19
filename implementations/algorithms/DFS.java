@@ -13,7 +13,7 @@ public class DFS {
     }
   }
 
-  public void search(List<List<Edge>> graph, int start) {
+  public void dfs(List<List<Edge>> graph, int start) {
     Stack<Integer> stack = new Stack<>();
     stack.push(start);
     boolean[] visited = new boolean[graph.size()];

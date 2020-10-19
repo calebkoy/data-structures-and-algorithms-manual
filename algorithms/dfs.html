@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css2?family=Commissioner&family=Roboto:wght@300&display=swap" rel="stylesheet">    
+    
+    <!-- Code display -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/themes/prism.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet">    
+    
+    <link href="../styles/style.css" rel="stylesheet">
+    
+    <title>DFS | Data Structures and Algorithms Manual</title>    
+  </head>
+  <body class="container language-java line-numbers">
+    <nav class="wide">
+      <ol>
+        <li><a href="../index.html" class="home-page-link">DATA STRUCTURES AND ALGORITHMS</a></li>
+        <li><a href="../introduction.html" class="nav-menu-section-item">Introduction</a></li>
+        <li><a href="../computational-complexity.html" class="nav-menu-section-item">Computational complexity</a></li>
+        <li class="nav-menu-header-item">
+          Data structures
+          <ol>
+            <li><a href="../data-structures/data-structures-overview.html" class="nav-menu-section-item">Data structures overview</a></li>
+            <li><a href="../data-structures/array.html" class="nav-menu-section-item">Array</a></li>
+            <li><a href="../data-structures/dynamic-array.html" class="nav-menu-section-item">Dynamic array</a></li>        
+            <li><a href="../data-structures/linked-list.html" class="nav-menu-section-item">Linked list</a></li>        
+            <li><a href="../data-structures/stack.html" class="nav-menu-section-item">Stack</a></li>        
+            <li><a href="../data-structures/queue.html" class="nav-menu-section-item">Queue</a></li>        
+          </ol>
+        </li>        
+        <li class="nav-menu-header-item">
+          Algorithms
+          <ol>
+            <li><a href="algorithms-overview.html" class="nav-menu-section-item">Algorithms overview</a></li>        
+            <li><a href="binary-search.html" class="nav-menu-section-item">Binary search</a></li> 
+            <li><a href="dfs.html" class="nav-menu-section-item">Depth-first search</a></li> 
+          </ol>
+        </li>        
+      </ol>
+    </nav>
+
+    <main>
+      <nav class="narrow">
+        <a href="../index.html" class="home-page-link">DATA STRUCTURES AND ALGORITHMS</a>
+      </nav>
+      <nav class="narrow">
+        <a href="binary-search.html" class="left-nav-link">PREVIOUS</a>
+        <a href="bfs.html" class="right-nav-link">NEXT</a>
+      </nav>
+
+      <h1>Depth-first search</h1>                  
+
+      <h2>Motivation</h2>
+      <p>
+        Depth-first search, commonly abbreviated as DFS, is an algorithm that's used to search through a graph. 
+        If you're unfamiliar with a graph, it's a data structure that represents a network of nodes optionally 
+        connected by lines called edges. A practical application is a social network like that used on your 
+        favourite social media site. It probably uses graphs to internally represent people (the nodes) and 
+        their connections to other people (the edges).
+      </p>
+
+      <p>
+        Fun fact: if you're in the UK and you google "DFS", you probably won't find anything about this algorithm 
+        on the first page of search results, because the DFS furniture company's search engine optimisation 
+        is so good. However, for our purposes, "DFS" refers to the algorithm at hand. 
+      </p>
+
+      <p>
+        DFS fairly systematically explores the nodes and edges in a graph data structure. On its own, it's not 
+        particularly useful or intriguing. But when it's combined with other algorithmic steps it can be used 
+        to do some pretty powerful things quite elegantly - for example:
+        <ul>          
+          <li>Generating mazes.</li>
+          <li>
+            Finding paths through mazes.
+          </li>
+          <li>
+            Finding the 
+            <a href="https://en.wikipedia.org/wiki/Tarjan%27s_strongly_connected_components_algorithm">
+              strongly connected components in a directed graph
+            </a>.
+          </li>
+          <li>Solving a variety of other graph-related problems.</li>
+        </ul>
+      </p>
+
+      <h2>The main idea</h2>
+      <p>
+        Given a starting node in the graph, DFS selects one of the unvisited neighbours of the node (a neighbour node  
+        is a node that the starting node is connected to by an edge) and then does the same thing for the neighbour 
+        and so on until it reaches a node which doesn't have any unvisited neighbours. Then it backtracks 
+        and visits all the other unvisited neighbours of the nodes that it's visited so far. 
+      </p>
+
+      <p>
+        An example will help to illustrate the point. <!-- TODO: add an example -->
+      </p>
+
+      <p>
+        This can be implemented recursively, but the implementation below is an iterative one. 
+        Iterative solutions can sometimes be faster than recursive ones, even though they might be 
+        more complex to code. They also tend to use less program call stack space than recursive solutions. 
+        Also, don't you just get a good feeling when you implement a recursive algorithm iteratively?        
+      </p>
+      
+      <h2>DFS code</h2>
+      <p>
+        In our iterative implementation of DFS, we'll use a stack to track the unvisited neighbours of a node.
+      </p>
+      
+      <p id="dfs-edge-code-description">
+        First we'll define a helper <code class="language-none">Edge</code> class which represents an edge 
+        in the graph between two nodes. 
+      </p>
+
+      <p>
+        One of the arguments to our DFS method is the graph, which we'll be representing as an 
+        <a href="https://en.wikipedia.org/wiki/Adjacency_list">adjacency list</a>. This is a list of lists. 
+        The elements of the outer list represent nodes in the graph. Each node is itself a list of 
+        <code class="language-none">Edge</code>s
+        which that node is a part of. Other graph representations we could use include an 
+        <a href="https://en.wikipedia.org/wiki/Adjacency_matrix">adjacency matrix</a> 
+        and an <a href="https://en.wikipedia.org/wiki/Edge_list">edge list</a>.
+      </p>
+      <figure>
+        <figcaption id="dfs-edge-code-caption">
+          <span class="code-block-caption">The helper Edge class</span>
+        </figcaption>
+        <button type="button" 
+                data-clipboard-target="#dfs-edge-code"
+                class="copy-code-button"
+                id="dfs-edge-code-button">Copy code</button>
+        <pre
+          aria-labelledby="dfs-edge-code-caption"
+          aria-describedby="dfs-edge-code-description"><code contenteditable spellcheck="false" id="dfs-edge-code">import java.util.List;
+import java.util.Stack;
+
+public class DFS {
+  private static class Edge {
+    private int from, to;    
+
+    public Edge(int from, int to) {
+      this.from = from;
+      this.to = to;      
+    }
+  }
+}</code></pre>            
+      </figure>
+
+      <p id="dfs-code-description">
+        Next, we'll implement the actual DFS algorithm. As well as the graph, it takes in the start node.
+      </p>
+      <figure>
+        <figcaption id="dfs-code-caption">
+          <span class="code-block-caption">The helper Edge class</span>
+        </figcaption>
+        <button type="button" 
+                data-clipboard-target="#dfs-code"
+                class="copy-code-button"
+                id="dfs-code-button">Copy code</button>
+        <pre
+          aria-labelledby="dfs-code-caption"
+          aria-describedby="dfs-code-description"><code contenteditable spellcheck="false" id="dfs-code">public void dfs(List&lt;List&lt;Edge&gt;&gt; graph, int start) {
+  Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
+  stack.push(start);
+  boolean[] visited = new boolean[graph.size()];
+  visited[start] = true;
+  int node;
+  while (!stack.isEmpty()) {
+    node = stack.pop();
+    for (Edge edge : graph.get(node)) {
+      if (!visited[edge.to]) {
+        stack.push(edge.to);
+        visited[edge.to] = true;
+      }
+    }
+  }
+}</code></pre>            
+      </figure>
+
+      <h2>Complexity analysis</h2>
+      <p>
+        What's the time complexity of DFS? Let's suppose that the lines before the 
+        <code class="language-none">while</code> loop take constant time. Then the real work 
+        happens in the <code class="language-none">while</code> loop. How many times will this loop 
+        execute? Well, in the worst, case, each node in the graph is reachable by a path of edges 
+        from the start node. And, since each reachable node is pushed onto the stack exactly once, 
+        this while loop will execute <math><mi>V</mi></math> times, where <math><mi>V</mi></math> 
+        is the number of nodes or "vertices" in the graph.
+      </p>
+
+      <p>
+        If we look closely, we see that the body of the <code class="language-none">for</code> loop 
+        will be executed exactly <math><mi>E</mi></math> times, where <math><mi>E</mi></math> 
+        is the number of edges in the graph.         
+      </p>
+
+      <p>
+        So we pop a node off the stack exactly <math><mi>V</mi></math> times and we execute the for loop 
+        body <math><mi>E</mi></math> times. This gives us a running time of 
+        <math>
+          <mrow>
+            <mi>O</mi>
+            <mo>(</mo>
+            <mi>V</mi>
+            <mo>+</mo>
+            <mi>E</mi>
+            <mo>)</mo>
+          </mrow>
+        </math>.
+      </p>
+
+      <p>
+        How about space? The space complexity depends on how we represent the graph. In this case, 
+        we use an adjacency list. The outer list stores the <math><mi>V</mi></math> vertices and the total 
+        number of elements across all the inner lists is the number of edges, <math><mi>E</mi></math>. 
+        So the space complexity is also 
+        <math>
+          <mrow>
+            <mi>O</mi>
+            <mo>(</mo>
+            <mi>V</mi>
+            <mo>+</mo>
+            <mi>E</mi>
+            <mo>)</mo>
+          </mrow>
+        </math>.
+      </p>
+      
+      <h2>Key takeaways</h2>      
+      <p>
+        We've seen that DFS is a common graph-search algorithm that is used to traverse the nodes and 
+        edges in a graph. On its own, 
+        it's not the most useful algorithm, but it can be used in combination with other algorithms to solve 
+        a variety of problems. Its running time and space complexity when the graph is represented as an adjacency 
+        list are both 
+        <math>
+          <mrow>
+            <mi>O</mi>
+            <mo>(</mo>
+            <mi>V</mi>
+            <mo>+</mo>
+            <mi>E</mi>
+            <mo>)</mo>
+          </mrow>
+        </math>.
+      </p>
+      
+      <nav>
+        <a href="binary-search.html" class="left-nav-link">PREVIOUS</a>
+        <a href="bfs.html" class="right-nav-link">NEXT</a>
+      </nav>
+
+      
+    </main>
+
+    <footer>      
+      <hr class="footer-top-rule">
+      Crafted by Caleb Owusu-Yianoma - &copy; 2020
+    </footer>
+    
+    <!-- A light MathML polyfill recommended by MDN -->
+    <!-- See https://developer.mozilla.org/en-US/docs/Web/MathML/Authoring -->
+    <script src="https://fred-wang.github.io/mathml.css/mspace.js"></script>
+    
+    <!-- Code syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../script.js"></script>
+  </body>    
+</html>
