@@ -74,23 +74,23 @@
       </p>
 
       <p>        
-        The concept we've described so far is known as a "singly-linked list"; each node has a pointer to the 
+        The concept we've described so far is known as a "singly linked list"; each node has a pointer to the 
         next node in the list, and the last node points to <code class=language-none>null</code>. 
         Though we can traverse the list one-way 
         using this structure, removing nodes and traversing in the opposite direction is challenging. 
-        (If you remove a node from a singly-linked list, you need to update the pointer of its previous 
+        (If you remove a node from a singly linked list, you need to update the pointer of its previous 
         node to point to the node following the removed node. Unless you use multiple pointers when looking 
         for the node to remove, this can lead to multiple traversals of the list.)
       </p>
 
       <p>
         A simple and common solution is for each node in the list to maintain two pointers: one to the 
-        next node and one to the previous node. This is known as a "doubly-linked list".
+        next node and one to the previous node. This is known as a "doubly linked list".
       </p>
 
       <h2>What's the point?</h2>
       <p>
-        "Okay, a linked list can store variable-sized objects. But what benefits does it have apart 
+        "Okay, a linked list can store variable-size objects. But what benefits does it have apart 
         from that?", you might be thinking. Good question. Linked lists can be used to:
         <ul>
           <li>Model real-world linked objects like train carts.</li>
@@ -124,10 +124,27 @@
       </p>
 
       <p>
-        Inserting an element in-between two elements in a singly-linked list is a little bit fiddly. 
-        So we're going to look at the implementation of a doubly-linked list in Java. I highly 
-        recommend implementing a singly-linked list as well, though. It's good exercise.
+        Both adding at the head and adding at the tail are constant-time operations. This is one area in which 
+        a linked list trumps a static or dynamic array. There's no need to create new arrays or stuff like that.
       </p>
+
+      <p>
+        Inserting an element in-between two elements is a linear-time operation. We need to scan the list 
+        to find the index to insert at. In the worst case, we scan 
+        <math>
+          <mrow>
+            <mi>n</mi>
+            <mo>/</mo>
+            <mn>2</mn>
+          </mrow>
+        </math>
+        nodes until we find the index in a doubly linked list, (assuming the index exists).
+      </p>
+      <p>
+        In a singly linked list, removal is a little bit fiddly. 
+        So we're going to look at the implementation of a doubly linked list in Java. I highly 
+        recommend implementing a singly linked list as well, though. It's good exercise.
+      </p>      
 
       <p id="linked-list-helper-code-description">
         We'll begin the class with some member variables and a helper class that represents a node.         
@@ -251,8 +268,127 @@ public void addFirst(E element) {
       </figure>
 
       <h2>Removing elements</h2>
+      <p id="linked-list-remove-code-description">
+        A doubly linked list makes removing elements a treat, especially if you've ever tried to 
+        write a remove method for a singly linked list. The code below implements a method to remove 
+        the current head (if it exists), a method to remove the current tail and a method to remove the 
+        element at a given index. 
+      </p>      
+
+      <p>
+        As with adding new elements, removal (from anywhere but the head or tail) is a linear-time operation and 
+        requires us to update the next and previous pointers of any 
+        existing nodes, to ensure that nobody gets a horrible <code class="language-none">NullPointerException</code> 
+        by trying to access nodes or pointers that (should) no longer exist.
+      </p>
+
+      <p>
+        The <a href="https://docs.oracle.com/javase/7/docs/api/java/util/LinkedList.html">Java LinkedList documentation</a> 
+        includes a few other removal methods. Feel free to add those to your implementation.
+      </p>            
+
+      <figure>
+        <figcaption id="linked-list-remove-code-caption">
+          <span class="code-block-caption">Linked list removeFirst(), removeLast() and remove() methods</span>
+        </figcaption>
+        <button type="button" 
+                data-clipboard-target="#linked-list-remove-code"
+                class="copy-code-button"
+                id="linked-list-remove-code-button">Copy code</button>        
+        <pre
+          aria-labelledby="linked-list-remove-code-caption"
+          aria-describedby="linked-list-remove-code-description"><code contenteditable spellcheck="false" id="linked-list-remove-code">public E removeFirst() {
+  if (isEmpty()) {
+    throw new NoSuchElementException("Cannot remove from empty list");
+  }
+
+  E data = head.data;    
+  if (head.next == null) {            
+    tail = null;
+  } else {      
+    head.next.previous = null;                        
+  } 
+  head = head.next;           
+  size--;        
+  return data;    
+}
+
+public E removeLast() {
+  if (isEmpty()) {
+    throw new NoSuchElementException("Cannot remove from empty list");
+  }
+
+  E data = tail.data;
+  if (tail.previous == null) {
+    head = null;
+  } else {
+    tail.previous.next = null;
+  }
+  tail = tail.previous;    
+  size--;
+  return data;    
+}
+
+public E remove(int index) {
+  if (index &lt; 0 || index &gt;= size) {
+    throw new IndexOutOfBoundsException("Invalid index; got: " + index);
+  }
+
+  if (index == 0) return removeFirst();
+  if (index == size-1) return removeLast();
+
+  int i;
+  Node&lt;E&gt; traverser;
+  if (index &gt; size/2) {      
+    for (i = size-1, traverser = tail; i &gt; index; i--) {
+      traverser = traverser.previous;
+    }
+  } else {      
+    for (i = 0, traverser = head; i &lt; index; i++) {
+      traverser = traverser.next;
+    }
+  }
+  E data = traverser.data;
+  traverser.previous.next = traverser.next;
+  traverser.next.previous = traverser.previous;
+  traverser = null;
+  size--;
+  return data;
+}</code></pre>
+      </figure>
+
+      <p>
+        That's it for this implementation. The linked list code is a bit more involved than 
+        the code for many of the other data structures we'll see, because of the pointer updating. 
+        But understanding how it works makes understanding many other data structures a breeze, especially 
+        those implemented using a linked list.
+      </p>
 
       <h2>Key takeaways</h2>
+      <p>
+        I enjoyed writing that. I hope you enjoyed reading it and coding along. 
+      </p>
+      <p>
+        We've seen that a linked list: 
+        <ul>
+          <li>Enables us to store variable-size objects (almost) anywhere in memory.</li>
+          <li>Has constant-time additions to and removals from the head and tail (in a doubly linked list).</li>
+          <li>Has linear-time additions and removals everywhere else in the list.</li>
+        </ul>                
+      </p>
+
+      <p>
+        Regarding space complexity, the operations we've covered will be 
+        <math>
+          <mrow>
+            <mi>O</mi>
+            <mo>(</mo>
+            <mi>n</mi>
+            <mo>)</mo>
+          </mrow>
+        </math>, 
+        where <math><mi>n</mi></math> is the number of nodes in the linked list.
+      </p>
       
       <nav>
         <a href="dynamic-array.html" class="left-nav-link">PREVIOUS</a>
