@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css2?family=Commissioner&family=Roboto:wght@300&display=swap" rel="stylesheet">    
+    
+    <!-- Code display -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/themes/prism.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet">    
+    
+    <link href="../styles/style.css" rel="stylesheet">
+    
+    <title>Dijkstra's SSSP algorithm | Data Structures and Algorithms Manual</title>    
+  </head>
+  <body class="container language-java line-numbers">
+    <nav class="wide">
+      <ol>
+        <li><a href="../index.html" class="home-page-link">DATA STRUCTURES AND ALGORITHMS</a></li>
+        <li><a href="../introduction.html" class="nav-menu-section-item">Introduction</a></li>
+        <li><a href="../computational-complexity.html" class="nav-menu-section-item">Computational complexity</a></li>
+        <li class="nav-menu-header-item">
+          Data structures
+          <ol>
+            <li><a href="../data-structures/data-structures-overview.html" class="nav-menu-section-item">Data structures overview</a></li>
+            <li><a href="../data-structures/array.html" class="nav-menu-section-item">Array</a></li>
+            <li><a href="../data-structures/dynamic-array.html" class="nav-menu-section-item">Dynamic array</a></li>        
+            <li><a href="../data-structures/linked-list.html" class="nav-menu-section-item">Linked list</a></li>        
+            <li><a href="../data-structures/stack.html" class="nav-menu-section-item">Stack</a></li>        
+            <li><a href="../data-structures/queue.html" class="nav-menu-section-item">Queue</a></li>        
+          </ol>
+        </li>        
+        <li class="nav-menu-header-item">
+          Algorithms
+          <ol>
+            <li><a href="algorithms-overview.html" class="nav-menu-section-item">Algorithms overview</a></li>        
+            <li><a href="binary-search.html" class="nav-menu-section-item">Binary search</a></li> 
+            <li><a href="dfs.html" class="nav-menu-section-item">Depth-first search</a></li> 
+            <li><a href="bfs.html" class="nav-menu-section-item">Breadth-first search</a></li> 
+            <li><a href="dijkstras-shortest-path.html" class="nav-menu-section-item">Dijkstra's SSSP algorithm</a></li> 
+          </ol>
+        </li>        
+      </ol>
+    </nav>
+
+    <main>
+      <nav class="narrow">
+        <a href="../index.html" class="home-page-link">DATA STRUCTURES AND ALGORITHMS</a>
+      </nav>
+      <nav class="narrow">
+        <a href="bfs.html" class="left-nav-link">PREVIOUS</a>        
+      </nav>
+
+      <h1>Dijkstra's Shortest Path algorithm</h1>                  
+
+      <h2>Motivation</h2>
+      <p>
+        In the previous section, we noted that BFS enables us to find the shortest path between a start node 
+        and other nodes, but with the caveat that the graph has unweighted edges. Dijkstra's Single-Source 
+        Shortest Path, or SSSP, algorithm mostly solves this problem. It's "mostly" because there's a caveat 
+        here too: the graph edges must have non-negative weights. The reason for this is because the algorithm 
+        uses a technique called "relaxation" to eagerly find the next most promising edge to traverse. Let's see 
+        how this works.
+      </p>
+
+      <h2>The main idea</h2>      
+      <p>
+        Given an undirected graph with non-negative edge weights, Dijkstra's algorithm does the following:
+        <ul>
+          <li>
+            It creates a <code class="language-none">distance</code> array to store the shortest distance 
+            from the start node to each other node in the graph.
+          </li>
+          <li>
+            It sets the initial distance to each other node from the start node to postive infinity. The 
+            start node has an initial distance of 0, since it is itself.
+          </li>
+          <li>
+            It maintains a <a href="https://en.wikipedia.org/wiki/Priority_queue">priority queue</a> of key-value 
+            pairs, where the key is a node index and the value is the current shortest distance from the starting node 
+            to the node represented by the key.
+          </li>
+          <li>
+            It traverses the graph from the starting node, visiting nodes in turn by polling the priority queue 
+            and adding key-value pairs to the priority queue for unvisited nodes.            
+          </li>
+          <li>
+            If the algorithm finds a shorter path from the start node to a given node, it "relaxes" the edge, by 
+            updating the value for the node in the distance array. 
+          </li>
+          <li>
+            The algorithm continues like this until the queue is empty. 
+          </li>
+        </ul>        
+      </p>
+
+      <p>
+        A slight modification of the base algorithm can be used to construct the shortest path from the starting node 
+        to all other nodes that are reachable from it in the graph. 
+      </p>      
+
+      <p>
+        Let's look at an example. <!-- TODO: add an example -->
+      </p>      
+      
+      <h2>Code time</h2>                  
+      <p id="dijkstras-edge-code-description">
+        We begin the implementation of the algorithm with 
+        a helper <code class="language-none">Edge</code> class. 
+        It's similar to the one we used for DFS and BFS, except that it has a 
+        <code class="language-none">cost</code> field that represents the weight of the edge.
+      </p>
+      
+      <figure>
+        <figcaption id="dijkstars-edge-code-caption">
+          <span class="code-block-caption">The helper Edge class</span>
+        </figcaption>
+        <button type="button" 
+                data-clipboard-target="#dijkstras-edge-code"
+                class="copy-code-button"
+                id="dijkstras-edge-code-button">Copy code</button>
+        <pre
+          aria-labelledby="dijkstras-edge-code-caption"
+          aria-describedby="dijkstras-edge-code-description"><code contenteditable spellcheck="false" id="dijkstras-edge-code">import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.PriorityQueue;
+
+public class DijkstrasShortestPath {
+  private Integer[] previous;
+  
+  private static class Edge {
+    private int from, to, cost;    
+
+    public Edge(int from, int to, int cost) {
+      this.from = from;
+      this.to = to;      
+      this.cost = cost;
+    }
+  }
+}</code></pre>            
+      </figure>
+
+      <p>
+        For the sake of simplicity, I assume that edge weights are integers, but in your implementation, feel 
+        free to use real numbers.
+      </p>
+
+      <p>
+        The <code class="language-none">previous</code> array will be used to construct the shortest path from the 
+        start node to all other reachable nodes in the graph.
+      </p>
+
+      <p id="dijkstras-node-code-description">
+        Next up, we have a <code class="language-none">Node</code> helper class which is used to represent the 
+        key-value pairs that are stored in the priority queue. We also create a 
+        <code class="language-none">Comparator</code> comparison function which the priority queue will use to 
+        compare nodes when Dijkstra's polls it for the next most promising node.
+      </p>
+      <figure>
+        <figcaption id="dijkstras-node-code-caption">
+          <span class="code-block-caption">The helper Node class and Comparator function</span>
+        </figcaption>
+        <button type="button" 
+                data-clipboard-target="#dijkstras-node-code"
+                class="copy-code-button"
+                id="dijkstras-node-code-button">Copy code</button>
+        <pre
+          aria-labelledby="dijkstras-node-code-caption"
+          aria-describedby="dijkstras-node-code-description"><code contenteditable spellcheck="false" id="dijkstras-node-code">private static class Node {
+  private int id, value;
+
+  public Node(int id, int value) {
+    this.id = id;
+    this.value = value;
+  }
+}
+
+private Comparator&lt;Node&gt; nodeComparator = new Comparator&lt;&gt;() {
+  @Override
+  public int compare(Node node1, Node node2) {
+    if (node1.value == node2.value) return 0;
+    return node1.value &lt; node2.value ? -1 : 1;      
+  }
+};</code></pre>            
+      </figure>      
+
+      <p id="dijkstras-code-description">
+        Next up is Dijkstra's algorithm itself. It might seem a bit more complex than DFS and BFS, which it is,
+        but when broken down it's relatively straightforward. 
+      </p>
+      <figure>
+        <figcaption id="dijkstras-code-caption">
+          <span class="code-block-caption">Dijkstra's SSSP algorithm</span>
+        </figcaption>
+        <button type="button" 
+                data-clipboard-target="#dijkstras-code"
+                class="copy-code-button"
+                id="dijkstras-code-button">Copy code</button>
+        <pre
+          aria-labelledby="dijkstras-code-caption"
+          aria-describedby="dijkstras-code-description"><code contenteditable spellcheck="false" id="dijkstras-code">public double[] dijkstra(List&lt;List&lt;Edge&gt;&gt; graph, int start) {
+  if (start &lt; 0 || start &gt;= graph.size()) {
+    throw new IllegalArgumentException("Start node index is invalid; got: " + start);
+  }
+
+  int v = graph.size();
+  previous = new Integer[v];
+  boolean[] visited = new boolean[v];    
+  double[] distance = new double[v];            
+  for (int i = 0; i &lt; v; i++) {
+    distance[i] = (i == start ? 0 : Double.POSITIVE_INFINITY);            
+  }
+  PriorityQueue&lt;Node&gt; queue = new PriorityQueue&lt;&gt;(nodeComparator);
+  queue.offer(new Node(start, 0));
+  Node node;
+
+  while (!queue.isEmpty()) {
+    node = queue.poll();
+    if (node.value &gt; distance[node.id]) continue;
+    for (Edge edge : graph.get(node.id)) {
+      if (!visited[edge.to]) {
+        int newDistance = node.value + edge.cost;
+        if (newDistance &lt; distance[edge.to]) {
+          previous[edge.to] = edge.from;
+          distance[edge.to] = newDistance;
+          queue.offer(new Node(edge.to, newDistance));
+        }
+      }
+    }
+    visited[node.id] = true;
+  }
+  return distance;
+}</code></pre>            
+      </figure>
+
+      <p id="dijkstras-path-construction-code-description">
+        Finally, we have the code to construct the shortest path from the starting node to 
+        all other nodes that are reachable from it. First, it runs Dijkstra's algorithm. 
+        Then it loops through the nodes in the graph (we assume that the graph nodes are labelled 
+        from <math><mn>0</mn></math> to 
+        <math>
+          <mrow>
+            <mi>n</mi>
+            <mo>-</mo>
+            <mn>1</mn>
+          </mrow>
+        </math>, 
+        where <math><mi>n</mi></math> is the number of nodes
+        ). For each node, the loop constructs the path from the node to the starting node, reverses the path and 
+        then adds the path to a list of paths which the function eventually returns.
+      </p>
+      <figure>
+        <figcaption id="dijkstras-path-construction-code-caption">
+          <span class="code-block-caption">Method to construct shortest paths</span>
+        </figcaption>
+        <button type="button" 
+                data-clipboard-target="#dijkstras-path-construction-code"
+                class="copy-code-button"
+                id="dijkstras-path-construction-code-button">Copy code</button>
+        <pre
+          aria-labelledby="dijkstras-path-construction-code-caption"
+          aria-describedby="dijkstras-path-construction-code-description"><code contenteditable spellcheck="false" id="dijkstras-path-construction-code">public List&lt;List&lt;Integer&gt;&gt; constructShortestPaths(List&lt;List&lt;Edge&gt;&gt; graph, int start) {
+  if (start &lt; 0 || start &gt;= graph.size()) {
+    throw new IllegalArgumentException("Start node index is invalid; got: " + start);
+  }
+
+  double[] distance = dijkstra(graph, start);    
+  List&lt;List&lt;Integer&gt;&gt; paths = new ArrayList&lt;&gt;(graph.size());
+  for (int i = 0; i &lt; graph.size(); i++) {
+    if (i == start || distance[i] == Double.POSITIVE_INFINITY) {
+      paths.set(i, new ArrayList&lt;&gt;());
+      continue;
+    }
+    List&lt;Integer&gt; path = new ArrayList&lt;&gt;();
+    path.add(i);
+    int node = i;
+    while (previous[node] != null) {        
+      path.add(previous[node]);
+      node = previous[node];
+    }
+    Collections.reverse(path);
+    paths.set(i, path);
+  }
+  return paths;  
+}</code></pre>            
+      </figure>      
+
+      <h2>Complexity analysis</h2>
+      <p>
+        Nice one. So that's Dijkstra's algorithm. What's its time complexity? Well, this depends on a few things. 
+        Unlike BFS and DFS, we have a priority queue as well as the main 
+        <code class="language-none">while</code> loop. If the priority queue is implemented using a 
+        <a href="https://en.wikipedia.org/wiki/Binary_heap">binary heap</a>, then the 
+        <code class="language-none">offer()</code> and <code class="language-none">poll()</code> 
+        operations both have a  
+        <math>
+          <mrow>
+            <mi>O</mi>
+            <mo>(</mo>
+            <mi>log</mi>
+            <mo>(</mo>
+            <mi>n</mi>
+            <mo>)</mo>
+            <mo>)</mo>
+          </mrow>
+        </math> running time, where 
+        <math><mi>n</mi></math> is the number of elements currently in the priority queue.
+      </p>      
+
+      <p>
+        There'll be 
+        <math>
+          <mrow>
+            <mi>O</mi>
+            <mo>(</mo>                        
+            <mi>V</mi>            
+            <mo>)</mo>
+          </mrow>
+        </math> 
+        <code class="language-none">poll()</code> operations, where <math><mi>V</mi></math> is the number of 
+        nodes in the graph. In our implementation, it's possible that more than one 
+        <code class="language-none">Node</code> object will be put into the priority queue for a given graph node,
+        but this doesn't affect the order <math><mi>V</mi></math> result.
+      </p>
+
+      <p>
+        The body of the <code class="language-none">for</code> loop inside the 
+        <code class="language-none">while</code> loop will execute exactly <math><mi>E</mi></math> times, 
+        where <math><mi>E</mi></math> is the number of edges in the graph (we're assuming that each node is 
+        reachable from the start node, which will give us the worst case). Since the 
+        <code class="language-none">offer()</code> operation inside this 
+        <code class="language-none">for</code> loop is 
+        <math>
+          <mrow>
+            <mi>O</mi>
+            <mo>(</mo>
+            <mi>log</mi>
+            <mo>(</mo>
+            <mi>n</mi>
+            <mo>)</mo>
+            <mo>)</mo>
+          </mrow>
+        </math>, when we add everything up, we get a total running time of 
+        <math>
+          <mrow>
+            <mi>O</mi>
+            <mo>(</mo>
+            <mo>(</mo>
+            <mi>V</mi>
+            <mo>+</mo>
+            <mi>E</mi>
+            <mo>)</mo>
+            <mi>log</mi>
+            <mo>(</mo>
+            <mi>V</mi>
+            <mo>)</mo>
+            <mo>)</mo>
+          </mrow>
+        </math>.
+      </p>
+
+      <p>
+        And space complexity? Well, building a binary heap-based priority queue will require 
+        <math>
+          <mrow>
+            <mi>O</mi>
+            <mo>(</mo>
+            <mi>V</mi>
+            <mo>)</mo>            
+          </mrow>
+        </math> space. So will maintaining the various arrays the algorithm uses. So that will be the space complexity.
+      </p>
+
+      <p>
+        There are a few optimisations available, though. We won't dive into them here, but feel free to do so on your 
+        own. One improvement is to use an 
+        <a href="https://algs4.cs.princeton.edu/24pq/IndexMinPQ.java.html">indexed priority queue</a> instead of a 
+        priority queue. This will allow us to update the value of a given key-value pair in constant-time, instead of 
+        having to offer a new key-value pair in logarithmic time. 
+      </p>
+
+      <p>
+        A more substantial optimisation is to use a Fibonacci heap to implement the priority queue. This gives a 
+        running time of 
+        <math>
+          <mrow>
+            <mi>O</mi>
+            <mo>(</mo>
+            <mi>V</mi>
+            <mi>log</mi>
+            <mo>(</mo>
+            <mi>V</mi>
+            <mo>)</mo>
+            <mo>+</mo>
+            <mi>E</mi>
+            <mo>)</mo>
+          </mrow>
+        </math>. I think you'll find the details and proofs behind this fascinating. If you're interested, check out 
+        <a href="https://mitpress.mit.edu/books/introduction-algorithms-third-edition">Introduction to Algorithms, Third Edition</a>.
+      </p>
+      
+      <h2>Key takeaways</h2>      
+      <p>
+        There we have it! An algorithm which enables us to find the shortest path from any two nodes in an undirected 
+        or directed graph with non-negative edge weights. The implementation we've looked at has a running time that can 
+        be improved on by using more sophisticated binary heap implementations. Regardless, it's a pretty cool algorithm!
+      </p>
+
+      <p>
+        By the way, if you don't know much about 
+        <a href="https://en.wikipedia.org/wiki/Edsger_W._Dijkstra">Edsger Dijkstra</a>, it's worth checking him out. 
+        And if you like getting the facts from the source, check out the 
+        <a href="https://dl.acm.org/doi/10.1007/BF01386390">
+          original paper on Dijkstra's algorithm</a>. 
+      </p>      
+      
+      <nav >
+        <a href="bfs.html" class="left-nav-link">PREVIOUS</a>        
+      </nav>
+      
+    </main>
+
+    <footer>      
+      <hr class="footer-top-rule">
+      Crafted by Caleb Owusu-Yianoma - &copy; 2020
+    </footer>
+    
+    <!-- A light MathML polyfill recommended by MDN -->
+    <!-- See https://developer.mozilla.org/en-US/docs/Web/MathML/Authoring -->
+    <script src="https://fred-wang.github.io/mathml.css/mspace.js"></script>
+    
+    <!-- Code syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../script.js"></script>
+  </body>    
+</html>

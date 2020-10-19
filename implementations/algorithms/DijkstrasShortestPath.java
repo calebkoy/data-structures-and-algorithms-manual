@@ -20,7 +20,7 @@ public class DijkstrasShortestPath {
   }
 
   private static class Node {
-    int id, value;
+    private int id, value;
 
     public Node(int id, int value) {
       this.id = id;
@@ -41,18 +41,21 @@ public class DijkstrasShortestPath {
   // This could be optimised by using an indexed priority queue, 
   // to avoid polling stale nodes from the priority queue.
   public double[] dijkstra(List<List<Edge>> graph, int start) {
+    if (start < 0 || start >= graph.size()) {
+      throw new IllegalArgumentException("Start node index is invalid; got: " + start);
+    }
+
     int v = graph.size();
-    boolean[] visited = new boolean[v];
     previous = new Integer[v];
-    double[] distance = new double[v];        
-    distance[start] = 0;
+    boolean[] visited = new boolean[v];    
+    double[] distance = new double[v];            
     for (int i = 0; i < v; i++) {
-      if (i == start) continue;
-      distance[i] = Double.POSITIVE_INFINITY;
+      distance[i] = (i == start ? 0 : Double.POSITIVE_INFINITY);            
     }
     PriorityQueue<Node> queue = new PriorityQueue<>(nodeComparator);
     queue.offer(new Node(start, 0));
     Node node;
+
     while (!queue.isEmpty()) {
       node = queue.poll();
       if (node.value > distance[node.id]) continue;
@@ -71,10 +74,11 @@ public class DijkstrasShortestPath {
     return distance;
   }
 
-  public List<List<Integer>> constructPaths(List<List<Edge>> graph, int start) {
+  public List<List<Integer>> constructShortestPaths(List<List<Edge>> graph, int start) {
     if (start < 0 || start >= graph.size()) {
       throw new IllegalArgumentException("Start node index is invalid; got: " + start);
     }
+
     double[] distance = dijkstra(graph, start);    
     List<List<Integer>> paths = new ArrayList<>(graph.size());
     for (int i = 0; i < graph.size(); i++) {
