@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css2?family=Commissioner&family=Roboto:wght@300&display=swap" rel="stylesheet">    
+    
+    <!-- Code display -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/themes/prism.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet">    
+    
+    <link href="../styles/style.css" rel="stylesheet">
+    
+    <title>Linked list | Data Structures and Algorithms Manual</title>    
+  </head>
+  <body class="container language-java line-numbers">
+    <nav class="wide">
+      <ol>
+        <li><a href="../index.html" class="home-page-link">DATA STRUCTURES AND ALGORITHMS</a></li>
+        <li><a href="../introduction.html" class="nav-menu-section-item">Introduction</a></li>
+        <li><a href="../computational-complexity.html" class="nav-menu-section-item">Computational complexity</a></li>
+        <li class="nav-menu-header-item">
+          Data structures
+          <ol>
+            <li><a href="data-structures-overview.html" class="nav-menu-section-item">Data structures overview</a></li>
+            <li><a href="array.html" class="nav-menu-section-item">Array</a></li>
+            <li><a href="dynamic-array.html" class="nav-menu-section-item">Dynamic array</a></li>        
+            <li><a href="linked-list.html" class="nav-menu-section-item">Linked list</a></li>        
+          </ol>
+        </li>        
+        <li class="nav-menu-header-item">
+          Algorithms
+          <ol>
+            <li><a href="../algorithms/algorithms-overview.html" class="nav-menu-section-item">Algorithms overview</a></li>        
+            <li><a href="../algorithms/binary-search.html" class="nav-menu-section-item">Binary search</a></li> 
+          </ol>
+        </li>        
+      </ol>
+    </nav>
+
+    <main>
+      <nav class="narrow">
+        <a href="../index.html" class="home-page-link">DATA STRUCTURES AND ALGORITHMS</a>
+      </nav>
+      <nav class="narrow">
+        <a href="dynamic-array.html" class="left-nav-link">PREVIOUS</a>
+        <a href="stack.html" class="right-nav-link">NEXT</a>
+      </nav>
+
+      <h1>Linked list</h1>
+
+      <p>
+        Of all data structures, the linked list might be my favourite. Ever since I first learnt how 
+        to implement one, I've been intrigued by pointers and memory. I know; that combination 
+        isn't everyone's cup of tea, but I'm fascinated by it. 
+      </p>
+      
+      <h2>What's a linked list?</h2>
+      <p>
+        We saw in previous sections that arrays are only able to hold objects of the same size. 
+        Imagine a data structure (visualise a container) that has slots which can hold variable-size objects. We 
+        can't use contiguous blocks of memory to achieve this goal, but we can use available 
+        memory slots as long as each slot has a pointer to the next slot in the container. 
+        That's exactly what a linked list is.
+      </p>
+
+      <p>
+        Since the memory slots don't need to be near each other, a given "slot" could actually consist 
+        of multiple memory slots. All we need is to maintain the pointers. In fact, all the user of the linked 
+        list really needs to keep track of is a pointer to the "head" of the linked list. This is the first 
+        "node" of the list and enables us to find all other nodes, by traversing the chain of pointers.
+        Some implementations also keep track of the "tail", or last node, of the list.
+      </p>
+
+      <p>        
+        The concept we've described so far is known as a "singly-linked list"; each node has a pointer to the 
+        next node in the list, and the last node points to <code class=language-none>null</code>. 
+        Though we can traverse the list one-way 
+        using this structure, removing nodes and traversing in the opposite direction is challenging. 
+        (If you remove a node from a singly-linked list, you need to update the pointer of its previous 
+        node to point to the node following the removed node. Unless you use multiple pointers when looking 
+        for the node to remove, this can lead to multiple traversals of the list.)
+      </p>
+
+      <p>
+        A simple and common solution is for each node in the list to maintain two pointers: one to the 
+        next node and one to the previous node. This is known as a "doubly-linked list".
+      </p>
+
+      <h2>What's the point?</h2>
+      <p>
+        "Okay, a linked list can store variable-sized objects. But what benefits does it have apart 
+        from that?", you might be thinking. Good question. Linked lists can be used to:
+        <ul>
+          <li>Model real-world linked objects like train carts.</li>
+          <li>Build other data structures like <a href="stack.html">stacks</a>.</li>
+          <li><a href="https://www.learncpp.com/cpp-tutorial/69-dynamic-memory-allocation-with-new-and-delete/">Dynamically allocate memory on the heap</a>.</li>
+          <li>Efficiently insert items between other items in a list.</li>
+        </ul>
+      </p>
+
+      <p>
+        If that's not enough, then add the fact that there's something intriguing about traversing a chain of pointers, 
+        like trying to find your way through a maze.
+      </p>
+
+      <p>
+        Ready to see some code?
+      </p>
+
+      <h2>Adding elements</h2>
+      <p>
+        To add an element to an empty linked list, we create a new node, insert the element into the list 
+        and ensure the head pointer points to the new node. To add an element at the head of a non-empty list, 
+        we again create a new node. But before we point the head to the new node, we point the new node to the 
+        current head of the list.         
+      </p>
+
+      <p>
+        If we have a pointer to the tail of the list, adding an element at the tail is similar. 
+        We create a new node, point the current tail to the new node and then update the tail pointer to 
+        point to the new node.
+      </p>
+
+      <p>
+        Inserting an element in-between two elements in a singly-linked list is a little bit fiddly. 
+        So we're going to look at the implementation of a doubly-linked list in Java. I highly 
+        recommend implementing a singly-linked list as well, though. It's good exercise.
+      </p>
+
+      <p id="linked-list-helper-code-description">
+        We'll begin the class with some member variables and a helper class that represents a node.         
+      </p>
+      <figure>
+        <figcaption id="linked-list-helper-code-caption">
+          <span class="code-block-caption">Linked list member variables and Node class</span>
+        </figcaption>
+        <button type="button" 
+                data-clipboard-target="#linked-list-helper-code"
+                class="copy-code-button"
+                id="linked-list-helper-code-button">Copy code</button>
+        <pre
+          aria-labelledby="linked-list-helper-code-caption"
+          aria-describedby="linked-list-helper-code-description"><code contenteditable spellcheck="false" id="linked-list-helper-code">import java.util.NoSuchElementException;
+
+public class DoublyLinkedList&lt;E&gt; {
+  private Node&lt;E&gt; head, tail;
+  private int size;
+
+  private static class Node&lt;E&gt; {
+    private Node&lt;E&gt; previous, next;
+    private E data;
+
+    public Node(Node&lt;E&gt; previous, Node&lt;E&gt; next, E data) {
+      this.previous = previous;
+      this.next = next;
+      this.data = data;
+    }
+  }
+}</code></pre>            
+      </figure>      
+
+      <p>
+        And now we'll add the &#x2026; add methods.
+      </p>
+
+      <p id="linked-list-add-code-description">
+        By default, we add a new element to the tail of the list. We can also add to the head, though.
+      </p>
+      <figure>
+        <figcaption id="linked-list-add-code-caption">
+          <span class="code-block-caption">Linked list add(), addFirst() and addLast() methods</span>
+        </figcaption>
+        <button type="button" 
+                data-clipboard-target="#linked-list-add-code"
+                class="copy-code-button"
+                id="linked-list-add-code-button">Copy code</button>
+        <pre
+          aria-labelledby="linked-list-add-code-caption"
+          aria-describedby="linked-list-add-code-description"><code contenteditable spellcheck="false" id="linked-list-add-code">// Assume this list permits duplicates.
+public void add(E element) {
+  addLast(element);
+}
+
+public void addLast(E element) {
+  if (isEmpty()) {
+    head = tail = new Node&lt;&gt;(null, null, element);
+  } else {
+    tail = tail.next = new Node&lt;&gt;(tail, null, element);
+  }
+  size++;
+}
+
+public void addFirst(E element) {    
+  if (isEmpty()) {
+    head = tail = new Node&lt;&gt;(null, null, element);
+  } else {
+    head = head.previous = new Node&lt;&gt;(null, head, element);      
+  }
+  size++;            
+}</code></pre>
+      </figure>
+
+      <p id="linked-list-insert-code-description">
+        The final add method is actually a method to insert an element in-between two other nodes in the list. 
+        We traverse the list from either the head or the tail, create a new node for the element and update or set
+        the relevant next and previous pointers.
+      </p>
+      <figure>
+        <figcaption id="linked-list-insert-code-caption">
+          <span class="code-block-caption">Linked list method to add element at specific index</span>
+        </figcaption>
+        <button type="button" 
+                data-clipboard-target="#linked-list-insert-code"
+                class="copy-code-button"
+                id="linked-list-insert-code-button">Copy code</button>        
+        <pre
+          aria-labelledby="linked-list-insert-code-caption"
+          aria-describedby="linked-list-insert-code-description"><code contenteditable spellcheck="false" id="linked-list-insert-code">public void add(int index, E element) {
+  if (index &lt; 0 || index &gt;= size) {
+    throw new IndexOutOfBoundsException("Invalid index; got: " + index);
+  }
+
+  if (index == 0) {
+    addFirst(element);
+    return; 
+  }
+
+  if (index == size) {
+    addLast(element);
+    return;
+  }
+              
+  int i;
+  Node&lt;E&gt; traverser;
+  if (index &gt; size/2) {
+    for (i = size-1, traverser = tail; i &gt; index; i--) {
+      traverser = traverser.previous;
+    }
+  } else {
+    for (i = 0, traverser = head; i &lt; index; i++) {
+      traverser = traverser.next;
+    }
+  }        
+  Node&lt;E&gt; newNode = new Node&lt;&gt;(traverser.previous, traverser, element);                
+  traverser.previous.next = newNode;
+  traverser.previous = newNode;    
+  size++;
+}</code></pre>
+      </figure>
+
+      <h2>Removing elements</h2>
+
+      <h2>Key takeaways</h2>
+      
+      <nav>
+        <a href="dynamic-array.html" class="left-nav-link">PREVIOUS</a>
+        <a href="stack.html" class="right-nav-link">NEXT</a>
+      </nav>
+
+      
+    </main>
+
+    <footer>      
+      <hr class="footer-top-rule">
+      Crafted by Caleb Owusu-Yianoma - &copy; 2020
+    </footer>
+    
+    <!-- A light MathML polyfill recommended by MDN -->
+    <!-- See https://developer.mozilla.org/en-US/docs/Web/MathML/Authoring -->
+    <script src="https://fred-wang.github.io/mathml.css/mspace.js"></script>
+    
+    <!-- Code syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../script.js"></script>
+  </body>    
+</html>
