@@ -14,7 +14,7 @@ public class BFS {
     }
   }
   
-  public void search(List<List<Edge>> graph, int start) {
+  public void bfs(List<List<Edge>> graph, int start) {
     Queue<Integer> queue = new LinkedList<>();
     queue.offer(start);
     boolean[] visited = new boolean[graph.size()];

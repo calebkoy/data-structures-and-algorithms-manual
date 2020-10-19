@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css2?family=Commissioner&family=Roboto:wght@300&display=swap" rel="stylesheet">    
+    
+    <!-- Code display -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/themes/prism.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet">    
+    
+    <link href="../styles/style.css" rel="stylesheet">
+    
+    <title>BFS | Data Structures and Algorithms Manual</title>    
+  </head>
+  <body class="container language-java line-numbers">
+    <nav class="wide">
+      <ol>
+        <li><a href="../index.html" class="home-page-link">DATA STRUCTURES AND ALGORITHMS</a></li>
+        <li><a href="../introduction.html" class="nav-menu-section-item">Introduction</a></li>
+        <li><a href="../computational-complexity.html" class="nav-menu-section-item">Computational complexity</a></li>
+        <li class="nav-menu-header-item">
+          Data structures
+          <ol>
+            <li><a href="../data-structures/data-structures-overview.html" class="nav-menu-section-item">Data structures overview</a></li>
+            <li><a href="../data-structures/array.html" class="nav-menu-section-item">Array</a></li>
+            <li><a href="../data-structures/dynamic-array.html" class="nav-menu-section-item">Dynamic array</a></li>        
+            <li><a href="../data-structures/linked-list.html" class="nav-menu-section-item">Linked list</a></li>        
+            <li><a href="../data-structures/stack.html" class="nav-menu-section-item">Stack</a></li>        
+            <li><a href="../data-structures/queue.html" class="nav-menu-section-item">Queue</a></li>        
+          </ol>
+        </li>        
+        <li class="nav-menu-header-item">
+          Algorithms
+          <ol>
+            <li><a href="algorithms-overview.html" class="nav-menu-section-item">Algorithms overview</a></li>        
+            <li><a href="binary-search.html" class="nav-menu-section-item">Binary search</a></li> 
+            <li><a href="dfs.html" class="nav-menu-section-item">Depth-first search</a></li> 
+            <li><a href="bfs.html" class="nav-menu-section-item">Breadth-first search</a></li> 
+          </ol>
+        </li>        
+      </ol>
+    </nav>
+
+    <main>
+      <nav class="narrow">
+        <a href="../index.html" class="home-page-link">DATA STRUCTURES AND ALGORITHMS</a>
+      </nav>
+      <nav class="narrow">
+        <a href="dfs.html" class="left-nav-link">PREVIOUS</a>
+        <a href="dijkstras-shortest-path.html" class="right-nav-link">NEXT</a>
+      </nav>
+
+      <h1>Breadth-first search</h1>                  
+
+      <h2>Motivation</h2>
+      <p>
+        Breadth-first search, commonly abbreviated to "BFS", is a graph-search algorithm which, like DFS, 
+        systematically traverses the nodes and edges in a graph. If we have DFS, why another algorithm? 
+        Well, unlike DFS, BFS is actually useful on its own. If you run BFS on an unweighted, undirected graph 
+        (here, "unweighted" means that the edges do not have associated weights), you can use it to find the 
+        shortest path between the start node and all other nodes that are reachable from the start node.
+      </p>
+
+      <p>
+        Amongst other applications, BFS is also used:
+        <ul>
+          <li>
+            For garbage collection. For example, see
+            <a href="https://dl.acm.org/doi/10.1145/362790.362798">Cheney's garbage collection algorithm</a>.
+          </li>
+          <li>
+            To construct a variety of other graph-related algorithms, such as 
+            <a href="https://en.wikipedia.org/wiki/Bipartite_graph#Testing_bipartiteness">
+              testing graph bipartiteness
+            </a>.
+          </li>
+        </ul>
+      </p>
+
+      <h2>The main idea</h2>      
+
+      <p>
+        A key difference between DFS and BFS is that, while DFS uses a stack to keep track of nodes, BFS uses 
+        a queue. This enables BFS to completely visit each of the immediate neighbours of a node before continuing 
+        to search the rest of the graph. DFS, on the other hand, searches as deep as possible before backtracking 
+        and visiting other neighbours of a given node. 
+      </p>
+
+      <p>
+        As with DFS, an example will help to illustrate the point. <!-- TODO: add an example -->
+      </p>      
+      
+      <h2>BFS code</h2>      
+      <p>
+        Now let's look at some code.
+      </p>
+      
+      <p id="bfs-edge-code-description">
+        We use the same helper <code class="language-none">Edge</code> class that we used for DFS. 
+      </p>
+      
+      <figure>
+        <figcaption id="bfs-edge-code-caption">
+          <span class="code-block-caption">The helper Edge class</span>
+        </figcaption>
+        <button type="button" 
+                data-clipboard-target="#bfs-edge-code"
+                class="copy-code-button"
+                id="bfs-edge-code-button">Copy code</button>
+        <pre
+          aria-labelledby="bfs-edge-code-caption"
+          aria-describedby="bfs-edge-code-description"><code contenteditable spellcheck="false" id="bfs-edge-code">import java.util.Queue;
+import java.util.LinkedList;
+import java.util.List;
+
+public class BFS {
+  private static class Edge {
+    private int from, to;    
+
+    public Edge(int from, int to) {
+      this.from = from;
+      this.to = to;      
+    }
+  }
+}</code></pre>            
+      </figure>
+
+      <p id="bfs-code-description">
+        Next up is the actual BFS algorithm. It takes in the graph and start node as parameters.
+      </p>
+      <figure>
+        <figcaption id="bfs-code-caption">
+          <span class="code-block-caption">BFS implementation</span>
+        </figcaption>
+        <button type="button" 
+                data-clipboard-target="#bfs-code"
+                class="copy-code-button"
+                id="bfs-code-button">Copy code</button>
+        <pre
+          aria-labelledby="bfs-code-caption"
+          aria-describedby="bfs-code-description"><code contenteditable spellcheck="false" id="bfs-code">public void bfs(List&lt;List&lt;Edge&gt;&gt; graph, int start) {
+  Queue<Integer> queue = new LinkedList&lt;&gt;();
+  queue.offer(start);
+  boolean[] visited = new boolean[graph.size()];
+  visited[start] = true;
+  while (!queue.isEmpty()) {
+    int node = queue.poll();
+    for (Edge edge : graph.get(node)) {
+      if (!visited[edge.to]) {
+        queue.offer(edge.to);
+        visited[edge.to] = true;
+      }
+    }
+  }
+}</code></pre>            
+      </figure>
+
+      <h2>Complexity analysis</h2>
+      <p>
+        What's the time complexity of BFS? Assuming that the first four lines of the algorithm take 
+        constant time, the real work happens inside the <code class="language-none">while</code> loop. As 
+        with DFS, we see that each node gets enqueued and dequeued exactly once. In the worst case, each 
+        node in the graph is reachable from the start node. So the <code class="language-none">poll</code> 
+        operation occurs exactly <math><mi>V</mi></math> times, where <math><mi>V</mi></math> is the number 
+        of nodes in the graph. 
+      </p>
+
+      <p>
+        Also, the body of the <code class="language-none">for</code> loop 
+        is executed exactly <math><mi>E</mi></math> times, where <math><mi>E</mi></math> 
+        is the number of edges in the graph.         
+      </p>      
+
+      <p>
+        So we poll a node exactly <math><mi>V</mi></math> times and we execute the for loop 
+        body <math><mi>E</mi></math> times. In total, we have a running time of 
+        <math>
+          <mrow>
+            <mi>O</mi>
+            <mo>(</mo>
+            <mi>V</mi>
+            <mo>+</mo>
+            <mi>E</mi>
+            <mo>)</mo>
+          </mrow>
+        </math>.
+      </p>
+
+      <p>
+        Since we've used an adjacency list to represent the graph, 
+        the space complexity is also         
+        <math>
+          <mrow>
+            <mi>O</mi>
+            <mo>(</mo>
+            <mi>V</mi>
+            <mo>+</mo>
+            <mi>E</mi>
+            <mo>)</mo>
+          </mrow>
+        </math>, like for our DFS implementation.
+      </p>
+      
+      <h2>Key takeaways</h2>      
+      <p>
+        BFS is a useful graph-search algorithm that can be used to find the shortest path between two nodes 
+        in an unweighted, undirected graph. It also has a variety of other applications directly or indirectly 
+        related to graph theory. It runs in linear time with respect to the number of vertices and edges in the graph: 
+        <math>
+          <mrow>
+            <mi>O</mi>
+            <mo>(</mo>
+            <mi>V</mi>
+            <mo>+</mo>
+            <mi>E</mi>
+            <mo>)</mo>
+          </mrow>
+        </math>.
+      </p>
+
+      <p>
+        One limitation of BFS is that it's not very useful for finding the shortest path in graphs with weighted 
+        edges. The next algorithm solves that issue for certain types of graphs.
+      </p>
+      
+      <nav >
+        <a href="dfs.html" class="left-nav-link">PREVIOUS</a>
+        <a href="dijkstras-shortest-path.html" class="right-nav-link">NEXT</a>
+      </nav>
+
+      
+    </main>
+
+    <footer>      
+      <hr class="footer-top-rule">
+      Crafted by Caleb Owusu-Yianoma - &copy; 2020
+    </footer>
+    
+    <!-- A light MathML polyfill recommended by MDN -->
+    <!-- See https://developer.mozilla.org/en-US/docs/Web/MathML/Authoring -->
+    <script src="https://fred-wang.github.io/mathml.css/mspace.js"></script>
+    
+    <!-- Code syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../script.js"></script>
+  </body>    
+</html>
