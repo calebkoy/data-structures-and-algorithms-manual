@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css2?family=Commissioner&family=Roboto:wght@300&display=swap" rel="stylesheet">    
+    
+    <!-- Code display -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/themes/prism.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet">    
+    
+    <link href="../styles/style.css" rel="stylesheet">
+    
+    <title>Stack | Data Structures and Algorithms Manual</title>    
+  </head>
+  <body class="container language-java line-numbers">
+    <nav class="wide">
+      <ol>
+        <li><a href="../index.html" class="home-page-link">DATA STRUCTURES AND ALGORITHMS</a></li>
+        <li><a href="../introduction.html" class="nav-menu-section-item">Introduction</a></li>
+        <li><a href="../computational-complexity.html" class="nav-menu-section-item">Computational complexity</a></li>
+        <li class="nav-menu-header-item">
+          Data structures
+          <ol>
+            <li><a href="data-structures-overview.html" class="nav-menu-section-item">Data structures overview</a></li>
+            <li><a href="array.html" class="nav-menu-section-item">Array</a></li>
+            <li><a href="dynamic-array.html" class="nav-menu-section-item">Dynamic array</a></li>        
+            <li><a href="linked-list.html" class="nav-menu-section-item">Linked list</a></li>        
+            <li><a href="stack.html" class="nav-menu-section-item">Stack</a></li>  
+            <li><a href="queue.html" class="nav-menu-section-item">Queue</a></li>              
+          </ol>
+        </li>        
+        <li class="nav-menu-header-item">
+          Algorithms
+          <ol>
+            <li><a href="../algorithms/algorithms-overview.html" class="nav-menu-section-item">Algorithms overview</a></li>        
+            <li><a href="../algorithms/binary-search.html" class="nav-menu-section-item">Binary search</a></li> 
+          </ol>
+        </li>        
+      </ol>
+    </nav>
+
+    <main>
+      <nav class="narrow">
+        <a href="../index.html" class="home-page-link">DATA STRUCTURES AND ALGORITHMS</a>
+      </nav>
+      <nav class="narrow">
+        <a href="linked-list.html" class="left-nav-link">PREVIOUS</a>
+        <a href="queue.html" class="right-nav-link">NEXT</a>
+      </nav>
+
+      <h1>Stack</h1>      
+      
+      <p>
+        I think I lied when I said the linked list might be my favourite data structure. The ubiquitous stack 
+        is something else. Even though its implementation is comparatively straightforward, it has 
+        an elegance that never gets old for me.
+      </p>
+
+      <h2>What's a stack?</h2>   
+      <p>
+        A common analogy used to describe a stack data structure is that of a stack of plates. 
+        Suppose you have an empty table. Then you put one plate on the table. Then you put a second 
+        plate on top of the first plate. Add a few more plates. 
+      </p>
+
+      <p>
+        Now, if you want to take a plate off the stack of plates so you can dish your dinner, 
+        you'll probably be sensible and take a single plate off the top of the stack, instead 
+        of picking up a bunch of plates and trying to take one from the middle of the stack 
+        (like <a href="https://youtu.be/AhQoX551Oe8?t=16">master cup stackers</a> do) or, even worse, 
+        trying to pull the bottom plate out of the stack without causing the rest to come crashing down.
+      </p>
+
+      <p>
+        The last plate you put on the stack is the first one to be taken off. This order of operations 
+        is known as "Last In First Out", or "LIFO".
+      </p>
+
+      <h2>What's the point?</h2>
+      <p>
+        Stacks are really useful data structures. Apart from modelling real-world 
+        stacks like plates, you see them crop up in many places, including:
+        <ul>          
+          <li>Programming language stack-based virtual machines, which are used to execute bytecode.</li>
+          <li>
+            Program call stacks, which track the operations that are currently being executed as a computer 
+            program runs.
+          </li>
+          <li>
+            Undo functionality in text editors, browsers and other programs.
+          </li>
+        </ul>
+      </p>
+
+      <p>
+        Let's have a closer look at the key operations of a stack.
+      </p>
+
+      <h2>Push and pop</h2>
+      <p>
+        Putting a new element onto the stack is commonly called "pushing" and removing the most recently pushed 
+        element from the stack is known as "popping". 
+      </p>
+      
+      <p>
+        The time complexity of these operations will depend on 
+        how the stack is implemented. If it's implemented using a dynamic array, then pushing takes 
+        amortised constant time; some pushes might require the array to be resized. However, 
+        if we implement a stack using a linked list, then we get constant-time pushes and pops. 
+        All we need to do is track the top of the stack, which usually points to the most recently pushed element.
+      </p>
+
+      <p>Let's take a look at a linked list-based stack implementation.</p>
+      
+      <h2>The code</h2>
+      <p id="stack-code-description">
+        We'll use Java's <a href="https://docs.oracle.com/javase/7/docs/api/java/util/LinkedList.html">LinkedList</a> 
+        to implement the stack. The first two methods return the size of the stack and tell us if it's empty. 
+        Then we have a method to push an element onto the stack, a method to look at the top element without removing it 
+        and a method to remove the top element. Pretty straightforward.
+      </p>
+      <figure>
+        <figcaption id="stack-code-caption">
+          <span class="code-block-caption">Linked list-based stack implementation</span>
+        </figcaption>
+        <button type="button" 
+                data-clipboard-target="#stack-code"
+                class="copy-code-button"
+                id="stack-code-button">Copy code</button>
+        <pre
+          aria-labelledby="stack-code-caption"
+          aria-describedby="stack-code-description"><code contenteditable spellcheck="false" id="stack-code">import java.util.EmptyStackException;
+import java.util.LinkedList;
+
+public class Stack&lt;E&gt; {
+  private LinkedList&lt;E&gt; list = new LinkedList&lt;&gt;();  
+  
+  public int size() {
+    return list.size();    
+  }
+
+  public boolean empty() {
+    return list.size() == 0;
+  }    
+  
+  public E push(E element) {
+    list.addLast(element);
+    return element;
+  }
+  
+  public E peek() {
+    if (empty()) throw new EmptyStackException();
+    return list.peekLast();
+  }
+  
+  public E pop() {
+    if (empty()) throw new EmptyStackException();
+    return list.removeLast();
+  }  
+}</code></pre>            
+      </figure>
+
+      <h2>Key takeaways</h2>      
+      <p>
+        That's all for the stack. We've seen that it:
+        <ul>
+          <li>Has many practical applications.</li>
+          <li>Is simple to implement.</li>
+          <li>Can have constant-time push, pop and peek operations, depending on the implementation.</li>
+        </ul>
+      </p>
+
+      <p>
+        We didn't mention any disadvantages. Well, depending on your use-case, a 
+        linked list-based stack might not be great.
+        For example, if you need to be able to very quickly access an element in the middle of the stack, it might 
+        be better to use an array-based stack, or simply use an array. Searching through a stack takes
+        <math>
+          <mrow>
+            <mi>O</mi>
+            <mo>(</mo>
+            <mi>n</mi>
+            <mo>)</mo>
+          </mrow>
+        </math> time. 
+      </p>
+
+      <p>
+        The next data structure is similar to a stack, but slightly different.
+      </p>
+      
+      <nav>
+        <a href="linked-list.html" class="left-nav-link">PREVIOUS</a>
+        <a href="queue.html" class="right-nav-link">NEXT</a>
+      </nav>
+
+      
+    </main>
+
+    <footer>      
+      <hr class="footer-top-rule">
+      Crafted by Caleb Owusu-Yianoma - &copy; 2020
+    </footer>
+    
+    <!-- A light MathML polyfill recommended by MDN -->
+    <!-- See https://developer.mozilla.org/en-US/docs/Web/MathML/Authoring -->
+    <script src="https://fred-wang.github.io/mathml.css/mspace.js"></script>
+    
+    <!-- Code syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../script.js"></script>
+  </body>    
+</html>
