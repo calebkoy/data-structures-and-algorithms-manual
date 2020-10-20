@@ -81,9 +81,18 @@
         essentially a container of contiguous slots of computer random access memory, or RAM.                       
       </p>
       
-      <img src="images/array.jpg"
+      <!-- As this currently is, when the viewport width is less than or equal to 900px,
+        the image gets blurry and doesn't resize.
+       -->
+      <img srcset="images/array-75-percent.jpg 588w,
+                   images/array.jpg 785w"
+           sizes="(max-width: 900px) 588px,
+                  785px"
+           src="images/array.jpg"
            alt="A series of computer memory slots; six consecutive slots are shown, 
-                representing a zero-indexed array of size six">
+                representing a zero-indexed array of size six"
+           width="785"
+           height="333">
 
       <h2>Complexity analysis</h2>
       <p>
