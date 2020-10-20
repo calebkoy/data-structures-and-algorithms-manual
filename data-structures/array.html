@@ -80,19 +80,20 @@
         A static array is an array with a fixed size. It can only hold objects of the same size, because it's 
         essentially a container of contiguous slots of computer random access memory, or RAM.                       
       </p>
-      
-      <!-- As this currently is, when the viewport width is less than or equal to 900px,
-        the image gets blurry and doesn't resize.
-       -->
-      <img srcset="images/array-75-percent.jpg 588w,
+            
+      <img srcset="images/array-299.jpg 299w,
+                   images/array-354w.jpg 354w,
+                   images/array-471w.jpg 471w,
+                   images/array-588w.jpg 588w,
                    images/array.jpg 785w"
-           sizes="(max-width: 900px) 588px,
+           sizes="(max-width: 420px) 299px,
+                  (max-width: 512px) 354px,
+                  (max-width: 650px) 471px,
+                  (max-width: 900px) 588px,
                   785px"
            src="images/array.jpg"
            alt="A series of computer memory slots; six consecutive slots are shown, 
-                representing a zero-indexed array of size six"
-           width="785"
-           height="333">
+                representing a zero-indexed array of size six">
 
       <h2>Complexity analysis</h2>
       <p>
