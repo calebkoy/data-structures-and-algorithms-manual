@@ -115,7 +115,7 @@
           </mrow>
         </math>.
         Accessing an element of a static array is also known as "indexing". 
-        Arrays are usually zero-indexed, which means that the first slot of the 
+        Array indices are usually zero-based, which means that the first slot of the 
         array has index 0.          
       </p>                  
 
@@ -161,7 +161,7 @@
         where <math><mi>n</mi></math> is the size of the array. 
       </p>
       <p>
-        Once we've found the nubmer (if it even exists), we'll need to delete it. 
+        Once we've found the number (if it even exists), we'll need to delete it. 
         Assume that deletion takes constant time. 
         Then we'll need to shift all elements to the right of the deleted number one space to the left. 
         In the worst case, this shifting will take 
