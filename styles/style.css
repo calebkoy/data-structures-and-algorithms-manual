@@ -28,7 +28,8 @@ h2 {
   font-size: 3em;
 }
 
-p {
+p,
+img {
   font-size: 1.7em;  
   line-height: 1.6;
 }
