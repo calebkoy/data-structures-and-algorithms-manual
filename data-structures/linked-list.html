@@ -162,7 +162,7 @@
         If we have a pointer to the tail of the list, adding an element at the tail is similar. 
         We create a new node, point the current tail to the new node and then update the tail pointer to 
         point to the new node.
-      </p>
+      </p>      
 
       <p>
         Both adding at the head and adding at the tail are constant-time operations. This is one area in which 
@@ -181,6 +181,23 @@
         </math>
         nodes until we find the index in a doubly linked list, (assuming the index exists).
       </p>
+
+      <p id="doubly-linked-list-insertion-image-label">
+        The image below shows the insertion of a new node in a doubly linked list. The dotted pointers 
+        are the old pointers which are "re-routed" to point to the new node.
+      </p>
+
+      <img srcset="images/linked-list-add-280w.jpg 280w,
+                   images/linked-list-add-373w.jpg 373w,
+                   images/linked-list-add-466w.jpg 466w,
+                   images/linked-list-add.jpg 621w"
+           sizes="(max-width: 416px) 280px,
+                  (max-width: 526px) 373px,
+                  (max-width: 836px) 466px,
+                  621px"
+           src="images/linked-list-add.jpg"
+           aria-labelledby="doubly-linked-list-insertion-image-label">
+
       <p>
         In a singly linked list, removal is a little bit fiddly. 
         So we're going to look at the implementation of a doubly linked list in Java. I highly 
