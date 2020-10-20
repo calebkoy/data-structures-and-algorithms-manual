@@ -44,13 +44,14 @@
       </nav>
       <nav class="narrow">
         <a href="algorithms-overview.html" class="left-nav-link">PREVIOUS</a>        
+        <a href="dfs.html" class="right-nav-link">NEXT</a>        
       </nav>
       <h1>Binary search</h1>      
       <p>    
         Binary search is an algorithm that is used to efficiently search for an element in a sorted list. 
         As covered in the <a href="../data-structures/array.html">section on arrays</a>, searching through an array 
         is a linear-time operation. However, if the array is sorted and we need to find out if it contains a 
-        particular element, we improve on this running time. Here's how. 
+        particular element, we can improve this running time. Here's how. 
       </p>
       <h2>The main idea</h2>
       <p>
@@ -69,10 +70,10 @@
             <mo>=</mo>
             <mn>2</mn>
           </mrow>
-        </math>.                
+        </math> (we floor the result).                
         Now we compare the element at index 2 to the desired value. Since it's greater than the desired value, we can 
         search for the value in the lower half of the array. That is, we can search all the elements to the left of 
-        midpoint. We calculate a new midpoint in this new sub-array: 
+        the midpoint. We calculate a new midpoint in this new sub-array: 
         <math>
           <mrow>
             <mo>(</mo>
@@ -85,8 +86,7 @@
             <mo>=</mo>
             <mn>0</mn>
           </mrow>
-        </math>
-        (we floor the result). 
+        </math>. 
         Since the value at this new midpoint is lower than the desired value, we increase the value of the current low 
         index, so that we search only the elements on the right of the midpoint. The new midpoint is 
         <math>
@@ -145,13 +145,21 @@
       <h2>Time complexity</h2>
       <p>
         What's the time complexity of this algorithm? The first few lines all take constant time to execute. The real 
-        work happens in the while loop. So the question is: How many times does the while loop execute? Let's 
-        look at the worst case. Suppose the input array has size <math><mi>n</mi></math>. Then the while loop will terminate when the 
-        variable <code class="language-none">low</code> is greater than the variable <code class="language-none">high</code>. This occurs when the sorted subarray 
-        that we're inspecting has no more elements in it. On each iteration of the while loop, we halve the size of the 
+        work happens in the while loop. So the question is: How many times does the while loop execute?
+      </p> 
+      <p>
+        Suppose the input array has size <math><mi>n</mi></math>. In the worst case, where 
+        <code class="language-none">element</code> doesn't exist in the array, the while loop will terminate when the 
+        variable <code class="language-none">low</code> is greater than the variable <code class="language-none">high</code>. 
+        This occurs when the sorted subarray that we're inspecting has no more elements in it. 
+      </p>
+      <p>
+        On each iteration of the while loop, we halve the size of the 
         sorted subarray. In the example above, the original array has length six. Then this is halved to become three. 
-        Then this is halved once more to become one. The worst case occurs when the element is not in the original array 
-        and the original array is not empty. Then the first iteration of the while loop looks through an array 
+        Then this is halved once more to become one.
+      </p>
+      <p>
+        The first iteration of the while loop looks through an array 
         of size 
         <math>
           <mrow>
@@ -160,7 +168,7 @@
             <mn>2</mn>
           </mrow>
         </math>.
-        The next looks through an array of size 
+        The next iteration looks through an array of size 
         <math>
           <mrow>
             <mi>n</mi>
@@ -203,8 +211,16 @@
         running time. 
       </p>
 
+      <h2>Key takeaways</h2>
+      <p>
+        Any time you need to scan through a sorted list, consider using binary search. If the list is small, 
+        binary search might not seem like a massive improvement over doing a linear scan, 
+        but as the list size grows, a logarithmic running time begins to seriously outperform a linear one.
+      </p>
+
       <nav>
-        <a href="algorithms-overview.html" class="left-nav-link">PREVIOUS</a>        
+        <a href="algorithms-overview.html" class="left-nav-link">PREVIOUS</a>
+        <a href="dfs.html" class="right-nav-link">NEXT</a>        
       </nav>
     </main>
 
