@@ -38,7 +38,7 @@
             <li><a href="binary-search.html" class="nav-menu-section-item">Binary search</a></li> 
             <li><a href="dfs.html" class="nav-menu-section-item">Depth-first search</a></li> 
             <li><a href="bfs.html" class="nav-menu-section-item">Breadth-first search</a></li> 
-            <li><a href="dijkstras-shortest-path.html" class="nav-menu-section-item">Dijkstra's SSSP algorithm</a></li> 
+            <li><a href="dijkstras-shortest-path-algorithm.html" class="nav-menu-section-item">Dijkstra's SSSP algorithm</a></li> 
           </ol>
         </li>        
       </ol>
@@ -101,7 +101,7 @@
       </p>      
 
       <p>
-        Let's look at an example. <!-- TODO: add an example -->
+        Let's look at an example.
       </p>      
 
       <img srcset="images/dijkstras-algorithm-310w.jpg 310w,
@@ -120,6 +120,83 @@
                 followed by an array storing the final distance from the starting node to all 
                 other nodes. There is a priority queue that shows the order in which nodes 
                 are inserted into the priority queue.">
+
+      <p>
+        Consider the graph above. We'll run Dijkstra's algorithm from node 0.
+        <ol>
+          <li>
+            First, the algorithm initialises an array which stores the initial distance from 0 to all other nodes.
+            The distance to all other nodes is set to positive infinity.
+          </li>
+          <li>
+            Then the algorithm creates a priority queue and enqueues the key-value pair 
+            <code class="language-none">&lt;0, 0&gt;</code>. Then it dequeues it.
+          </li>
+          <li>
+            Node 0 has two neighbours, 1 and 2. Suppose the algorithm chooses 1 first. The current shortest 
+            distance to node 1 is positive infinity. However, the sum of the current shortest distance 
+            to node 0 and the cost of the edge from 0 to 1 is 
+            <math>
+              <mrow>
+                <mn>0</mn>
+                <mo>+</mo>
+                <mn>3</mn>
+                <mo>=</mo>
+                <mn>3</mn>
+              </mrow>
+            </math>. Since 3 is less than positive infinity, the value at index 1 of the distance array is 
+            updated from positive infinity to 3, and the key-value pair 
+            <code class="language-none">&lt;1, 3&gt;</code> is enqueued.
+          </li>
+          <li>
+            A similar step is executed for the other neighbour of node 0, node 2. The shortest distance 
+            from 0 to 2 is updated from positive infinity to 1, and the key-value pair 
+            <code class="language-none">&lt;2, 1&gt;</code> is enqueued.
+          </li>
+          <li>
+            Next, the algorithm dequeues the key-value pair with the smallest value: 
+            <code class="language-none">&lt;2, 1&gt;</code>. Node 2 has two unvisited neighbours: 
+            1 and 3. 
+          </li>
+          <li>
+            The cost of the shortest path from 0 to 1 through 2 is 2, which is less than 
+            the current shortest path to 1. So the current shortest path to 1 is updated and the key-value pair 
+            <code class="language-none">&lt;1, 2&gt;</code> is enqueued.
+            Similarly, the cost of the shortest path from 0 to 3 is updated from positive infinity 
+            to 5 and the key-value pair <code class="language-none">&lt;3, 5&gt;</code> is enqueued.
+          </li>
+          <li>
+            Next, the algorithm dequeues the key-value pair <code class="language-none">&lt;1, 2&gt;</code>. 
+            Node 1 has a single unvisited neighbour 4. The shortest distance from 0 to 4 is updated to 6 
+            and the key-value pair <code class="language-none">&lt;4, 6&gt;</code> is enqueued.
+          </li>
+          <li>
+            The algorithm then dequeues the key-value pair <code class="language-none">&lt;1, 3&gt;</code>. 
+            Since the value is greater than the current shortest distance to node 1 (which is 2), nothing is 
+            done with this key-value pair.
+          </li>
+          <li>
+            The algorithm dequeues the pair <code class="language-none">&lt;3, 5&gt;</code>. 
+            Node 3 has a single unvisited neighbour, node 5. The shortest distance to 5 is updated from 
+            positive infinity to 7 and the pair <code class="language-none">&lt;5, 7&gt;</code> is enqueued.
+          </li>
+          <li>
+            The pair <code class="language-none">&lt;4, 6&gt;</code> is dequeued next. Node 4 has a single 
+            unvisited neighbour, node 6. The shortest distance to 6 is updated from positive infinity to 8, 
+            and the pair <code class="language-none">&lt;6, 8&gt;</code> is enqueued.
+          </li>
+          <li>
+            The algorithm dequeues the pair <code class="language-none">&lt;5, 7&gt;</code>. 
+            Node 5 has a single unvisited neighbour, node 6. However the sum of the shortest distance 
+            to 5 and the cost of the edge from 5 to 6 is greater than the current shortest distance to 6. 
+            So no update occurs. 
+          </li>
+          <li>
+            Finally, the algorithm dequeues <code class="language-none">&lt;6, 8&gt;</code>. Node 6 
+            has no neighbours and the algorithm terminates.
+          </li>
+        </ol>
+      </p>
       
       <h2>Code time</h2>                  
       <p id="dijkstras-edge-code-description">
