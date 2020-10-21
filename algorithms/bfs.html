@@ -74,8 +74,7 @@
           <li>
             To construct a variety of other graph-related algorithms, such as 
             <a href="https://en.wikipedia.org/wiki/Bipartite_graph#Testing_bipartiteness">
-              testing graph bipartiteness
-            </a>.
+              testing graph bipartiteness</a>.
           </li>
         </ul>
       </p>
@@ -104,6 +103,36 @@
            src="images/undirected-graph.jpg"
            alt="An undirected, connected, unweighted graph containing nine nodes, 
                 labelled from 0 to 1.">
+
+      <p>
+        We'll run BFS on the undirected graph above, starting at the node labelled 0.
+        <ol>
+          <li>Node 0 has a single unvisited neighbour, 1. So the algorithm enqueues node 1.</li>
+          <li>
+            Node 1 is dequeued. It has two unvisited neighbours, 2 and 3. Suppose the algorithm explores 2 first.
+            So it enqueues 2 and then enqueues 3.
+          </li>
+          <li>
+            Node 2 is dequeued. It has two unvisited neighbours, 4 and 6. Suppose 4 is explored first. 
+            So the algorithm enqueues 4 and then enqueues 6. 
+          </li>
+          <li>Node 3 is dequeued. It has one unvisited neighbour, node 7. The algorithm enqueues 7.</li>
+          <li>
+            Node 4 is dequeued. It has two unvisited neighbours, 5 and 8. Suppose 5 is explored first. 
+            So the algorithm enqueues 5 and then enqueues 8.
+          </li>
+          <li>
+            Node 6 is dequeued. It has no unvisited neighbours, since both its neighbours, 2 and 5, 
+            were marked as visited when they were enqueued.
+          </li>
+          <li>Node 7 is dequeued. It has no unvisited neighbours.</li>
+          <li>Node 5 is dequeued. It also has no unvisited neighbours.</li>
+          <li>Node 8 is dequeued and it also has no unvisited neighbours.</li>
+          <li>The algorithm terminates since the queue is empty.</li>
+        </ol>
+      </p>
+
+      <p>So the order in which nodes were visited (dequeued) is: 0, 1, 2, 3, 4, 6, 7, 5, 8.</p>
       
       <h2>BFS code</h2>      
       <p>
