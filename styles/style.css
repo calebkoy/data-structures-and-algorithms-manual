@@ -70,7 +70,7 @@ img {
 }
 
 .home-page h1 {
-  font-size: 6em;
+  font-size: 6em;    
   color: #000080;
 }
 
@@ -110,6 +110,10 @@ img {
 
 .home-page footer {
   padding-bottom: none;
+}
+
+.own-line {
+  display: block;
 }
 
 /*===================*/
