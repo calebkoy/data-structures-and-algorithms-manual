@@ -38,7 +38,7 @@ footer {
   font-size: 1.5em;
   padding-top: 2.5em;  
   padding-bottom: 0.5em;    
-  color: #9494b8;  
+  color: #7575a3;  
   text-align: center;  
 }
 
@@ -363,6 +363,7 @@ figure {
   border-color: rgba(0, 0, 77, 0.3);
   border-style: solid;
   border-width: 0.1em 0;
+  line-height: 2em;
 }
 
 code[class*="language-java"] {
