@@ -96,7 +96,7 @@
       </p>
 
       <p>
-        An example will help to illustrate the point. <!-- TODO: add an example -->
+        An example will help to illustrate the point.
       </p>
 
       <img srcset="images/undirected-graph-234w.jpg 234w,
@@ -112,11 +112,32 @@
                 labelled from 0 to 1.">
 
       <p>
-        Consider the undirected graph above. 
+        Consider the undirected graph above. Let's run DFS from the node labelled 0. 
+        <ol>
+          <li>The algorithm selects the only unvisited neighbour of 0, which is 1.</li>
+          <li>Node 1 has two unvisited neighbours, 2 and 3. Suppose the algorithm chooses to explore 3.</li>
+          <li>Node 3 has a single unvisited neighbour, 7.</li>
+          <li>
+            When exploring 7, the algorithm realises that it has no unvisited 
+            neighbours and backtracks to the last node
+            with unvisited neighbours, which is 1.
+          </li>
+          <li>
+            Node 2 is the next unvisited neighbour of 1. It has two unvisited neighbours, 6 and 4. Suppose 
+            4 is chosen next.
+          </li>
+          <li>Node 4 also has two unvisited neighbours, 5 and 8. Suppose 8 is chosen next.</li>
+          <li>Node 8 has no unvisited neighbours, so the algorithm backtracks to 4.</li>
+          <li>Node 5 is the next unvisited neighbour of 4. It has one unvisited neighbour, node 6.</li>
+          <li>
+            Node 6 has no unvisited neighbours, so the algorithm backtracks all the way to starting node 0
+            and finishes running.
+          </li>
+        </ol>
       </p>
 
       <p>
-        This can be implemented recursively, but the implementation below is an iterative one. 
+        This suggests a recursive implementation, but the implementation below is actually an iterative one. 
         Iterative solutions can sometimes be faster than recursive ones, even though they might be 
         more complex to code. They also tend to use less program call stack space than recursive solutions. 
         Also, don't you just get a good feeling when you implement a recursive algorithm iteratively?        
