@@ -71,7 +71,11 @@
       <p>
         Breadth-first search, commonly abbreviated to "BFS", is a graph-search algorithm which, like DFS, 
         systematically traverses the nodes and edges in a graph. If we have DFS, why another algorithm? 
-        Well, unlike DFS, BFS is actually useful on its own. If you run BFS on an unweighted, undirected graph 
+        Well, unlike DFS, BFS is actually useful on its own. 
+      </p>
+      
+      <p>
+        If you run BFS on an unweighted, undirected graph 
         (here, "unweighted" means that the edges do not have associated weights), you can use it to find the 
         shortest path between the start node and all other nodes that are reachable from the start node.
       </p>
@@ -126,12 +130,12 @@
           </li>
           <li>
             Node 2 is dequeued. It has two unvisited neighbours, 4 and 6. Suppose 4 is explored first. 
-            So the algorithm enqueues 4 and then enqueues 6. 
+            Then the algorithm enqueues 4 and then enqueues 6. 
           </li>
           <li>Node 3 is dequeued. It has one unvisited neighbour, node 7. The algorithm enqueues 7.</li>
           <li>
             Node 4 is dequeued. It has two unvisited neighbours, 5 and 8. Suppose 5 is explored first. 
-            So the algorithm enqueues 5 and then enqueues 8.
+            Then the algorithm enqueues 5 and then enqueues 8.
           </li>
           <li>
             Node 6 is dequeued. It has no unvisited neighbours, since both its neighbours, 2 and 5, 
@@ -171,11 +175,11 @@ import java.util.List;
 
 public class BFS {
   private static class Edge {
-    private int from, to;    
+    private int fromNode, toNode;    
 
-    public Edge(int from, int to) {
-      this.from = from;
-      this.to = to;      
+    public Edge(int fromNode, int toNode) {
+      this.fromNode = fromNode;
+      this.toNode = toNode;      
     }
   }
 }</code></pre>            
@@ -202,9 +206,9 @@ public class BFS {
   while (!queue.isEmpty()) {
     int node = queue.poll();
     for (Edge edge : graph.get(node)) {
-      if (!visited[edge.to]) {
-        queue.offer(edge.to);
-        visited[edge.to] = true;
+      if (!visited[edge.toNode]) {
+        queue.offer(edge.toNode);
+        visited[edge.toNode] = true;
       }
     }
   }
@@ -228,7 +232,8 @@ public class BFS {
       </p>      
 
       <p>
-        So we poll a node exactly <math><mi>V</mi></math> times and we execute the for loop 
+        So we poll a node exactly <math><mi>V</mi></math> times and we execute the <code class="language-none">for</code> 
+        loop 
         body <math><mi>E</mi></math> times. In total, we have a running time of 
         <math>
           <mrow>

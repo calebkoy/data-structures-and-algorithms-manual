@@ -70,9 +70,13 @@
       <h2>Motivation</h2>
       <p>
         In the previous section, we noted that BFS enables us to find the shortest path between a start node 
-        and other nodes, but with the caveat that the graph has unweighted edges. Dijkstra's Single-Source 
-        Shortest Path, or SSSP, algorithm mostly solves this problem. It's "mostly" because there's a caveat 
-        here too: the graph edges must have non-negative weights. The reason for this is because the algorithm 
+        and other nodes, but with the caveat that the graph must have unweighted edges. Dijkstra's Single-Source 
+        Shortest Path, or SSSP, algorithm mostly solves this problem.
+      </p>
+
+      <p>
+        It's "mostly" because there's a caveat 
+        here too: the graph edges must have non-negative weights. The reason for this is that the algorithm 
         uses a technique called "relaxation" to eagerly find the next most promising edge to traverse. Let's see 
         how this works.
       </p>
@@ -180,7 +184,7 @@
           </li>
           <li>
             Next, the algorithm dequeues the key-value pair <code class="language-none">&lt;1, 2&gt;</code>. 
-            Node 1 has a single unvisited neighbour 4. The shortest distance from 0 to 4 is updated to 6 
+            Node 1 has a single unvisited neighbour, node 4. The shortest distance from 0 to 4 is updated to 6 
             and the key-value pair <code class="language-none">&lt;4, 6&gt;</code> is enqueued.
           </li>
           <li>
@@ -239,11 +243,11 @@ public class DijkstrasShortestPath {
   private Integer[] previous;
   
   private static class Edge {
-    private int from, to, cost;    
+    private int fromNode, toNode, cost;    
 
-    public Edge(int from, int to, int cost) {
-      this.from = from;
-      this.to = to;      
+    public Edge(int fromNode, int toNode, int cost) {
+      this.fromNode = fromNode;
+      this.toNode = toNode;      
       this.cost = cost;
     }
   }
@@ -252,7 +256,7 @@ public class DijkstrasShortestPath {
 
       <p>
         For the sake of simplicity, I assume that edge weights are integers, but in your implementation, feel 
-        free to use real numbers.
+        free to allow real numbers.
       </p>
 
       <p>
@@ -264,7 +268,7 @@ public class DijkstrasShortestPath {
         Next up, we have a <code class="language-none">Node</code> helper class which is used to represent the 
         key-value pairs that are stored in the priority queue. We also create a 
         <code class="language-none">Comparator</code> comparison function which the priority queue will use to 
-        compare nodes when Dijkstra's polls it for the next most promising node.
+        compare nodes when Dijkstra's algorithm polls it for the next most promising node.
       </p>
       <figure>
         <figcaption id="dijkstras-node-code-caption">
@@ -328,12 +332,12 @@ private Comparator&lt;Node&gt; nodeComparator = new Comparator&lt;&gt;() {
     node = queue.poll();
     if (node.value &gt; distance[node.id]) continue;
     for (Edge edge : graph.get(node.id)) {
-      if (!visited[edge.to]) {
+      if (!visited[edge.toNode]) {
         int newDistance = node.value + edge.cost;
-        if (newDistance &lt; distance[edge.to]) {
-          previous[edge.to] = edge.from;
-          distance[edge.to] = newDistance;
-          queue.offer(new Node(edge.to, newDistance));
+        if (newDistance &lt; distance[edge.toNode]) {
+          previous[edge.toNode] = edge.fromNode;
+          distance[edge.toNode] = newDistance;
+          queue.offer(new Node(edge.toNode, newDistance));
         }
       }
     }
@@ -344,7 +348,7 @@ private Comparator&lt;Node&gt; nodeComparator = new Comparator&lt;&gt;() {
       </figure>
 
       <p id="dijkstras-path-construction-code-description">
-        Finally, we have the code to construct the shortest path from the starting node to 
+        We finish up with the code to construct the shortest path from the starting node to 
         all other nodes that are reachable from it. First, it runs Dijkstra's algorithm. 
         Then it loops through the nodes in the graph (we assume that the graph nodes are labelled 
         from <math><mn>0</mn></math> to 
@@ -355,8 +359,8 @@ private Comparator&lt;Node&gt; nodeComparator = new Comparator&lt;&gt;() {
             <mn>1</mn>
           </mrow>
         </math>, 
-        where <math><mi>n</mi></math> is the number of nodes
-        ). For each node, the loop constructs the path from the node to the starting node, reverses the path and 
+        where <math><mi>n</mi></math> is the number of nodes). 
+        For each node, the loop constructs the path from the node to the starting node, reverses the path and 
         then adds the path to a list of paths which the function eventually returns.
       </p>
       <figure>
@@ -485,7 +489,7 @@ private Comparator&lt;Node&gt; nodeComparator = new Comparator&lt;&gt;() {
         There are a few optimisations available, though. We won't dive into them here, but feel free to do so on your 
         own. One improvement is to use an 
         <a href="https://algs4.cs.princeton.edu/24pq/IndexMinPQ.java.html">indexed priority queue</a> instead of a 
-        priority queue. This will allow us to update the value of a given key-value pair in constant-time, instead of 
+        priority queue. This will allow us to update the value of a given key-value pair in constant time, instead of 
         having to offer a new key-value pair in logarithmic time. 
       </p>
 

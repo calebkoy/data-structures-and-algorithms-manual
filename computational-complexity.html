@@ -68,10 +68,11 @@
       
       <h2>Motivation</h2>
       <p>
-        Suppose you have a computational problem and you need to devise an algorithm to solve it. 
-        You might imagine that, depending on the context, you might need a really fast algorithm. 
+        Suppose you have a computational problem (a problem that a computer might be able to solve) 
+        and you need to devise an algorithm to solve it.         
+        Depending on the context, you might need a really fast algorithm. 
         For example, if you're developing an algorithm to place trades in a high-frequency trading platform,
-        speed is very critical.  
+        speed is critical.  
       </p>
       <p>                
         Computational complexity is usually used to analyse how quickly algorithms or operations 
@@ -90,8 +91,8 @@
       <p>
         Consider an algorithm that takes in some input and, regardless of what the input is, 
         always executes the same 10 steps and then outputs a result. 
-        (If you're not familiar with algorithms, think of them as funnels which optionally take in some input, 
-        execute some steps and then optionally output a result. 
+        (If you're not familiar with algorithms, think of them as funnels which take in some input, 
+        execute some steps and then output a result. 
         We'll cover them some more in the 
         <a href="algorithms/algorithms-overview.html">algorithms overview section</a>.)                
       </p>
@@ -129,7 +130,7 @@
       <p>
         What's the running time of this algorithm? If we assume that each sum operation takes constant time, 
         then we just need to calculate the number of sum operations 
-        plus the number of print operations. There'll be <math><mi>n</mi></math> print operations and, 
+        and add that to the number of print operations. There'll be <math><mi>n</mi></math> print operations and, 
         for a given number <math><mi>i</mi></math> in the list, there'll be 
         <math>
           <mrow>
@@ -202,7 +203,7 @@
       <p>
         When I was writing this, I suddenly wondered why big O is called "big O". The letter "O" is used 
         because this notation is used to reason about the "order" of various mathematical functions. 
-        More specifically, computational complexity is usually most interested in studying the growth rates of  
+        More specifically, when studying computational complexity, we're often most interested in the growth rates of  
         functions of some input size <math><mi>n</mi></math>, say, and the growth rate is also known as the 
         order of the function. 
       </p>
@@ -381,7 +382,7 @@
       <h2>A helpful resource</h2>
       <p>
         A final note: I came across this <a href="https://www.bigocheatsheet.com/">big O cheat sheet</a>
-        a while ago. It's really helpful, 
+        a while ago. It's a really helpful summary of various time and space complexities, 
         especially if you're prepping for upcoming technical interviews. 
       </p>
       <p>

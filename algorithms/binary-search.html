@@ -89,9 +89,16 @@
             <mn>2</mn>
           </mrow>
         </math> (we floor the result).                
-        Now we compare the element at index 2 to the desired value. Since it's greater than the desired value, we can 
+      </p>
+      
+      <p>
+        Next, we compare the element at index 2 to the desired value. Since it's greater than the desired value, we can 
         search for the value in the lower half of the array. That is, we can search all the elements to the left of 
-        the midpoint. We calculate a new midpoint in this new sub-array: 
+        the midpoint. 
+      </p>
+
+      <p>
+        We calculate a new midpoint in this new sub-array: 
         <math>
           <mrow>
             <mo>(</mo>
@@ -163,21 +170,23 @@
       <h2>Time complexity</h2>
       <p>
         What's the time complexity of this algorithm? The first few lines all take constant time to execute. The real 
-        work happens in the while loop. So the question is: How many times does the while loop execute?
+        work happens in the <code class="language-none">while</code> loop. So the question is: 
+        How many times does the <code class="language-none">while</code> loop execute?
       </p> 
       <p>
         Suppose the input array has size <math><mi>n</mi></math>. In the worst case, where 
-        <code class="language-none">element</code> doesn't exist in the array, the while loop will terminate when the 
+        <code class="language-none">element</code> doesn't exist in the array, 
+        the <code class="language-none">while</code> loop will terminate when the 
         variable <code class="language-none">low</code> is greater than the variable <code class="language-none">high</code>. 
         This occurs when the sorted subarray that we're inspecting has no more elements in it. 
       </p>
       <p>
-        On each iteration of the while loop, we halve the size of the 
+        On each iteration of the <code class="language-none">while</code> loop, we halve the size of the 
         sorted subarray. In the example above, the original array has length six. Then this is halved to become three. 
         Then this is halved once more to become one.
       </p>
       <p>
-        The first iteration of the while loop looks through an array 
+        The first iteration of the <code class="language-none">while</code> loop looks through an array 
         of size 
         <math>
           <mrow>

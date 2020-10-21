@@ -83,7 +83,7 @@
       </p>
 
       <p>
-        Since the memory slots don't need to be near each other, a given "slot" could actually consist 
+        Since the memory slots don't need to be next to each other, a given "slot" could actually consist 
         of multiple memory slots. All we need is to maintain the pointers. In fact, all the user of the linked 
         list really needs to keep track of is a pointer to the "head" of the linked list. This is the first 
         "node" of the list and enables us to find all other nodes, by traversing the chain of pointers.
@@ -141,7 +141,7 @@
            aria-labelledby="singly-and-doubly-linked-lists-image-label"
       >
 
-      <h2>What's the point?</h2>
+      <h2>What's the point(er)?</h2>
       <p>
         "Okay, a linked list can store variable-size objects. But what benefits does it have apart 
         from that?", you might be thinking. Good question. Linked lists can be used to:
@@ -168,7 +168,7 @@
 
       <h2>Adding elements</h2>
       <p>
-        To add an element to an empty linked list, we create a new node, insert the element into the list 
+        To add an element to an empty singly linked list, we create a new node, insert the element into the list 
         and ensure the head pointer points to the new node. To add an element at the head of a non-empty list, 
         we again create a new node. But before we point the head to the new node, we point the new node to the 
         current head of the list.         
@@ -181,8 +181,10 @@
       </p>      
 
       <p>
-        Both adding at the head and adding at the tail are constant-time operations. This is one area in which 
-        a linked list trumps a static or dynamic array. There's no need to create new arrays or stuff like that.
+        Both adding at the head and adding at the tail are constant-time operations in a doubly linked list. 
+        This is one area in which 
+        a linked list trumps a static or dynamic array. There's no need to create new arrays and copy 
+        elements over.
       </p>
 
       <p>
@@ -294,7 +296,7 @@ public void addFirst(E element) {
       </figure>
 
       <p id="linked-list-insert-code-description">
-        The final add method is actually a method to insert an element in-between two other nodes in the list. 
+        The final add method we'll implement is actually a method to insert an element in-between two other nodes in the list. 
         We traverse the list from either the head or the tail, create a new node for the element and update or set
         the relevant next and previous pointers.
       </p>
@@ -309,7 +311,7 @@ public void addFirst(E element) {
         <pre
           aria-labelledby="linked-list-insert-code-caption"
           aria-describedby="linked-list-insert-code-description"><code contenteditable spellcheck="false" id="linked-list-insert-code">public void add(int index, E element) {
-  if (index &lt; 0 || index &gt;= size) {
+  if (index &lt; 0 || index &gt; size) {
     throw new IndexOutOfBoundsException("Invalid index; got: " + index);
   }
 

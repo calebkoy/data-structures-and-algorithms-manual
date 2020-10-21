@@ -30,7 +30,7 @@ public class DoublyLinkedList<E> {
   
   // Insert specified element at specified index
   public void add(int index, E element) {
-    if (index < 0 || index >= size) {
+    if (index < 0 || index > size) {
       throw new IndexOutOfBoundsException("Invalid index; got: " + index);
     }
 

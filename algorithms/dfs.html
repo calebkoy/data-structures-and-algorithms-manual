@@ -84,7 +84,7 @@
 
       <p>
         DFS fairly systematically explores the nodes and edges in a graph data structure. On its own, it's not 
-        particularly useful or intriguing. But when it's combined with other algorithmic steps it can be used 
+        particularly useful. But when it's combined with other algorithmic steps it can be used 
         to do some pretty powerful things quite elegantly - for example:
         <ul>          
           <li>Generating mazes.</li>
@@ -128,7 +128,7 @@
         Consider the undirected graph above. Let's run DFS from the node labelled 0. 
         <ol>
           <li>The algorithm selects the only unvisited neighbour of 0, which is 1.</li>
-          <li>Node 1 has two unvisited neighbours, 2 and 3. Suppose the algorithm chooses to explore 3.</li>
+          <li>Node 1 has two unvisited neighbours, 2 and 3. Suppose the algorithm chooses to explore 3 first.</li>
           <li>Node 3 has a single unvisited neighbour, 7.</li>
           <li>
             When exploring 7, the algorithm realises that it has no unvisited 
@@ -192,11 +192,11 @@ import java.util.Stack;
 
 public class DFS {
   private static class Edge {
-    private int from, to;    
+    private int fromNode, toNode;        
 
-    public Edge(int from, int to) {
-      this.from = from;
-      this.to = to;      
+    public Edge(int fromNode, int toNode) {
+      this.fromNode = fromNode;
+      this.toNode = toNode;      
     }
   }
 }</code></pre>            
@@ -224,9 +224,9 @@ public class DFS {
   while (!stack.isEmpty()) {
     node = stack.pop();
     for (Edge edge : graph.get(node)) {
-      if (!visited[edge.to]) {
-        stack.push(edge.to);
-        visited[edge.to] = true;
+      if (!visited[edge.toNode]) {
+        stack.push(edge.toNode);
+        visited[edge.toNode] = true;
       }
     }
   }
@@ -240,8 +240,9 @@ public class DFS {
         happens in the <code class="language-none">while</code> loop. How many times will this loop 
         execute? Well, in the worst, case, each node in the graph is reachable by a path of edges 
         from the start node. And, since each reachable node is pushed onto the stack exactly once, 
-        this while loop will execute <math><mi>V</mi></math> times, where <math><mi>V</mi></math> 
-        is the number of nodes or "vertices" in the graph.
+        this <code class="language-none">while</code> loop will 
+        execute <math><mi>V</mi></math> times, where <math><mi>V</mi></math> 
+        is the number of nodes, or "vertices", in the graph.
       </p>
 
       <p>
@@ -251,7 +252,8 @@ public class DFS {
       </p>
 
       <p>
-        So we pop a node off the stack exactly <math><mi>V</mi></math> times and we execute the for loop 
+        So we pop a node off the stack exactly <math><mi>V</mi></math> times and we execute the 
+        <code class="language-none">for</code> loop 
         body <math><mi>E</mi></math> times. This gives us a running time of 
         <math>
           <mrow>

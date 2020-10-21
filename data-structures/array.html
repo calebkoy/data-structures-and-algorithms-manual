@@ -125,7 +125,7 @@
             <mo>)</mo>
           </mrow>
         </math>.
-        We're allocating <math><mi>n</mi></math> memory slots, and this, by the way, is 
+        We're allocating <math><mi>n</mi></math> memory slots and this, by the way, is 
         why we specify the array size when declaring a static array. The computer needs to find a block of unused,
         uninterrupted memory for the array.         
       </p>
@@ -189,7 +189,7 @@
       <p>
         Once we've found the number (if it even exists), we'll need to delete it. 
         Assume that deletion takes constant time. 
-        Then we'll need to shift all elements to the right of the deleted number one space to the left. 
+        Then we'll need to shift all elements on the right of the deleted number one space to the left. 
         In the worst case, this shifting will take 
         <math><mi>n</mi></math> steps. Therefore, deleting an element from a static array is, theoretically, a 
         linear-time operation, or 
@@ -204,8 +204,8 @@
       </p>
 
       <p>
-        However, a more common way of looking at appending and deletion is that 
-        since a static array is of a fixed size, it's not possible to add or remove elements.
+        However, perhaps a more common way of looking at appending and deletion is that, 
+        since a static array has a fixed size, it's not possible to add or remove elements.
         This is exactly the case in Java and we'll assume that this is the case for the rest of the manual, 
         unless otherwise stated. 
       </p>

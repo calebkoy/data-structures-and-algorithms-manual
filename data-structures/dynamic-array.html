@@ -105,9 +105,13 @@
       <p>
         So what's the time complexity of appending an element to a dynamic array? It depends. In most cases, the capacity of the 
         array will be greater than the size, so the time complexity will be constant. Simply append the new element to the next 
-        available slot. When the size equals the capacity, though, a new array of double the capacity is created and each 
+        available slot. 
+      </p>
+
+      <p>
+        When the size equals the capacity, though, a new array of double the capacity is created and each 
         element from the previous array is copied over to the new array. Then, finally, the new element is appended to the 
-        new array. 
+        new array.
       </p>
             
       <p>
@@ -118,7 +122,11 @@
       
       <p>
         Most of the appends will take constant time, but some will take longer. Which ones take longer? It will be 
-        the ones where the current array size is a power of two: 1, 2, 4, 8 and so on. Each time the capacity is doubled from 
+        the ones where the current array size is a power of two: 1, 2, 4, 8 and so on.
+      </p>
+      
+      <p>
+        Each time the capacity is doubled from 
         <math><mi>x</mi></math> to 
         <math>
           <mrow>
@@ -223,7 +231,11 @@
             <mn>1</mn>
           </mrow>
         </math>
-        elements to the dynamic array. If we evenly spread out this cost over the 
+        elements to the dynamic array. 
+      </p>
+      
+      <p>
+        If we evenly spread out this cost over the 
         <math>
           <mrow>                        
             <mi>n</mi>
@@ -232,7 +244,7 @@
           </mrow>
         </math>
         items, we 
-        get an average cost of about 
+        get an average cost of 
         <math>
           <mrow>
             <mi>O</mi>
@@ -494,7 +506,7 @@ public int size() {
   E element = array[index];
   E[] newArray = (E[]) new Object[size - 1];
   for (int i = 0, j = 0; i &lt; size; i++, j++) {
-    if (i == index) j--;
+    if (i == index) j--; // Skip over the element to be removed
     else newArray[j] = array[i];
   }
   array = newArray;
@@ -523,7 +535,7 @@ public int size() {
       <p>
         There's one limitation of both static and dynamic arrays which we haven't dwelt on, though: 
         they can only hold objects which have the same size. So, typically, they're used to hold objects 
-        of the same type. The next data structure we'll look at provides a solution.
+        of the same type. The next data structure we'll look at provides a solution to this problem.
       </p>
 
       <nav>
