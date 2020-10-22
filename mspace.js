@@ -19,6 +19,7 @@
             box = div.firstChild.firstChild.getBoundingClientRect();
             document.body.removeChild(div);
             if (Math.abs(box.height - 23) > 1  || Math.abs(box.width - 77) > 1) {
+                console.log("MathML is supported");
                 // Insert the mathml.css stylesheet.
                 link = document.createElement("link");
                 link.href = "mathml.css";
