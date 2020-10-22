@@ -21,7 +21,7 @@
             if (Math.abs(box.height - 23) > 1  || Math.abs(box.width - 77) > 1) {
                 // Insert the mathml.css stylesheet.
                 link = document.createElement("link");
-                link.href = "styles/mathml.css";
+                link.href = "/styles/mathml.css";
                 link.rel = "stylesheet";
                 document.head.appendChild(link);
             }
