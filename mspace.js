@@ -25,6 +25,8 @@
                 link.href = "mathml.css";
                 link.rel = "stylesheet";
                 document.head.appendChild(link);
+            } else {
+                console.log("MathML is not supported");
             }
         }
     });
