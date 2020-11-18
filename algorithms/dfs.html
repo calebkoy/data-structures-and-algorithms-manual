@@ -270,17 +270,13 @@ public class DFS {
       </p>
 
       <p>
-        How about space? The space complexity depends on how we represent the graph. In this case, 
-        we use an adjacency list. The outer list stores the <math><mi>V</mi></math> vertices and the total 
-        number of elements across all the inner lists is the number of edges, <math><mi>E</mi></math>. 
-        So the space complexity is also 
+        How about space? Well, at most <math><mi>V</mi></math> vertices can be on the stack at any given time.
+        So the space complexity is 
         <math>
           <mrow>
             <mi>O</mi>
             <mo>(</mo>
-            <mi>V</mi>
-            <mo>+</mo>
-            <mi>E</mi>
+            <mi>V</mi>                        
             <mo>)</mo>
           </mrow>
         </math>.
