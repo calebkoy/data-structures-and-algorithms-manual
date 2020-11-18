@@ -13,6 +13,7 @@
 math {
     display: inline;
     text-indent: 0;
+    font-family: Georgia, serif;
 }
 math[display="block"] {
     display: block;
@@ -146,10 +147,6 @@ mspace {
 }
 mi {
     font-style: italic;
-}
-mo {
-    margin-right: .2em;
-    margin-left: .2em;
 }
 ms:before, ms:after {
     content:"\0022";
