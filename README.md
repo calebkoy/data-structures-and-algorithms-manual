@@ -14,7 +14,7 @@ I'm building the manual using Visual Studio Code, but feel free to use any IDE o
 
 * Create a personal fork of this GitHub repo.
 * In your fork, create a branch off the **master** branch.
-* Make your changes, keeping the following in mind:
+* Make your changes on your branch, keeping the following in mind:
     * Follow the current coding style.
 * Ensure that each page of the site can be navigated to and add tests for any dynamic features. 
 * Commit your changes to your branch.    
