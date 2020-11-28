@@ -9,11 +9,9 @@ public class BinarySearch {
     while (low <= high) {
       mid = (low + high) / 2;
       if (array[mid] < element) {
-        low = mid + 1;
-        continue;
+        low = mid + 1;        
       } else if (array[mid] > element) {
-        high = mid - 1;
-        continue;
+        high = mid - 1;        
       } else {
         return mid;
       }
